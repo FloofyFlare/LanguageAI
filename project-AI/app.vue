@@ -1,26 +1,32 @@
 <template>
-  <div>
-    <div class="navbar bg-base-100">
-      <div class="flex-1">
-        <a class="btn btn-ghost text-xl">daisyUI</a>
-      </div>
-      <div class="flex-none">
-        <ul class="menu menu-horizontal px-1">
-          <li><a>Link</a></li>
+ <header class="header bg-neutral text-neutral-content sticky top-0 z-50">
+  <div class="navbar bg-base-100">
+    <div class="flex-1">
+      <a class="btn btn-ghost text-xl text-primary">Yuuera</a>
+    </div>
+    <div class="flex-none gap-2">
+    <div>
+      <div class="flex-1 mr-64">
+      <a class="btn btn-ghost text-xl text-info">Home</a>
+    </div>
+    </div>
+      <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+          <div class="w-10 rounded-full">
+            <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+          </div>
+        </div>
+        <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
           <li>
-            <details>
-              <summary>
-                Parent
-              </summary>
-              <ul class="p-2 bg-base-100 rounded-t-none">
-                <li><a>Link 1</a></li>
-                <li><a>Link 2</a></li>
-              </ul>
-            </details>
+            <a class="justify-between">
+              Profile
+            </a>
           </li>
+          <li><a>Settings</a></li>
+          <li><a>Logout</a></li>
         </ul>
       </div>
     </div>
-    <NuxtPage ref="index" />
   </div>
+  </header>
 </template>

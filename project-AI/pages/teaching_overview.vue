@@ -39,13 +39,13 @@
               </div>
               <textarea class="textarea text-info text-lg h-full textarea-bordered resize-none" placeholder="Enter" style="resize: none;"></textarea>
               <div class="flex items-center justify-center">
-                <button class="btn btn-primary w-1/3 text-base-100">Buy Now</button>
+                <button class="btn btn-primary w-1/3 text-base-100">Filter</button>
               </div>
             </div>
           </div>
          </div>
       </div>
-      <div class="w-3/4 overflow-y-scroll border-l-2 h-full bg-base-100  pt-0 p-10 border-gray-300">
+      <div class="w-full overflow-y-scroll border-l-2 h-full bg-base-100  pt-0 p-10 border-gray-300">
         <div class="card w-full mt-10 bg-base-100 hover:bg-neutral shadow-xl border-2 border-gray-300">
           <div class="card-body">
             <div class="flex w-full  ">

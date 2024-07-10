@@ -27,6 +27,12 @@
               </div>
             </div>
           </div>
+          <div class="text-center justify-right">
+            <button class="btn bg-info text-neutral">
+              <NuxtImg :src="'/images/mic.png'" class="w-10 h-10"></NuxtImg>
+              Speak
+            </button>
+          </div>
         </div>
         <div class="w-1/2 overflow-y-scroll border-l-2 h-full bg-base-100 pt-0 p-10 border-gray-300 bg-warning">
           <div class="chat chat-start">
@@ -40,7 +46,7 @@
             <div class="chat-header">
               Tony
             </div>
-            <div class="chat-bubble">abdfglsaf</div>
+            <div class="chat-bubble chat_enter">abdfglsaf</div>
           </div>
           <div class="chat chat-end">
             <div class="chat-image avatar">
@@ -51,7 +57,7 @@
             <div class="chat-header">
               AI
             </div>
-            <div class="chat-bubble">fdsfahasdfldw</div>
+            <div class="chat-bubble chat_enter">fdsfahasdfldw</div>
           </div>
           <div class="chat chat-start">
             <div class="chat-image avatar">
@@ -64,7 +70,7 @@
             <div class="chat-header">
               Tony
             </div>
-            <div class="chat-bubble">abdfglsaf</div>
+            <div class="chat-bubble chat_enter chat_enter">abdfglsaf</div>
           </div>
           <div class="chat chat-end">
             <div class="chat-image avatar">
@@ -75,7 +81,7 @@
             <div class="chat-header">
               AI
             </div>
-            <div class="chat-bubble">fdsfahasdfldw</div>
+            <div class="chat-bubble chat_enter">fdsfahasdfldw</div>
           </div>
           <div class="chat chat-start">
             <div class="chat-image avatar">
@@ -88,7 +94,7 @@
             <div class="chat-header">
               Tony
             </div>
-            <div class="chat-bubble">abdfglsaf</div>
+            <div class="chat-bubble chat_enter">abdfglsaf</div>
           </div>
           <div class="chat chat-end">
             <div class="chat-image avatar">
@@ -99,7 +105,7 @@
             <div class="chat-header">
               AI
             </div>
-            <div class="chat-bubble">fdsfahasdfldw</div>
+            <div class="chat-bubble chat_enter">fdsfahasdfldw</div>
           </div>
           <div class="chat chat-start">
             <div class="chat-image avatar">
@@ -112,7 +118,7 @@
             <div class="chat-header">
               Tony
             </div>
-            <div class="chat-bubble">abdfglsaf</div>
+            <div class="chat-bubble chat_enter">abdfglsaf</div>
           </div>
           <div class="chat chat-end">
             <div class="chat-image avatar">
@@ -123,7 +129,7 @@
             <div class="chat-header">
               AI
             </div>
-            <div class="chat-bubble">fdsfahasdfldw</div>
+            <div class="chat-bubble chat_enter">fdsfahasdfldw</div>
           </div>
           <div class="chat chat-start">
             <div class="chat-image avatar">
@@ -136,7 +142,7 @@
             <div class="chat-header">
               Tony
             </div>
-            <div class="chat-bubble">abdfglsaf</div>
+            <div class="chat-bubble chat_enter">abdfglsaf</div>
           </div>
           <div class="chat chat-end">
             <div class="chat-image avatar">
@@ -147,7 +153,7 @@
             <div class="chat-header">
               AI
             </div>
-            <div class="chat-bubble">fdsfahasdfldw</div>
+            <div class="chat-bubble chat_enter">fdsfahasdfldw</div>
           </div>
           <div class="chat chat-start">
             <div class="chat-image avatar">
@@ -160,7 +166,7 @@
             <div class="chat-header">
               Tony
             </div>
-            <div class="chat-bubble">abdfglsaf</div>
+            <div class="chat-bubble chat_enter">abdfglsaf</div>
           </div>
           <div class="chat chat-end">
             <div class="chat-image avatar">
@@ -171,7 +177,7 @@
             <div class="chat-header">
               AI
             </div>
-            <div class="chat-bubble">fdsfahasdfldw</div>
+            <div class="chat-bubble chat_enter">fdsfahasdfldw</div>
           </div>
         </div>
       </div>

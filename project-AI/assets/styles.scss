@@ -7,7 +7,7 @@ h1 {
   color: #333;
 }
 
-@keyframes grow {
+@keyframes grow_ai {
     from {
         transform: scale(0.7);
     }
@@ -15,8 +15,20 @@ h1 {
         transform: scale(0.8);
     }
 }
+@keyframes grow_chat {
+  from {
+      transform: scale(0);
+  }
+  to {
+      transform: scale(1);
+  }
+}
 
 #ai_animation { 
-    animation: grow 4s ease-in-out infinite alternate;
+    animation: grow_ai 4s ease-in-out infinite alternate;
+}
+
+.chat_enter {
+    animation: grow_chat 0.2s ;
 }
 // ...

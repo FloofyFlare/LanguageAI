@@ -6,5 +6,5 @@ export default defineNuxtConfig({
     '@/assets/styles.scss'
   ],
 
-  modules: ["@nuxtjs/tailwindcss"]
+  modules: ["@nuxtjs/tailwindcss", "@nuxt/image"]
 })

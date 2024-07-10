@@ -31,7 +31,7 @@
   </div>
 </header>
 <NuxtPage ref="index" />
-<footer class="footer bg-neutral text-neutral-content items-center p-4">
+<footer class="footer bg-neutral text-neutral-content items-left p-4 min-h-full flex flex-col justify-end">
   <aside class="grid-flow-col items-center">
     <svg
       width="36"

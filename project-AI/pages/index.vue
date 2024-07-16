@@ -1,13 +1,13 @@
 <template>
   <div class="">
-  <div class="mt-20 ml-24 ">
+  <div class="flex flex-col text-left justify-left items-left mt-20 ml-24 ">
     <div class="text-left justify-left">
-      <p class="text-4xl font-bold">
+      <p class="text-xl md:text-4xl font-bold text-pretty">
         World Language Class
       </p>
     </div>
-    <div class="text-left justify-left">
-      <p class="text-4xl font-bold text-primary">
+    <div class="text-left justify-left mt-6 ">
+      <p class="text-3xl text-nowrap md:text-4xl mr- font-bold text-primary">
         Beyond the Classroom
       </p>
     </div>

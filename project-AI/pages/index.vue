@@ -17,16 +17,16 @@
       </p>
     </div>
   </div>
-    <div class="text-left justify-left mt-24 ml-24">
+    <div class="text-left justify-left mt-12 ml-24">
       <button>
         <NuxtLink to="/login" class="btn btn-primary">Sign up for free</NuxtLink>
       </button>
     </div>
   
     <div class="text-center justify-right">
-      <div class="avatar h-full w-full flex justify-center">
+      <div class="avatar h-full w-full flex justify-center ml-60">
         <div class="w-2/4 h-2/4 ">
-          <div class="h-full w-full rounded-full bg-orange-500 p-2 shadow-2xl rounded-full border-8 border-gray-300 p-2" id="ai_animation"></div>
+          <div class="h-1/2 w-1/2 rounded-full bg-orange-500 p-2 shadow-2xl rounded-full border-8 border-gray-300 p-2" id="ai_animation"></div>
         </div>
       </div>
     </div>

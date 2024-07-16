@@ -33,7 +33,7 @@
             </button>
           </div>
         </div>
-        <div class="w-1/2 overflow-y-scroll border-l-2 h-full min-h-screen bg-base-100 pt-0 p-10 border-gray-300 bg-warning">
+        <div class="w-1/2 m-4 mb-10 shadow-xl rounded-3xl shadow-amber-400 overflow-y-scroll border-l-2 h-full min-h-screen bg-base-100 pt-0 p-10 border-gray-300 bg-warning">
           <div v-for="{ id, sender, message } in chatHistory" :key="id" :class="`chat ${chatSide(sender)}`">
             <div class="chat-image avatar">
               <div class="w-10 rounded-full">
@@ -60,7 +60,8 @@
   import { ref } from 'vue';
 
   const order = 0;
-
+  const counter = ref(15);
+  
   interface ChatMessage {
     id: number;
     sender: string;

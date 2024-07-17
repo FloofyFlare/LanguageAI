@@ -1,13 +1,13 @@
 <template>
-  <div class="">
+  <div class="md:flex">
   <div class="flex flex-col text-left justify-left items-left mt-20 ml-24 ">
     <div class="text-left justify-left">
       <p class="text-xl md:text-4xl font-bold text-pretty">
         World Language Class
       </p>
     </div>
-    <div class="text-left justify-left mt-6 ">
-      <p class="text-3xl text-nowrap md:text-4xl mr- font-bold text-primary">
+    <div class="text-left justify-left mt-6">
+      <p class="text-3xl text-nowrap md:text-4xl pr-96 md:mr-0 font-bold text-primary">
         Beyond the Classroom
       </p>
     </div>
@@ -24,7 +24,7 @@
     </div>
   
     <div class="text-center justify-right">
-      <div class="avatar h-full w-full flex justify-center ml-60">
+      <div class="avatar h-full w-full flex justify-center ml-60 invisible md:visible">
         <div class="w-2/4 h-2/4 ">
           <div class="h-1/2 w-1/2 rounded-full bg-orange-500 p-2 shadow-2xl rounded-full border-8 border-gray-300 p-2" id="ai_animation"></div>
         </div>

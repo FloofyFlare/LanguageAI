@@ -1,30 +1,34 @@
 <template>
- <header class="header bg-neutral text-neutral-content sticky top-0  z-50">
-  <div class="navbar bg-base-100 border border-gray-300">
+ <header class="header bg-neutral text-neutral-content sticky top-0 z-50">
+  <div class="navbar bg-base-100 border border-gray-300 w-min md:w-full">
 
      <div class="flex-1">
-       <a class="btn btn-ghost text-xl text-primary">Yuuera</a>
+       <NuxtLink to="/" class="btn btn-ghost text-xl text-primary">Yuuera</NuxtLink>
      </div>
-     <div class="flex-none gap-2">
+     <div class="flex-1 gap-2">
+      <div class="flex-1 mr-">
+       <NuxtLink to="/login" class="btn btn-base-100 rounded-full  h-1/2 w-1/2 mr-24 ml-12 invisible md:visible md:rounded-1/2 md:text-xl md:w-1/4 text-sm  ml-24 md:ml-96 md:mr-0 ">Login</NuxtLink>
+     </div>
      <div>
-       <div class="flex-1 mr-64">
-       <a class="btn btn-ghost text-xl text-info">Home</a>
+       <div class="flex-1 mr-">
+       <NuxtLink to="/" class="btn btn-primary rounded-full h-1/2 w-1/2 ml-12 md:rounded-1/2 md:text-xl md:w-5/6 md:pl text-sm text-base-100 ml-24 md:ml-0 md:mr-24 ">Sign up</NuxtLink>
      </div>
      </div>
-       <div class="dropdown dropdown-end">
+       <div class="dropdown dropdown-end ml-24 md:ml-0">
          <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-           <div class="w-10 rounded-full">
-             <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-           </div>
+          <div class="avatar placeholder">
+            <div class="bg-neutral text-neutral-content w-10 rounded-full">
+              <span class="text-xs">UI</span>
+            </div>
+          </div>
          </div>
          <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
            <li>
-             <a class="justify-between">
-               Profile
-             </a>
+            <NuxtLink to="/student_overview" class="btn btn-ghost">Profile</NuxtLink>
+            
            </li>
-           <li><a>Settings</a></li>
-           <li><a>Logout</a></li>
+           <li><NuxtLink to="/student_overview" class="btn btn-ghost">Settings</NuxtLink></li>
+           <li><NuxtLink to="/teaching_overview" class="btn btn-ghost">Logout</NuxtLink></li>
          </ul>
        </div>
    </div>

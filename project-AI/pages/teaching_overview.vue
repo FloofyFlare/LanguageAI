@@ -39,134 +39,26 @@
               </div>
               <textarea class="textarea text-info text-lg h-full textarea-bordered resize-none" placeholder="Enter" style="resize: none;"></textarea>
               <div class="flex items-center justify-center">
-                <button class="btn btn-primary w-1/3 text-base-100">Filter</button>
+                <button class="btn btn-primary w-1/3 text-base-100">Apply</button>
               </div>
             </div>
           </div>
          </div>
       </div>
-      <div class="w-full overflow-y-scroll border-l-2 h-full bg-base-100  pt-0 p-10 border-gray-300">
-        <div class="card w-full mt-10 bg-base-100 hover:bg-neutral shadow-xl border-2 border-gray-300">
+      <div class="w-full min-h-screen overflow-y-scroll border-l-2 h-full bg-base-100  pt-0 p-10 border-gray-300">
+        <div v-for="{ name, DaysComplete, id} in students" :key="id" class="card w-full mt-10 bg-base-100 hover:bg-neutral shadow-xl border-2 border-gray-300">
           <div class="card-body">
             <div class="flex w-full  ">
                 <div class="flex items-center justify-center">
-                  <h2 class="font-bold text-2xl pr-4">Tony Dillards</h2>
+                  <h2 class="font-bold text-2xl pr-4">{{ name }}</h2>
                   <div class="flex items-center justify-center">
-                    <h2 class="border-2 border-gray-300 bg-success rounded-full pl-3 ml-3 font-bold text-2xl pr-4">S</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">M</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">T</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">W</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">T</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">F</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">S</h2>
-                  </div>
-                </div>
-              </div>
-          </div>
-        </div>
-        <div class="card w-full mt-10 bg-base-100 shadow-xl border-2 border-gray-300">
-          <div class="card-body">
-            <div class="flex w-full  ">
-                <div class="flex items-center justify-center">
-                  <h2 class="font-bold text-2xl pr-4">Ray Allen</h2>
-                  <div class="flex items-center justify-center">
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">S</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">M</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">T</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">W</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">T</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">F</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">S</h2>
-                  </div>
-                </div>
-              </div>
-          </div>
-        </div>
-        <div class="card w-full mt-10 bg-base-100 shadow-xl border-2 border-gray-300">
-          <div class="card-body">
-            <div class="flex w-full  ">
-                <div class="flex items-center justify-center">
-                  <h2 class="font-bold text-2xl pr-4">Michael Scott</h2>
-                  <div class="flex items-center justify-center">
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">S</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">M</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">T</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">W</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">T</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">F</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">S</h2>
-                  </div>
-                </div>
-              </div>
-          </div>
-        </div>
-        <div class="card w-full mt-10 bg-base-100 shadow-xl border-2 border-gray-300">
-          <div class="card-body">
-            <div class="flex w-full  ">
-                <div class="flex items-center justify-center">
-                  <h2 class="font-bold text-2xl pr-4">Michael Jackson</h2>
-                  <div class="flex items-center justify-center">
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">S</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">M</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">T</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">W</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">T</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">F</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">S</h2>
-                  </div>
-                </div>
-              </div>
-          </div>
-        </div>
-        <div class="card w-full mt-10 bg-base-100 shadow-xl border-2 border-gray-300">
-          <div class="card-body">
-            <div class="flex w-full  ">
-                <div class="flex items-center justify-center">
-                  <h2 class="font-bold text-2xl pr-4">Dwight Schrute</h2>
-                  <div class="flex items-center justify-center">
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">S</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">M</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">T</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">W</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">T</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">F</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">S</h2>
-                  </div>
-                </div>
-              </div>
-          </div>
-        </div>
-        <div class="card w-full mt-10 bg-base-100 shadow-xl border-2 border-gray-300">
-          <div class="card-body">
-            <div class="flex w-full  ">
-                <div class="flex items-center justify-center">
-                  <h2 class="font-bold text-2xl pr-4">Dwayne Johnson</h2>
-                  <div class="flex items-center justify-center">
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">S</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">M</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">T</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">W</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">T</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">F</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">S</h2>
-                  </div>
-                </div>
-              </div>
-          </div>
-        </div>
-        <div class="card w-full mt-10 bg-base-100 shadow-xl border-2 border-gray-300">
-          <div class="card-body">
-            <div class="flex w-full  ">
-                <div class="flex items-center justify-center">
-                  <h2 class="font-bold text-2xl pr-4">Jim Halpert</h2>
-                  <div class="flex items-center justify-center">
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">S</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">M</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">T</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">W</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">T</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">F</h2>
-                    <h2 class="border-2 border-gray-300 rounded-full pl-3 ml-3 font-bold text-2xl pr-4">S</h2>
+                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'Sa')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">S</h2>
+                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'M')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">M</h2>
+                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'Tu')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">T</h2>
+                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'W')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">W</h2>
+                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'Th')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">T</h2>
+                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'F')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">F</h2>
+                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'Su')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">S</h2>
                   </div>
                 </div>
               </div>
@@ -178,4 +70,40 @@
 </template>
 <script setup lang="ts">
 
+  import { ref } from 'vue';
+
+  const students = ref<Students[]>([]);
+  const teachers = ref<Teacher[]>([]);
+  interface Students {
+    id: number;
+    name: string;
+    DaysComplete: string;
+    Teacher: number;
+  }
+  interface Teacher {
+    id: number;
+    name: string;
+    Time: number;
+    Difficulty: number;
+    ClassTopic: String;
+  }
+
+  testInput();
+  function testInput() {
+    students.value = [
+      { id: 0, name: 'Cabel', DaysComplete: 'Su', Teacher: 0 },
+      { id: 1, name: 'Raymond', DaysComplete: 'Sa', Teacher: 0 },
+    ];
+    teachers.value = [
+      { id: 0, name: 'user', Time: 0, Difficulty: 0, ClassTopic: 'General Conversation'},
+    ];
+  }
+
+  function DaysCompleteTranslate(student:string, day:string) : string {
+    if (student.includes(day)){
+      return 'bg-success'
+    } else {
+      return ''
+    }
+  }
 </script>

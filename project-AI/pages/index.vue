@@ -53,7 +53,7 @@
   
   <div class="mt-64">
     <div class="md:flex justify-center items-center">
-         <div class="h-full ml-16">
+         <div class="h-full mr-6">
           <div class="card m-10 h-2/3 bg-accent text-primary-content">
             <div class="card-body">
               <div class="flex w-full p-2">

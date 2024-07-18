@@ -4,44 +4,44 @@
       <div class="flex justify-center items-center">
          <div class="w-1/3 w-full h-full">
           <div class="card m-10 h-2/3 bg-accent text-primary-content">
-            <div class="card-body">
+            <form class="card-body" @submit.prevent="handleSubmit">
               <div class="flex w-full p-2">
                 <div class="flex items-center justify-center">
                   <h2 class="font-bold text-2xl pr-4">Time</h2>
                 </div>
-                <select class="select text-info text-lg select-secondary w-full max-w-xs">
+                <select v-model="time" class="select text-info text-lg select-secondary w-full max-w-xs">
                   <option disabled selected>choose time</option>
-                  <option>5 min</option>
-                  <option>10 min</option>
-                  <option>15 min</option>
-                  <option>20 min</option>
-                  <option>25 min</option>
-                  <option>30 min</option>
+                  <option value="0">5 min</option>
+                  <option value="1">10 min</option>
+                  <option value="2">15 min</option>
+                  <option value="3">20 min</option>
+                  <option value="4">25 min</option>
+                  <option value="5">30 min</option>
                 </select>
               </div>
               <div class="flex w-full p-2">
                 <div class="flex items-center justify-center">
                   <h2 class="font-bold text-2xl pr-4">Difficulty</h2>
                 </div>
-                <select class="select text-info text-lg select-secondary w-full max-w-xs">
+                <select v-model="difficulty" class="select text-info text-lg select-secondary w-full max-w-xs">
                   <option disabled selected>choose difficulty</option>
-                  <option>A1</option>
-                  <option>A2</option>
-                  <option>B1</option>
-                  <option>B2</option>
-                  <option>C1</option>
-                  <option>C2</option>
+                  <option value="0">A1</option>
+                  <option value="1">A2</option>
+                  <option value="2">B1</option>
+                  <option value="3">B2</option>
+                  <option value="4">C1</option>
+                  <option value="5">C2</option>
                 </select>
               </div>
               
               <div class="flex items-center justify-center">
                 <h2 class="font-bold text-2xl pr-4 pt-16">Class Topic</h2>
               </div>
-              <textarea class="textarea text-info text-lg h-full textarea-bordered resize-none" placeholder="Enter" style="resize: none;"></textarea>
+              <textarea v-model="classTopic" class="textarea text-info text-lg h-full textarea-bordered resize-none" placeholder="Enter" style="resize: none;"></textarea>
               <div class="flex items-center justify-center">
-                <button class="btn btn-primary w-1/3 text-base-100">Apply</button>
+                <button type="submit" class="btn btn-primary w-1/3 text-base-100">Apply</button>
               </div>
-            </div>
+            </form>
           </div>
          </div>
       </div>
@@ -73,7 +73,10 @@
   import { ref } from 'vue';
 
   const students = ref<Students[]>([]);
-  const teachers = ref<Teacher[]>([]);
+  const teacher = ref<Teacher>({} as Teacher);
+  const time = ref();
+  const difficulty = ref();
+  const classTopic = ref('');
   interface Students {
     id: number;
     name: string;
@@ -94,9 +97,14 @@
       { id: 0, name: 'Cabel', DaysComplete: 'Su', Teacher: 0 },
       { id: 1, name: 'Raymond', DaysComplete: 'Sa', Teacher: 0 },
     ];
-    teachers.value = [
-      { id: 0, name: 'user', Time: 0, Difficulty: 0, ClassTopic: 'General Conversation'},
-    ];
+
+    teacher.value = {
+      id: 0,
+      name: 'some teacher',
+      Time: 0,
+      Difficulty: 0,
+      ClassTopic: 'General Conversation'
+    };
   }
 
   function DaysCompleteTranslate(student:string, day:string) : string {
@@ -106,4 +114,6 @@
       return ''
     }
   }
+
+  function handleSubmit() {}
 </script>

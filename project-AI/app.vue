@@ -1,41 +1,41 @@
 <template>
- <header class="header bg-neutral text-neutral-content sticky top-0 z-50">
-  <div class="navbar bg-base-100 border border-gray-300 w-min md:w-full">
-
-     <div class="flex-1">
-       <NuxtLink to="/" class="btn btn-ghost text-xl text-primary">Yuuera</NuxtLink>
-     </div>
-     <div class="flex-1 gap-2">
-      <div class="flex-1 mr-">
-       <NuxtLink to="/login" class="btn btn-base-100 rounded-full  h-1/2 w-1/2 mr-24 ml-12 invisible md:visible md:rounded-1/2 md:text-xl md:w-1/4 text-sm  ml-24 md:ml-96 md:mr-0 ">Login</NuxtLink>
-     </div>
-     <div>
-       <div class="flex-1 mr-">
-       <NuxtLink to="/" class="btn btn-primary rounded-full h-1/2 w-1/2 ml-12 md:rounded-1/2 md:text-xl md:w-5/6 md:pl text-sm text-base-100 ml-24 md:ml-0 md:mr-24 ">Sign up</NuxtLink>
-     </div>
-     </div>
-       <div class="dropdown dropdown-end ml-24 md:ml-0">
-         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-          <div class="avatar placeholder">
-            <div class="bg-neutral text-neutral-content w-10 rounded-full">
-              <span class="text-xs">UI</span>
+ <header class="header w-screen bg-neutral text-neutral-content sticky top-0 z-50">
+    <div class="navbar w-full bg-base-100 border border-gray-300 ">
+      <div class="flex w-full">
+        <NuxtLink to="/" class="btn btn-ghost text-xl text-primary">Yuuera</NuxtLink>
+        
+        <div class="flex-1 hidden md:visible flex">
+          <div class=" flex-1 mr-">
+            <NuxtLink to="/login" class="btn btn-base-100 rounded-full  h-1/2 w-1/2 mr-24 ml-12  md:rounded-1/2 md:text-xl md:w-1/4 text-sm  ml-24 md:ml-96 md:mr-0 ">Login</NuxtLink>
+          </div>
+          <div>
+            <div class="flex-1 mr-">
+            <NuxtLink to="/" class="btn btn-primary rounded-full h-1/2 w-1/2 ml-12   md:rounded-1/2 md:text-xl md:w-5/6 md:pl text-sm text-base-100 ml-24 md:ml-0 md:mr-24 ">Sign up</NuxtLink>
             </div>
           </div>
-         </div>
-         <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-           <li>
-            <NuxtLink to="/student_overview" class="btn btn-ghost">Profile</NuxtLink>
-            
-           </li>
-           <li><NuxtLink to="/student_overview" class="btn btn-ghost">Settings</NuxtLink></li>
-           <li><NuxtLink to="/teaching_overview" class="btn btn-ghost">Logout</NuxtLink></li>
-         </ul>
-       </div>
-   </div>
+        </div>
+        <div class="flex-1 flex justify-end flex-direction visible md:hidden dropdown dropdown-end ml-24 md:ml-0">
+          <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+            <div class="avatar placeholder">
+              <div class="bg-neutral text-neutral-content w-10 rounded-full">
+                <span class="text-xs">UI</span>
+              </div>
+            </div>
+          </div>
+          <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box md:w-52">
+            <li>
+              <NuxtLink to="/student_overview" class="btn btn-ghost">Profile</NuxtLink>
+              
+            </li>
+            <li><NuxtLink to="/student_overview" class="btn btn-ghost">Settings</NuxtLink></li>
+            <li><NuxtLink to="/teaching_overview" class="btn btn-ghost">Logout</NuxtLink></li>
+          </ul>
+        </div>
+      </div>
   </div>
 </header>
 <NuxtPage ref="index" />
-<footer class="footer bg-neutral text-neutral-content items-left p-4 min-h-full flex flex-col justify-end">
+<footer class="footer bg-neutral w-screen text-neutral-content items-left p-4 min-h-full flex flex-col justify-end">
   <aside class="grid-flow-col items-center">
     <svg
       width="36"

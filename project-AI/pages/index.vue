@@ -25,7 +25,7 @@
           </div>
           <div class="lg:hidden flex text-left justify-center items-center mt-8 md:m-20">
             <button>
-              <a to="#waitlist" class="btn btn-primary text-accent text-xl w-48 h-16 rounded-3xl">Join the waitlist!</a>
+              <a href="#waitlist" class="btn btn-primary text-accent text-xl w-48 h-16 rounded-3xl">Join the waitlist!</a>
             </button>
           </div>
         </section>

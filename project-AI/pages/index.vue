@@ -8,7 +8,7 @@
       </p>
     </div>
     <div class="text-left justify-left mt-4">
-      <p class="text-2xl text-nowrap md:text-4xl pr-96 md:mr-0 font-bold text-primary">
+      <p class="text-2xl text-nowrap md:text-4xl md:mr-0 font-bold text-primary">
         Beyond the Classroom
       </p>
     </div>

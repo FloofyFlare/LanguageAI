@@ -31,4 +31,66 @@ h1 {
 .chat_enter {
     animation: grow_chat 0.2s ;
 }
+
+
+
+.animated-text {
+    font-size: 34px;
+    font-weight: 600;
+    min-width: 280px;
+}
+
+.animated-text span{
+    position: relative
+}
+
+.animated-text span::before{
+    content: "Hello";
+    color: #ff750f;
+    animation: words 15s infinite;
+}
+
+.animated-text span::after{
+    content: "" ;
+    position: absolute;
+    width: calc(100% + 8px);
+    height: 110%;
+    background-color: #ffffff;
+    border-left: 2px solid #ff750f;
+    right: -8px;
+    animation: cursor .8s infinite, typing 15s steps(15) infinite;
+}
+
+@keyframes cursor {
+    to{
+        border-left: 2px solid #ffffff;
+    }
+}
+
+@keyframes words {
+    0%,20%{
+        content: "Hello";
+    }
+    21%,40%{
+        content: "Bonjour";
+    }
+    41%,60%{
+        content: "Hola";
+    }
+    61%,80%{
+        content: "Hallo";
+    }
+    81%,100%{
+        content: "こんにちは";
+    }
+}
+
+@keyframes typing {
+    10%,15%,30%,35%,50%,55%,70%,75%,90%,95%{
+        width: 0;
+    }
+    5%,20%,25%,40%,45%,60%,65%,80%,85%{
+        width: calc(100% + 8px);
+    }
+}
 // ...

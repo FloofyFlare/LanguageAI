@@ -15,7 +15,7 @@
           </div>
           <div class=" mt-4 text-left">
             <p class="text-lg lg:text-2xl text-balance">
-              The language tool that gets students <span class="text-orange-500 font-bold">speaking</span> outside the classroom
+              The language tool that gets students <span class="text-primary font-bold">speaking</span> outside the classroom
             </p>
           </div>
           <div class="hidden lg:block flex text-left justify-start items-center mt-12">
@@ -43,8 +43,8 @@
           <div class="hidden sm:block animated-text text-center flex justify-center">
             <span class=" md:text-6xl"></span>
           </div>
-          <div id="waitlist" class="block sm:hidden flex text-left justify-start items-center mt-12">
-            <button>
+          <div id="waitlist" class="block sm:hidden flex text-left justify-center sm:justify-start items-center mt-12 mb-4 sm:mb-0">
+            <button class="flex justify-center">
               <Waitlist></Waitlist>
             </button>
           </div>

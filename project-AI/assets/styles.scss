@@ -15,6 +15,19 @@ h1 {
         transform: scale(0.8);
     }
 }
+
+@keyframes grow_ai_speaking {
+    0% {
+        transform: scale(0.7);
+    }
+    50% {
+        transform: scale(0.8);
+    }
+    100% {
+        transform: scale(0.6);
+    }
+}
+
 @keyframes grow_chat {
   from {
       transform: scale(0);
@@ -24,15 +37,17 @@ h1 {
   }
 }
 
-#ai_animation { 
+.ai_animation { 
     animation: grow_ai 4s ease-in-out infinite alternate;
+}
+
+.ai_animation_talking {
+    animation: grow_ai_speaking 0.7s ease-in-out infinite alternate;
 }
 
 .chat_enter {
     animation: grow_chat 0.2s ;
 }
-
-
 
 .animated-text {
     font-size: 34px;

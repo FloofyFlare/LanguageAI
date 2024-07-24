@@ -24,7 +24,7 @@
             class="btn button no-animation bg-primary"
             @click="handleSubmit"
           >
-            <p class="md:hidden">Sign up</p>
+            <p class="md:hidden text-accent">Join the beta!</p>
             <p class="hidden md:flex  text-accent">Join the beta!</p>
           </button>
         </form>

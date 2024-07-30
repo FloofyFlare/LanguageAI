@@ -1,5 +1,5 @@
 <template>
- <header class="header w-screen bg-neutral text-neutral-content sticky top-0 z-50">
+ <header class="header w-full bg-neutral text-neutral-content sticky top-0 z-50">
     <div class="navbar w-full bg-base-100 border border-gray-300 ">
       <div class="flex w-full">
         <NuxtLink to="/" class="btn btn-ghost text-xl text-primary">Yuuera</NuxtLink>
@@ -36,7 +36,7 @@
   </div>
 </header>
 <NuxtPage ref="index" />
-<footer class="footer bg-neutral w-screen text-neutral-content items-left p-4 min-h-full flex flex-col justify-end">
+<footer class="footer bg-neutral w-full text-neutral-content items-left p-4 min-h-full flex flex-col justify-end">
   <aside class="grid-flow-col items-center">
     <svg
       width="36"

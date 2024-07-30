@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/fonts": "latest",
     "@nuxt/image": "^1.7.0",
     "nuxt": "^3.12.1",
     "openai": "^4.53.2",

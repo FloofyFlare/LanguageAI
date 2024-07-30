@@ -2,7 +2,7 @@
  <header class="header w-full bg-neutral text-neutral-content sticky top-0 z-50">
     <div class="navbar w-full bg-base-100 border border-gray-300 ">
       <div class="flex w-full">
-        <NuxtLink to="/" class="btn btn-ghost text-xl text-primary">Yuuera</NuxtLink>
+        <NuxtLink to="/" class="btn btn-ghost text-2xl text-primary">Yuuera</NuxtLink>
         <section class="hidden">
           <div class="flex-1 hidden md:visible flex">
           <div class=" flex-1 mr-">

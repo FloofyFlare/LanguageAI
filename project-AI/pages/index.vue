@@ -4,12 +4,12 @@
       <div class="lg:flex lg:justify-center items-center lg:items-start">
         <section class=" flex lg:flex-1 flex-col text-left justify-left lg:items-left mt-16 lg:mt-32 lg:ml-32 m-2">
           <div class="text-left justify-left">
-            <p class="text-4xl md:4xl lg:text-6xl font-bold text-pretty">
+            <p class="text-4xl md:4xl lg:text-7xl font-bold text-pretty" font-family="arial">
               World Language
             </p>
           </div>
           <div class="text-left justify-left mt-4">
-            <p class="text-3xl md:4xl text-nowrap lg:text-6xl lg:mr-0 font-bold text-primary">
+            <p class="text-3xl md:4xl text-nowrap lg:text-7xl lg:mr-0 font-bold text-primary">
               Beyond the Classroom
             </p>
           </div>
@@ -41,7 +41,7 @@
             </div>
           </div>
           <div class="hidden sm:block animated-text text-center flex justify-center">
-            <span class=" md:text-6xl"></span>
+            <span class=" md:text-7xl"></span>
           </div>
           <div id="waitlist" class="block sm:hidden flex text-left justify-center sm:justify-start items-center mt-12 mb-4 sm:mb-0">
             <button class="flex justify-center">

@@ -43,7 +43,7 @@
                 <img
                   v-if="sender !== 'ai'"
                   alt="Tailwind CSS chat bubble component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                  src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/250px-Flag_of_France.svg.png" />
               </div>
             </div>
             <div class="chat-header">
@@ -99,8 +99,9 @@
   testInput();
   function testInput() {
     chatHistory.value = [
-      { id: order, sender: 'user', message: 'hello' },
-      { id: order, sender: 'ai', message: 'how are you?' },
+      { id: order, sender: 'ai', message: "Tu t'appelles comment ?" },
+      { id: order, sender: 'you', message: "Je m'appelle John et toi ?" },
+      { id: order, sender: 'ai', message: "Je m'appelle Jean." },
     ];
   }
   function talking() {

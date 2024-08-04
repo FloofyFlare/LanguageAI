@@ -5,7 +5,7 @@
         <NuxtLink to="/" class="btn btn-ghost text-2xl text-primary">Yuuera</NuxtLink>
         <section class="flex w-full justify-end">
           <div class="hidden sm:flex w-full justify-end">
-            <div class="w-full mr-8 w-36">
+            <div class="mr-8 w-36">
               <NuxtLink to="/login" class="btn btn-base-100 rounded-full pr-4 pl-4 w-full text-xl">Login</NuxtLink>
             </div>
             <div class="w-36">

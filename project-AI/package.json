@@ -12,8 +12,10 @@
   "dependencies": {
     "@nuxt/fonts": "latest",
     "@nuxt/image": "^1.7.0",
+    "@pinia/nuxt": "^0.5.2",
     "nuxt": "^3.12.1",
     "openai": "^4.53.2",
+    "pinia": "^2.2.0",
     "vue": "^3.4.27",
     "vue-router": "^4.3.3"
   },

@@ -3,35 +3,37 @@
     <div class="navbar w-full bg-base-100 border border-gray-300 ">
       <div class="flex w-full">
         <NuxtLink to="/" class="btn btn-ghost text-2xl text-primary">Yuuera</NuxtLink>
-        <section class="hidden">
-          <div class="flex-1 hidden md:visible flex">
-          <div class=" flex-1 mr-">
-            <NuxtLink to="/login" class="btn btn-base-100 rounded-full  h-1/2 w-1/2 mr-24 ml-12  md:rounded-1/2 md:text-xl md:w-1/4 text-sm  ml-24 md:ml-96 md:mr-0 ">Login</NuxtLink>
-          </div>
-          <div>
-            <div class="flex-1 mr-">
-            <NuxtLink to="/" class="btn btn-primary rounded-full h-1/2 w-1/2 ml-12   md:rounded-1/2 md:text-xl md:w-5/6 md:pl text-sm text-base-100 ml-24 md:ml-0 md:mr-24 ">Sign up</NuxtLink>
+        <section class="flex w-full justify-end">
+          <div class="hidden sm:flex w-full justify-end">
+            <div class="w-full mr-8 w-36">
+              <NuxtLink to="/login" class="btn btn-base-100 rounded-full pr-4 pl-4 w-full text-xl">Login</NuxtLink>
+            </div>
+            <div class="w-36">
+              <NuxtLink to="/login" class="btn btn-primary rounded-full pr-4 pl-4 w-full text-base-100 text-xl">Sign up</NuxtLink>
             </div>
           </div>
-        </div>
-        <div class="flex-1 flex justify-end flex-direction visible md:hidden dropdown dropdown-end ml-24 md:ml-0">
-          <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-            <div class="avatar placeholder">
-              <div class="bg-neutral text-neutral-content w-10 rounded-full">
-                <span class="text-xs">UI</span>
+          <div class="flex-1 flex justify-end flex-direction visible sm:hidden dropdown dropdown-end ml-24 md:ml-0">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+              <div class="avatar placeholder">
+                <div class="bg-neutral text-neutral-content w-10 rounded-full">
+                  <span class="text-xs">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                  </span>
+                </div>
               </div>
             </div>
+            <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box md:w-52">
+              <li>
+                <NuxtLink to="/login" class="btn btn-ghost">Login</NuxtLink>
+              </li>
+              <li><NuxtLink to="/login" class="btn btn-ghost">Sign up</NuxtLink></li>
+              <li><NuxtLink to="/login" class="btn btn-ghost hidden">Logout</NuxtLink></li>
+            </ul>
           </div>
-          <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box md:w-52">
-            <li>
-              <NuxtLink to="/student_overview" class="btn btn-ghost">Profile</NuxtLink>
-              
-            </li>
-            <li><NuxtLink to="/student_overview" class="btn btn-ghost">Settings</NuxtLink></li>
-            <li><NuxtLink to="/teaching_overview" class="btn btn-ghost">Logout</NuxtLink></li>
-          </ul>
-        </div>
         </section>
+        
       </div>
   </div>
 </header>

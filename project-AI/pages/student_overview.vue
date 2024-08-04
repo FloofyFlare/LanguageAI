@@ -1,5 +1,8 @@
 <template>
-  <body class="bg-base-100">
+  <div class="sm:hidden flex flex-col items-center justify-center h-screen">
+    <h1 class="text-2xl font-bold text-center">Your window is too small. Please exstend the window or use a larger screen size.</h1>
+  </div>
+  <body class="hidden sm:block bg-base-100">
     <main>
       <div class="flex justify-center">
         <div class="w-1/2 overflow-y-scroll border-l-2 h-full bg-base-100 pt-0 p-10 border-gray-300">

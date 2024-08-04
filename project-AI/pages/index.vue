@@ -35,8 +35,8 @@
           </div>
           <div class="text-center justify-center lg:justify-end">
             <div class="avatar h-full w-full lg:flex justify-center">
-              <div class="w-4/5 h-3/5 p-4 mb-4">
-                <div class="h-full w-full rounded-full bg-orange-500 p-2 shadow-2xl rounded-full border-8 border-gray-300 p-2" id="ai_animation"></div>
+              <div class="w-4/5 h-4/5 p-8 ">
+                <div class="h-full w-full rounded-full bg-orange-500 p-2 shadow-xl rounded-full border-8 border-gray-300 p-2" id="ai_animation"></div>
               </div>
             </div>
           </div>

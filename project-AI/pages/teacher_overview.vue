@@ -1,10 +1,13 @@
 <template>
-  <div class="h-5/6">
+  <div class="sm:hidden flex flex-col items-center justify-center h-screen">
+    <h1 class="text-2xl font-bold text-center">Your window is too small. Please exstend the window or use a larger screen size.</h1>
+  </div>
+  <div class="hidden sm:block h-5/6">
     <div class="flex h-full">
       <div class="flex justify-center items-center">
-         <div class="w-1/3 w-full h-full">
-          <div class="card m-10 h-2/3 bg-accent text-primary-content">
-            <form class="card-body" @submit.prevent="handleSubmit">
+         <div class="w-full h-full">
+          <div class="card m-4 bg-accent text-primary-content">
+            <form class="card-body pb-16" @submit.prevent="handleSubmit">
               <div class="flex w-full p-2">
                 <div class="flex items-center justify-center">
                   <h2 class="font-bold text-2xl pr-4">Time</h2>
@@ -51,12 +54,12 @@
           </div>
          </div>
       </div>
-      <div class="w-full min-h-screen overflow-y-scroll border-l-2 h-full bg-base-100  pt-0 p-10 border-gray-300">
+      <div class="w-full min-h-screen overflow-y-scroll border-l-2 h-full bg-base-100  pt-0 lg:p-10 border-gray-300">
         <div v-for="{ name, DaysComplete, id} in students" :key="id" class="card w-full mt-10 bg-base-100 hover:bg-neutral shadow-xl border-2 border-gray-300">
           <div class="card-body">
             <div class="flex w-full  ">
                 <div class="flex items-center justify-center">
-                  <h2 class="font-bold text-2xl pr-4 w-32">{{ name }}</h2>
+                  <h2 class="font-bold text-2xl pr-4 w-36">{{ name }}</h2>
                   <div class="flex items-center justify-center">
                     <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'Sa')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">S</h2>
                     <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'M')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">M</h2>

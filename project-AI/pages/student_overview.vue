@@ -21,6 +21,17 @@
                 </span>
                 seconds
               </div>
+              
+                <article class="clip">
+                <audio controls id="audio"></audio>
+                <audio controls id="audio-save"></audio>
+                <p>your clip name</p>
+                <button>Delete</button>
+                </article>
+
+                <button id="btnStart" class="btn btn-circle h-full p-4 mb-8 w-1/4 bg-success text-neutral shadow-2xl" @click="startRecording()">start</button>
+                <button id="btnStop" class="btn btn-circle h-full p-4 mb-8 w-1/4 bg-success text-neutral shadow-2xl" @click="endRecording()">stop</button>
+              
             </div>
           </div>
           <div class="text-center h-1/3 mb-8 justify-right mt-24">
@@ -61,15 +72,18 @@
 
   </body>
 </template>
+
 <script setup lang="ts">
   import { ref } from 'vue';
+  import { startRecording, endRecording } from '../scripts/Recording.js';
   import { infrence } from '../scripts/OpenAI.js';
+  
 
   const isAI = ref(false);
   const order = 0;
   const minuets = ref(14);
   const seconds = ref(30);
-  
+
   function countdown() {
     if (seconds.value > 0) {
       seconds.value--;
@@ -130,3 +144,4 @@
 
   const userMessageInput = ref('');
 </script>
+

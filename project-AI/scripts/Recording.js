@@ -1,5 +1,3 @@
-import { AutomaticSpeechRecognition } from "deepinfra";
-
 const DEEPINFRA_API_KEY = "93m4KBwYEIpDpmAZQwswvN2UM2bFQY6Z";
 let hasSpoken = false;
 let newVoice = null;

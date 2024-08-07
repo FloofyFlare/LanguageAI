@@ -24,7 +24,7 @@
               
                 <article class="clip">
                 <audio id="audio"></audio>
-                <audio controls id="audio-save"></audio>
+                <audio id="audio-save"></audio>
                 </article>             
             </div>
           </div>
@@ -57,7 +57,7 @@
             <div class="chat-header">
               {{sender}}
             </div>
-            <div class="chat-bubble chat_enter">{{message}}</div>
+            <div class="chat-bubble chat_enter text-xl">{{message}}</div>
           </div>
         </div>
       </div>

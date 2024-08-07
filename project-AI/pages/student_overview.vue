@@ -23,15 +23,9 @@
               </div>
               
                 <article class="clip">
-                <audio controls id="audio"></audio>
+                <audio id="audio"></audio>
                 <audio controls id="audio-save"></audio>
-                <p>your clip name</p>
-                <button>Delete</button>
-                </article>
-
-                <button id="btnStart" class="btn btn-circle h-full p-4 mb-8 w-1/4 bg-success text-neutral shadow-2xl" @click="startRecording()">start</button>
-                <button id="btnStop" class="btn btn-circle h-full p-4 mb-8 w-1/4 bg-success text-neutral shadow-2xl" @click="endRecording()">stop</button>
-              
+                </article>             
             </div>
           </div>
           <div class="text-center h-1/3 mb-8 justify-right mt-24">
@@ -43,8 +37,8 @@
             </div>
           </div>
           <div class="text-center h-1/3 justify-right">
-            <button class="btn btn-circle h-full p-4 mb-8 w-1/4 bg-info text-neutral shadow-2xl" @click="isSpeaking()">
-              <span v-if="speaking" class="loading loading-bars loading-lg"></span>
+            <button id="audio-Btn" class="btn btn-circle h-full p-4 mb-8 w-1/4 bg-info text-neutral shadow-2xl" @mousedown="aiSpeaking()" @mouseup="isSpeaking()">
+              <span v-if="speaking" class="loading w-1/4 h-20 loading-bars bg-secondary loading-lg"></span>
               <NuxtImg v-else :src="'/images/mic.png'" class="w-20 h-20"></NuxtImg>
             </button>
           </div>
@@ -74,15 +68,16 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
-  import { startRecording, endRecording } from '../scripts/Recording.js';
+  import { ref, onMounted} from 'vue';
+  import { getUserMedia, curlDeepInfra } from '../scripts/Recording.js';
   import { infrence } from '../scripts/OpenAI.js';
   
-
+  
   const isAI = ref(false);
   const order = 0;
   const minuets = ref(14);
   const seconds = ref(30);
+  const speaking = ref(false);
 
   function countdown() {
     if (seconds.value > 0) {
@@ -95,7 +90,6 @@
   }
   
   countdown();
-  const speaking = ref(false);
   
   interface ChatMessage {
     id: number;
@@ -128,11 +122,22 @@
 
   function isSpeaking() {
     speaking.value = !speaking.value;
-    (async () => {
-      const aiMessage = await infrence();
-      chatHistory.value.push({ id: order, sender: 'ai', message: `${aiMessage}` });
-    })();
+    if (!speaking.value) {
+      curlDeepInfra().then((result) => {
+        chatHistory.value.push({ id: order, sender: 'ai', message: `${result}` });
+      });
+    }
   }
+
+  function aiSpeaking() {
+    speaking.value = !speaking.value;
+    // (async () => {
+    //   const aiMessage = await infrence();
+    //   chatHistory.value.push({ id: order, sender: 'ai', message: `${aiMessage}` });
+    // })();
+  }
+
+  
 
   const sendMessage = () => {
     const userMessage = userMessageInput.value;
@@ -143,5 +148,11 @@
   };
 
   const userMessageInput = ref('');
+
+  onMounted(() => {
+    getUserMedia();
+
+    console.log('mounted');
+  });
 </script>
 

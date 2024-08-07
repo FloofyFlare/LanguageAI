@@ -21,6 +21,11 @@
                 </span>
                 seconds
               </div>
+              
+                <article class="clip">
+                <audio id="audio"></audio>
+                <audio id="audio-save"></audio>
+                </article>             
             </div>
           </div>
           <div class="text-center h-1/3 mb-8 justify-right mt-24">
@@ -32,8 +37,8 @@
             </div>
           </div>
           <div class="text-center h-1/3 justify-right">
-            <button class="btn btn-circle h-full p-4 mb-8 w-1/4 bg-info text-neutral shadow-2xl" @click="isSpeaking()">
-              <span v-if="speaking" class="loading loading-bars loading-lg"></span>
+            <button id="audio-Btn" class="btn btn-circle h-full p-4 mb-8 w-1/4 bg-info text-neutral shadow-2xl" @mousedown="aiSpeaking()" @mouseup="isSpeaking()">
+              <span v-if="speaking" class="loading w-1/4 h-20 loading-bars bg-secondary loading-lg"></span>
               <NuxtImg v-else :src="'/images/mic.png'" class="w-20 h-20"></NuxtImg>
             </button>
           </div>
@@ -52,7 +57,7 @@
             <div class="chat-header">
               {{sender}}
             </div>
-            <div class="chat-bubble chat_enter">{{message}}</div>
+            <div class="chat-bubble chat_enter text-xl">{{message}}</div>
           </div>
         </div>
       </div>
@@ -61,15 +66,19 @@
 
   </body>
 </template>
-<script setup lang="ts">
-  import { ref } from 'vue';
-  import { infrence } from '../scripts/OpenAI.js';
 
+<script setup lang="ts">
+  import { ref, onMounted} from 'vue';
+  import { getUserMedia, curlDeepInfra } from '../scripts/Recording.js';
+  import { infrence } from '../scripts/OpenAI.js';
+  
+  
   const isAI = ref(false);
   const order = 0;
   const minuets = ref(14);
   const seconds = ref(30);
-  
+  const speaking = ref(false);
+
   function countdown() {
     if (seconds.value > 0) {
       seconds.value--;
@@ -81,7 +90,6 @@
   }
   
   countdown();
-  const speaking = ref(false);
   
   interface ChatMessage {
     id: number;
@@ -114,11 +122,22 @@
 
   function isSpeaking() {
     speaking.value = !speaking.value;
-    (async () => {
-      const aiMessage = await infrence();
-      chatHistory.value.push({ id: order, sender: 'ai', message: `${aiMessage}` });
-    })();
+    if (!speaking.value) {
+      curlDeepInfra().then((result) => {
+        chatHistory.value.push({ id: order, sender: 'ai', message: `${result}` });
+      });
+    }
   }
+
+  function aiSpeaking() {
+    speaking.value = !speaking.value;
+    // (async () => {
+    //   const aiMessage = await infrence();
+    //   chatHistory.value.push({ id: order, sender: 'ai', message: `${aiMessage}` });
+    // })();
+  }
+
+  
 
   const sendMessage = () => {
     const userMessage = userMessageInput.value;
@@ -129,4 +148,11 @@
   };
 
   const userMessageInput = ref('');
+
+  onMounted(() => {
+    getUserMedia();
+
+    console.log('mounted');
+  });
 </script>
+

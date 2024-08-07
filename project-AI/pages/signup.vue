@@ -3,7 +3,7 @@
     <main>
       <section class="bg-base-100 w-full flex items-center justify-center">
         <form
-          class="flex flex-col w-full justify-center pb-48 pt-48 max-w-xs"
+          class="flex flex-col w-full justify-center pb-48 pt-12 max-w-xs"
           @submit.prevent="handleSubmit"
         >
           <div class="form-control w-full">
@@ -173,6 +173,7 @@
               </label>
             </div>
           </div>
+          <button class="btn btn-primary w-full max-w-xs text-neutral">Sign up</button>
           </form>
         </section>
       </main>

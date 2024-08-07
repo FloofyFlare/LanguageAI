@@ -1,9 +1,8 @@
 <template>
   <body class="bg-base-100 md:w-full h-screen">
     <main class="h-full">
-      <section>
-        <div class="flex justify-center">
-          <div class="hero min-h-screen bg-base-100">
+      <section class="flex h-full">
+          <div class="hero bg-base-100 h-4/5">
             <div class="hero-content flex-col lg:flex-row-reverse">
               <div class="text-center lg:text-left">
                 <h1 class="text-primary text-5xl font-bold">Login!</h1>
@@ -57,14 +56,13 @@
               </div>
             </div>
           </div>
-        </div>
         </section>
       </main>
     </body>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useAuthStore } from '../store/LoginStore'
+import { useAuthStore } from '~/store/LoginStore'
 
 const store = useAuthStore()
 

@@ -69,7 +69,7 @@
 
 <script setup lang="ts">
   import { ref, onMounted} from 'vue';
-  import { getUserMedia, curlDeepInfra } from '../scripts/Recording.js';
+  import { getUserMedia, curlDeepInfra, textToSpeech} from '../scripts/SpeechAPI.js';
   import { infrence } from '../scripts/OpenAI.js';
   
   
@@ -135,6 +135,8 @@
     //   const aiMessage = await infrence();
     //   chatHistory.value.push({ id: order, sender: 'ai', message: `${aiMessage}` });
     // })();
+
+
   }
 
   

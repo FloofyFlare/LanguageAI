@@ -61,3 +61,32 @@ export function getUserMedia() {
         console.error(error);
     });
 }
+
+// Imports the Google Cloud client library
+const tsAPI = require('@google-cloud/text-to-speech');
+
+// Import other required libraries
+const fs = require('fs');
+const util = require('util');
+// Creates a client
+const client = new tsAPI.TextToSpeechClient();
+export async function textToSpeech() {
+  // The text to synthesize
+  const text = 'hello, world!';
+
+  // Construct the request
+  const request = {
+    input: {text: text},
+    // Select the language and SSML voice gender (optional)
+    voice: { languageCode: 'fr-FR', name: 'fr-F-Standard-C'},
+    // select the type of audio encoding
+    audioConfig: {audioEncoding: 'LINEAR16', speakingRate: 1, pitch: 0, speakingRate: 1},
+  };
+
+  // Performs the text-to-speech request
+  const [response] = await client.synthesizeSpeech(request);
+  // Write the binary audio content to a local file
+  const writeFile = util.promisify(fs.writeFile);
+  await writeFile('output.wav', response.audioContent, 'binary');
+  console.log('Audio content written to file: output.wav');
+}

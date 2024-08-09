@@ -26,6 +26,7 @@
                 <audio id="audio"></audio>
                 <audio id="audio-save"></audio>
                 </article>             
+                <button class="btn btn-circle h-full p-4 mb-8 w-1/4 bg-info text-neutral shadow-2xl" @click="aiSpeaking()"></button>
             </div>
           </div>
           <div class="text-center h-1/3 mb-8 justify-right mt-24">
@@ -69,10 +70,10 @@
 
 <script setup lang="ts">
   import { ref, onMounted} from 'vue';
-  import { getUserMedia, curlDeepInfra, textToSpeech} from '../scripts/SpeechAPI.js';
+  import { getUserMedia, curlDeepInfra, textToSpeech } from '../scripts/SpeechAPI.js';
   import { infrence } from '../scripts/OpenAI.js';
   
-  
+
   const isAI = ref(false);
   const order = 0;
   const minuets = ref(14);
@@ -135,8 +136,7 @@
     //   const aiMessage = await infrence();
     //   chatHistory.value.push({ id: order, sender: 'ai', message: `${aiMessage}` });
     // })();
-
-
+    textToSpeech("bonjour comment allez vous", "fr-FR", "fr-FR-Standard-C", "LINEAR16", 1);
   }
 
   
@@ -153,7 +153,6 @@
 
   onMounted(() => {
     getUserMedia();
-
     console.log('mounted');
   });
 </script>

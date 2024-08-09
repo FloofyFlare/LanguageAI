@@ -1,4 +1,12 @@
 {
   // https://nuxt.com/docs/guide/concepts/typescript
-  "extends": "./.nuxt/tsconfig.json"
+  "extends": "./.nuxt/tsconfig.json",
+  "allowImportingTsExtensions": true,
+  "compilerOptions": {
+    "allowJs": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "target": "es6",
+    "strict": true
+  }
 }

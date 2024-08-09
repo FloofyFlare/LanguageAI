@@ -1,14 +1,15 @@
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  baseURL: 'https://api.deepinfra.com/v1/openai',
-  apiKey: "93m4KBwYEIpDpmAZQwswvN2UM2bFQY6Z",
-  "dangerouslyAllowBrowser": true,
-});
-
 const stream = false; // or true
 
 export async function infrence(){
+  const runtimeConfig = useRuntimeConfig()
+  
+  const openai = new OpenAI({
+    baseURL: 'https://api.deepinfra.com/v1/openai',
+    apiKey: `${runtimeConfig.public.deepInfra}`,
+    "dangerouslyAllowBrowser": true,
+  });
 
   const completion = await openai.chat.completions.create({
     messages: [

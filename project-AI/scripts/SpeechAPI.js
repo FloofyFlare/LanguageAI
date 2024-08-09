@@ -62,31 +62,62 @@ export function getUserMedia() {
     });
 }
 
-// Imports the Google Cloud client library
-const tsAPI = require('@google-cloud/text-to-speech');
+const GOOGLE_API_KEY = "ya29.a0AcM612xsUu1OeQJ-3r-0OAQmcqr1JYX_Z6JjO7Bg3v56Bq_SiiSgq-82gBYH5ogosbM_pDbbH24qzAsfbw6OJMDqeQ-1c50zzCLpqpVSQW-3S3k_OpBpWFmcf7n3mr6ivUf9u0RfuyiORJxqf4MWkhU2ZZ8m8zFmLRR3voqUMwaCgYKAYwSARMSFQHGX2MikC94npUlEYxF0JduyZi_Yg0177";
+/**
+ * @param {String} text
+ * @param {String} languageCode
+ * @param {String} voiceName
+ * @param {String} audioEncoding
+ * @param {Number} rateOfSpeech
+ */
+export async function textToSpeech(text, languageCode, voiceName, audioEncoding, rateOfSpeech) {
+    const projectId = "zeta-dock-430723-p9";
 
-// Import other required libraries
-const fs = require('fs');
-const util = require('util');
-// Creates a client
-const client = new tsAPI.TextToSpeechClient();
-export async function textToSpeech() {
-  // The text to synthesize
-  const text = 'hello, world!';
+    const headers = {
+        "Authorization": `Bearer ${GOOGLE_API_KEY}`,
+        "x-goog-user-project": projectId,
+        "Content-Type": "application/json; charset=utf-8"
+    };
 
-  // Construct the request
-  const request = {
-    input: {text: text},
-    // Select the language and SSML voice gender (optional)
-    voice: { languageCode: 'fr-FR', name: 'fr-F-Standard-C'},
-    // select the type of audio encoding
-    audioConfig: {audioEncoding: 'LINEAR16', speakingRate: 1, pitch: 0, speakingRate: 1},
-  };
+    const body = {
+        "input": {
+            "text": `${text}`,
+        },
+        "voice": {
+            "languageCode": `${languageCode}`,
+            "name": voiceName,
+        },
+        "audioConfig": {
+            "audioEncoding": audioEncoding,
+            "speakingRate": rateOfSpeech
+        }
+    };
 
-  // Performs the text-to-speech request
-  const [response] = await client.synthesizeSpeech(request);
-  // Write the binary audio content to a local file
-  const writeFile = util.promisify(fs.writeFile);
-  await writeFile('output.wav', response.audioContent, 'binary');
-  console.log('Audio content written to file: output.wav');
+    const response = await fetch("https://texttospeech.googleapis.com/v1/text:synthesize", {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(body)
+    }).then(response => response.json())
+        .then(data => {
+        const { audioContent } = data;
+
+        // Decode base64 audio data (assuming it's base64 encoded)
+        const binaryString = atob(audioContent);
+        const len = binaryString.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+
+        audioContext.decodeAudioData(bytes.buffer, buffer => {
+            const source = audioContext.createBufferSource();
+            source.buffer = buffer;
+            source.connect(audioContext.destination);
+            source.start(0);
+        });
+        })
+        .catch(error => console.error('Error processing audio context JSON:', error));
 }
+const audioContext = new window.AudioContext();
+
+    

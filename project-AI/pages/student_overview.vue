@@ -72,7 +72,6 @@
   import { ref, onMounted} from 'vue';
   import { getUserMedia, curlDeepInfra, textToSpeech } from '../scripts/SpeechAPI.js';
   import { infrence } from '../scripts/OpenAI.js';
-  
 
   const isAI = ref(false);
   const order = 0;
@@ -150,7 +149,7 @@
   };
 
   const userMessageInput = ref('');
-
+  
   onMounted(() => {
     getUserMedia();
     console.log('mounted');

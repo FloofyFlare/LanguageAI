@@ -1,7 +1,9 @@
-const DEEPINFRA_API_KEY = "93m4KBwYEIpDpmAZQwswvN2UM2bFQY6Z";
+
 let hasSpoken = false;
 let newVoice = null;
 export async function curlDeepInfra() {
+    const runtimeConfig = useRuntimeConfig()
+    const DEEPINFRA_API_KEY = `${runtimeConfig.public.deepInfra}`;
     while (!hasSpoken) {
         await new Promise(resolve => setTimeout(resolve, 100));
     }
@@ -62,7 +64,8 @@ export function getUserMedia() {
     });
 }
 
-const GOOGLE_API_KEY = "ya29.a0AcM612xsUu1OeQJ-3r-0OAQmcqr1JYX_Z6JjO7Bg3v56Bq_SiiSgq-82gBYH5ogosbM_pDbbH24qzAsfbw6OJMDqeQ-1c50zzCLpqpVSQW-3S3k_OpBpWFmcf7n3mr6ivUf9u0RfuyiORJxqf4MWkhU2ZZ8m8zFmLRR3voqUMwaCgYKAYwSARMSFQHGX2MikC94npUlEYxF0JduyZi_Yg0177";
+
+
 /**
  * @param {String} text
  * @param {String} languageCode
@@ -71,6 +74,8 @@ const GOOGLE_API_KEY = "ya29.a0AcM612xsUu1OeQJ-3r-0OAQmcqr1JYX_Z6JjO7Bg3v56Bq_Si
  * @param {Number} rateOfSpeech
  */
 export async function textToSpeech(text, languageCode, voiceName, audioEncoding, rateOfSpeech) {
+    const runtimeConfig = useRuntimeConfig()
+    const GOOGLE_API_KEY = `${runtimeConfig.public.google}`;
     const projectId = "zeta-dock-430723-p9";
 
     const headers = {
@@ -92,7 +97,7 @@ export async function textToSpeech(text, languageCode, voiceName, audioEncoding,
             "speakingRate": rateOfSpeech
         }
     };
-
+    const audioContext = new window.AudioContext();
     const response = await fetch("https://texttospeech.googleapis.com/v1/text:synthesize", {
         method: "POST",
         headers: headers,
@@ -118,6 +123,6 @@ export async function textToSpeech(text, languageCode, voiceName, audioEncoding,
         })
         .catch(error => console.error('Error processing audio context JSON:', error));
 }
-const audioContext = new window.AudioContext();
+
 
     

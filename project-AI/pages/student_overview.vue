@@ -83,8 +83,10 @@
     } else if (minuets.value > 0 && seconds.value === 0) {
       minuets.value--;
       seconds.value = 59;
-    } else if (minuets.value === 0 && seconds.value === 0) {
+    }
+    if (minuets.value === 0 && seconds.value === 0) {
       stopChat();
+      return;
     }
     setTimeout(countdown, 1000);
   }

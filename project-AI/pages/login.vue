@@ -6,15 +6,15 @@
             <div class="hero-content flex-col lg:flex-row-reverse">
               <div class="text-center lg:text-left">
                 <h1 class="text-primary text-5xl font-bold">Login!</h1>
-                <p class="text-primary">Or create an account</p>
-                <div class="flex-col justify-center">
+                <p class="hidden text-primary">Or create an account</p>
+                <div class="hidden flex-col justify-center">
                   <NuxtLink to="/signup" class="btn mt-8 btn-primary text-neutral"
                     >Create an account?</NuxtLink
                   >
                 </div>
               </div>
               <div class="card shrink-0 w-full max-w-sm shadow-2xl border-2 border-primary bg-base-100">
-                <form class="card-body" @submit.prevent="handleSubmit">
+                <form class="card-body" @submit.prevent="signInWithPassword">
                   <span v-show="badInput" class="text-error"
                     >Email and/or password is either missing or inccorect</span
                   >
@@ -62,75 +62,28 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useAuthStore } from '~/store/LoginStore'
 
-const store = useAuthStore()
-
-if (process.client) {
-  store.refreshAccessToken()
-  if (store.accessToken != null) {
-  }
+const user = useSupabaseUser()
+if (user.value) {
+  location.replace('/student_overview');
 }
 
 const signUpEmail = ref('')
 const pass = ref('')
 const badInput = ref(false)
-function handleSubmit() {
-  if (validateEmail(signUpEmail.value)) {
-    handleSend()
-  }
-}
+const supabase = useSupabaseClient()
 
-async function handleSend() {
-  console.log(signUpEmail.value)
-
-  const data = {
+const signInWithPassword = async () => {
+  
+  const { data, error } = await supabase.auth.signInWithPassword({
     email: signUpEmail.value,
     password: pass.value,
+  })
+  if (error) console.log(error)
+  if (data) {
+    console.log(data);
+    location.replace('/student_overview');
   }
-
-  try {
-    // Change the URL to your production server
-    const response = await fetch('https://api.yuuera.com/api/auth/login/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-
-    if (response.ok) {
-      const responseData = await response.json()
-      const tokens = {
-        accessToken: responseData.access,
-        refreshToken: responseData.refresh,
-      }
-      store.setTokens(tokens)
-      console.log('Login successful:', store.accessToken)
-      // Do something with the responseData, such as updating the component state
-      await store.getAccount()
-
-      return responseData
-    } else {
-      // Handle errors for non-2xx status codes
-      console.error('Login failed:', response.statusText)
-      badInput.value = true
-    }
-  } catch (error) {
-    badInput.value = true
-    console.error(error)
-  }
-}
-
-const validateEmail = (email: string) => {
-  if (typeof email !== 'string') {
-    throw new TypeError('Email must be a string')
-  }
-  return String(email)
-    .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    )
 }
 </script>
 

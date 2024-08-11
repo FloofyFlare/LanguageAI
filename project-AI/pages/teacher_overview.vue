@@ -50,7 +50,14 @@
               <div class="flex items-center justify-center">
                 <button type="submit" class="btn btn-primary w-1/3 text-base-100">Apply</button>
               </div>
+              
             </form>
+          </div>
+          <div class="rounded-2xl m-4 bg-primary text-primary-content flex">
+            <p class="w-1/2 p-4 text-base-100 text-center text-2xl">Class code</p>
+            <div class="bg-base-100 p-4 m-2 rounded-2xl">
+              <p class="">{{ classCode }}</p>
+            </div>
           </div>
          </div>
       </div>
@@ -86,6 +93,7 @@
   const time = ref('0');
   const difficulty = ref('0');
   const classTopic = ref('choose topic');
+  const classCode = ref('123456');
   interface Students {
     id: number;
     name: string;

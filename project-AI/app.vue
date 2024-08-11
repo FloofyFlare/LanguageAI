@@ -5,12 +5,19 @@
         <NuxtLink to="/" class="btn btn-ghost text-2xl text-primary">Yuuera</NuxtLink>
         <section class="flex w-full justify-end">
           <div class="hidden sm:flex w-full justify-end">
+            <div class="w-36 pr-2">
+              <NuxtLink v-if="loggedIn" to="/teacher_overview" class="btn btn-primary  rounded-full pr-4 pl-4 w-full text-lg leading-tight text-base-100">Teacher Page</NuxtLink>            </div>
+            <div class="w-36 pr-2">
+              <NuxtLink v-if="loggedIn" to="/student_overview" class="btn btn-primary  rounded-full pr-4 pl-4 w-full text-lg leading-tight text-base-100">Student Page</NuxtLink>
+            </div>
             <div class="mr-8 w-36">
-              <NuxtLink to="/login" class="btn btn-base-100 rounded-full pr-4 pl-4 w-full text-xl">Login</NuxtLink>
+              <NuxtLink v-if="!loggedIn" to="/login" class="btn btn-primary text-base-100 rounded-full pr-4 pl-4 w-full text-xl ">Login</NuxtLink>
+              <button v-else @click="logout()" class="btn btn-base-100  rounded-full pr-4 pl-4 w-full text-xl">Log Out</button>
             </div>
             <div class="w-36">
-              <NuxtLink to="/login" class="btn btn-primary rounded-full pr-4 pl-4 w-full text-base-100 text-xl">Sign up</NuxtLink>
+              <NuxtLink to="/login" class="hidden btn btn-primary rounded-full pr-4 pl-4 w-full text-base-100 text-xl">Sign up</NuxtLink>
             </div>
+            
           </div>
           <div class="flex-1 flex justify-end flex-direction visible sm:hidden dropdown dropdown-end ml-24 md:ml-0">
             <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
@@ -28,8 +35,8 @@
               <li>
                 <NuxtLink to="/login" class="btn btn-ghost">Login</NuxtLink>
               </li>
-              <li><NuxtLink to="/login" class="btn btn-ghost">Sign up</NuxtLink></li>
-              <li><NuxtLink to="/login" class="btn btn-ghost hidden">Logout</NuxtLink></li>
+              <li><NuxtLink to="/login" class="hidden btn btn-ghost">Sign up</NuxtLink></li>
+              <button class="btn btn-ghost hidden" @click="logout"> Logout</button>
             </ul>
           </div>
         </section>
@@ -89,6 +96,25 @@
     </a>
   </nav>
 </footer>
-  
-  
 </template>
+
+<script setup lang="ts">
+const supabase = useSupabaseClient()
+
+
+
+const loggedIn = ref(false)
+if (useSupabaseUser().value != null) {
+  if (useSupabaseUser().value.aud == 'authenticated') {
+    loggedIn.value = true
+  }
+}
+async function logout() {
+  const { error } = await supabase.auth.signOut();
+  if (error) console.log(error)
+  location.replace('/');
+  
+  
+}
+
+</script>

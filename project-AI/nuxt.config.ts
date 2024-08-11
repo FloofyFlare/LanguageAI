@@ -2,7 +2,26 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/image", "@nuxt/fonts", "@pinia/nuxt"],
+  supabase: {
+    url: process.env.SUPABASE_URL,
+    key: process.env.SUPABASE_KEY,
+    redirect: true,
+    redirectOptions: {
+      login: '/login',
+      callback: '/confirm',
+      include: undefined,
+      exclude: ['/'],
+      cookieRedirect: false,
+    },
+  },
+
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@nuxt/image",
+    "@nuxt/fonts",
+    "@pinia/nuxt",
+    "@nuxtjs/supabase"
+  ],
   
   css: [
     '@/assets/styles.scss'
@@ -17,6 +36,6 @@ export default defineNuxtConfig({
       google: '',
       deepInfra: '',
     }
-  }
+  },
   
 })

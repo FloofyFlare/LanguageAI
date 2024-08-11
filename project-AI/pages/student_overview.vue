@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="w-1/2 m-4 mb-10 shadow-xl rounded-3xl shadow-amber-400 overflow-y-scroll border-l-2 h-full min-h-screen bg-base-100 pt-0 p-10 border-gray-300 bg-warning">
-          <div v-for="{ role, content } in chatHistory" :class="`chat ${chatSide(role)}`">
+          <div v-for="{ role, content } in chatHistory.slice(1)" :class="`chat ${chatSide(role)}`">
             <div class="chat-image avatar">
               <div class="w-10 rounded-full">
                 <div v-if="role === 'ai'" class="h-full w-full rounded-full bg-orange-500 p-2"></div>
@@ -83,11 +83,21 @@
     } else if (minuets.value > 0 && seconds.value === 0) {
       minuets.value--;
       seconds.value = 59;
+    } else if (minuets.value === 0 && seconds.value === 0) {
+      stopChat();
     }
     setTimeout(countdown, 1000);
   }
   
   countdown();
+
+  function stopChat() {
+    console.log('Time is up!');
+    // Add your code here
+    // ...
+    // ...
+    // ...
+  }
   
   interface ChatMessage {
     role: string;
@@ -95,22 +105,35 @@
   }
   
   function chatSide(params:string) {
-    if (params == 'ai') {
+    if (params == 'assistant') {
       return 'chat-end';
     } else {
       return 'chat-start';
     }
   }
-
-  const chatHistory = ref<ChatMessage[]>([{ role: 'ai', content: "Tu t'appelles comment ?" }]);
-
+  const chatHistory = ref<ChatMessage[]>([
+    { role: 'assistant', content: "You are a language tutor bot that helps students helping them introduce themselves in French. You may ONLY respond in ACTFL Intermediate Low French." },
+    { role: 'assistant', content: "Tu t'appelles comment ?" },
+  ]);
   function conversation(speak : boolean) {
+    // Needs a timeout for speaking
     if (speaking.value == true && speak == false) {
       curlDeepInfra().then((result) => {
+        if (result == undefined) {
+          return;
+        }
         chatHistory.value.push({ role: 'user', content: `${result}` });
         infrence(chatHistory.value).then((tutorResponse) => {
-          textToSpeech(`${tutorResponse}`, "fr-FR", "fr-FR-Standard-C", "LINEAR16", 1);
-          chatHistory.value.push({ role: 'ai', content: `${tutorResponse}` });
+          isAI.value = true;
+          textToSpeech(`${tutorResponse}`, "fr-FR", "fr-FR-Standard-C", "LINEAR16", 1).then((error) => {
+            isAI.value = false;
+            if (error != "200") {
+              console.error(error);
+              // Could add an error message here
+            } else{
+              chatHistory.value.push({ role: 'assistant', content: `${tutorResponse}` });
+            }
+          });
         });
       });
     }

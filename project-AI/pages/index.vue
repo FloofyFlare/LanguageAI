@@ -3,24 +3,26 @@
     <div class="lg:flex flex-col">
       <div class="lg:flex lg:justify-center items-center lg:items-start">
         <section class=" flex lg:flex-1 flex-col text-left justify-left lg:items-left mt-16 lg:mt-32 lg:ml-32 m-2">
-          <div class="text-left justify-left">
-            <p class="text-4xl md:4xl lg:text-7xl font-bold text-pretty" font-family="arial">
-              World Language
-            </p>
-          </div>
-          <div class="text-left justify-left mt-4">
-            <p class="text-3xl md:4xl text-nowrap lg:text-7xl lg:mr-0 font-bold text-primary">
-              Beyond the Classroom
-            </p>
-          </div>
-          <div class=" mt-4 text-left">
-            <p class="text-lg lg:text-2xl text-balance">
-              The language tool that gets students <span class="text-primary font-bold">speaking</span> outside the classroom
-            </p>
-          </div>
+          <main>
+            <div class="text-left justify-left">
+              <p class="text-4xl md:4xl lg:text-7xl font-bold text-pretty" font-family="arial">
+                World Language
+              </p>
+            </div>
+            <div class="text-left justify-left mt-4">
+              <p class="text-3xl md:4xl text-nowrap lg:text-7xl lg:mr-0 font-bold text-primary">
+                Beyond the Classroom
+              </p>
+            </div>
+            <div class=" mt-4 text-left">
+              <p class="text-lg lg:text-2xl text-balance">
+                The language tool that gets students <span class="text-primary font-bold">speaking</span> outside the classroom
+              </p>
+            </div>
+          </main>
           <div class="hidden lg:block flex text-left justify-start items-center mt-12">
             <button>
-              <Waitlist></Waitlist>
+              <ClientOnly><Waitlist></Waitlist></ClientOnly>
             </button>
           </div>
           <div class="lg:hidden flex text-left justify-center items-center mt-8 md:m-20">
@@ -45,7 +47,7 @@
           </div>
           <div id="waitlist" class="block sm:hidden flex text-left justify-center sm:justify-start items-center mt-12 mb-4 sm:mb-0">
             <button class="flex justify-center">
-              <Waitlist></Waitlist>
+              <ClientOnly><Waitlist></Waitlist></ClientOnly>
             </button>
           </div>
         </section>

@@ -43,6 +43,10 @@ export function getUserMedia() {
             mediaRecorder.start();
             console.log(mediaRecorder.state);
         })
+        stop.addEventListener('mouseout', (ev)=>{
+            mediaRecorder.stop();
+            console.log(mediaRecorder.state);
+        })
         stop.addEventListener('mouseup', (ev)=>{
             mediaRecorder.stop();
             console.log(mediaRecorder.state);
@@ -86,10 +90,10 @@ export async function textToSpeech(text, languageCode, voiceName, audioEncoding,
 
     const body = {
         "input": {
-            "text": `${text}`,
+            "text": text,
         },
         "voice": {
-            "languageCode": `${languageCode}`,
+            "languageCode": languageCode,
             "name": voiceName,
         },
         "audioConfig": {

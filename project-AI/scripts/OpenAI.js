@@ -2,7 +2,7 @@ import OpenAI from "openai";
 
 const stream = false; // or true
 
-export async function infrence(){
+export async function infrence(chatHistory){
   const runtimeConfig = useRuntimeConfig()
   
   const openai = new OpenAI({
@@ -12,9 +12,7 @@ export async function infrence(){
   });
 
   const completion = await openai.chat.completions.create({
-    messages: [
-      {role: "user", content: "Hello!"},
-    ],
+    messages: chatHistory,
     model: "meta-llama/Meta-Llama-3.1-8B-Instruct",
     stream: stream,
     max_new_tokens: 200,

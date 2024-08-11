@@ -58,7 +58,7 @@
             <div class="chat-header">
               {{role}}
             </div>
-            <div class="chat-bubble chat_enter text-xl">{{content}}</div>
+            <div class="chat-bubble shadow-xl chat_enter text-xl">{{content}}</div>
           </div>
         </div>
       </div>
@@ -105,7 +105,7 @@
   }
   
   function chatSide(params:string) {
-    if (params == 'assistant') {
+    if (params == 'user') {
       return 'chat-end';
     } else {
       return 'chat-start';

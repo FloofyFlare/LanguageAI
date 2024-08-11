@@ -7,6 +7,7 @@ export async function curlDeepInfra() {
     while (!hasSpoken) {
         await new Promise(resolve => setTimeout(resolve, 100));
     }
+    console.log(DEEPINFRA_API_KEY);
     const blob = newVoice;
     const formData = new FormData();
     formData.append('audio', blob, 'voiceOut.webm');
@@ -101,31 +102,38 @@ export async function textToSpeech(text, languageCode, voiceName, audioEncoding,
             "speakingRate": rateOfSpeech
         }
     };
+
     const audioContext = new window.AudioContext();
     const response = await fetch("https://texttospeech.googleapis.com/v1/text:synthesize", {
         method: "POST",
         headers: headers,
         body: JSON.stringify(body)
     }).then(response => response.json())
-        .then(data => {
-        const { audioContent } = data;
+        .then(async data => {
+            const { audioContent } = data;
 
-        // Decode base64 audio data (assuming it's base64 encoded)
-        const binaryString = atob(audioContent);
-        const len = binaryString.length;
-        const bytes = new Uint8Array(len);
-        for (let i = 0; i < len; i++) {
-            bytes[i] = binaryString.charCodeAt(i);
-        }
+            // Decode base64 audio data (assuming it's base64 encoded)
+            const binaryString = atob(audioContent);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
 
-        audioContext.decodeAudioData(bytes.buffer, buffer => {
-            const source = audioContext.createBufferSource();
-            source.buffer = buffer;
-            source.connect(audioContext.destination);
-            source.start(0);
-        });
+            await new Promise((resolve) => {
+                audioContext.decodeAudioData(bytes.buffer, async (buffer) => {
+                    const source = audioContext.createBufferSource();
+                    source.buffer = buffer;
+                    source.connect(audioContext.destination);
+                    source.start(0);
+                    source.onended = () => {
+                        resolve();
+                    };
+                });
+            });
         })
-        .catch(error => console.error('Error processing audio context JSON:', error));
+        .catch(error => console.error('Error processing audio context JSON:', error).then(() => {return "404"}));
+    return "200";
 }
 
 

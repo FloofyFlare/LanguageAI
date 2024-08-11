@@ -10,7 +10,6 @@ export async function infrence(chatHistory){
     apiKey: `${runtimeConfig.public.deepInfra}`,
     "dangerouslyAllowBrowser": true,
   });
-
   const completion = await openai.chat.completions.create({
     messages: chatHistory,
     model: "meta-llama/Meta-Llama-3.1-8B-Instruct",

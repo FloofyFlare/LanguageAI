@@ -172,5 +172,18 @@
   </section>
 </template>
 <script setup lang="ts">
-
+  useHead({
+  title: 'Yuuera |  World Language Beyond the Classroom  !',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'The language tool that gets students speaking outside the classroom.',
+    },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+  ],
+  link: [
+    { hid: 'favicon', rel: 'icon', type: 'image/x-icon', href: 'favicon.ico' },
+  ],
+});
 </script>

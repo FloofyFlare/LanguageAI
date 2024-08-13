@@ -199,7 +199,7 @@ useHead({
 import { ref } from 'vue'
 import { useAuthStore } from '~/store/LoginStore'
 const store = useAuthStore()
-
+await navigateTo('/')
 if (process.client) {
   store.refreshAccessToken()
   if (store.accessToken != null) {

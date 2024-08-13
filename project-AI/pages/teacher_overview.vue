@@ -62,6 +62,7 @@
          </div>
       </div>
       <div class="w-full min-h-screen overflow-y-scroll border-l-2 h-full bg-base-100  pt-0 lg:p-10 border-gray-300">
+        <h1 class="font-bold text-2xl pr-4 w-36">Preview</h1>
         <div v-for="{ name, DaysComplete, id} in students" :key="id" class="card w-full mt-10 bg-base-100 hover:bg-neutral shadow-xl border-2 border-gray-300">
           <div class="card-body">
             <div class="flex w-full  ">

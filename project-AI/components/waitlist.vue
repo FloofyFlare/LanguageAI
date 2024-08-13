@@ -22,7 +22,6 @@
           <button
             type="submit"
             class="btn button no-animation bg-primary"
-            @click="handleSubmit"
           >
             <p class="md:hidden text-accent">Join the beta!</p>
             <p class="hidden md:flex  text-accent">Join the beta!</p>
@@ -62,24 +61,19 @@ function handleSubmit() {
 }
 
 async function handleSend() {
+  const supabase = useSupabaseClient()
   showButton.value = false
   showThanks.value = true
   console.log(signUpEmail.value)
 
-  const data = { email: signUpEmail.value }
+  const emailProvided = { email: signUpEmail.value }
 
-  try {
-    // Change the URL to your production server
-    await fetch('https://api.yuuera.com/newsletter/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-  } catch (error) {
-    console.error(error)
-  }
+  const { data, error } = await supabase
+    .from('Email List')
+    .insert([
+      { email: emailProvided },
+    ])
+    .select()
 }
 
 const validateEmail = (email) => {

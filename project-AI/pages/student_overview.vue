@@ -7,6 +7,8 @@
       <div class="flex justify-center">
         <div class="w-1/2 overflow-y-scroll border-l-2 h-full bg-base-100 pt-0 p-10 border-gray-300">
           <div class="text-center h-1/3 mt-10 justify-right">
+            <div class="flex text-center align-left">
+            </div>
             <div class="flex gap-5 items-end justify-center flex-end">
               <p class="text-3xl font-bold">Timer:</p>
               <div>
@@ -36,6 +38,7 @@
               </div>
             </div>
           </div>
+          
           <div class="text-center h-1/3 justify-right">
             <p class="text-xl font-bold pb-2">Hold down to speak!</p>
             <button id="audio-Btn" class="btn btn-circle h-full p-4 mb-8 w-1/4 bg-info text-neutral shadow-2xl" @mousedown="conversation(true)" @mouseup="conversation(false)" @mouseout="conversation(false)">
@@ -43,8 +46,27 @@
               <NuxtImg v-else :src="'/images/mic.png'" class="w-20 h-20"></NuxtImg>
             </button>
           </div>
+          
         </div>
         <div class="w-1/2 m-4 mb-10 shadow-xl rounded-3xl shadow-amber-400 overflow-y-scroll border-l-2 h-full min-h-screen bg-base-100 pt-0 p-10 border-gray-300 bg-warning">
+          <div class="flex justify-center mb-4">
+            <h1 class="text-center text-3xl p-4">Lesson: Introduce Yourself </h1>
+            <div class="h-1/3 m-2">
+              <button class="btn btn-secondary ml-2 w-full" @click="initialChat()">
+                Reset Lesson
+              </button>
+              <div class="collapse shadow-lg h-1/3 m-2 w-full bg-base-200">
+              <input type="checkbox" />
+              <div class="collapse-title text-xl font-medium p-3">Word Bank</div>
+              <div class="collapse-content">
+                <p>hello : Bonjour</p>
+                <p>today : aujourd'hui</p>
+                <p>my name is : Je m'appelle</p>
+                <p>What is your name? : Comment vous appelez-vous?</p>
+              </div>
+            </div>
+            </div>
+          </div>
           <div v-for="{ role, content } in chatHistory.slice(1)" :class="`chat ${chatSide(role)}`">
             <div class="chat-image avatar">
               <div class="w-10 rounded-full">
@@ -117,6 +139,13 @@
     { role: 'assistant', content: "You are a language tutor bot that helps students helping them introduce themselves in French. You may ONLY respond in ACTFL Intermediate Low French." },
     { role: 'assistant', content: "Tu t'appelles comment ?" },
   ]);
+
+  function initialChat() {
+    chatHistory.value = [
+      { role: 'assistant', content: "You are a language tutor bot that helps students helping them introduce themselves in French. You may ONLY respond in ACTFL Intermediate Low French." },
+      { role: 'assistant', content: "Tu t'appelles comment ?" },
+    ]
+  }
   function conversation(speak : boolean) {
     // Needs a timeout for speaking
     if (speaking.value == true && speak == false) {

@@ -65,7 +65,7 @@ import { ref } from 'vue'
 
 const user = useSupabaseUser()
 if (user.value) {
-  location.replace('/student_overview');
+  navigateTo('/student_overview');
 }
 
 const signUpEmail = ref('')
@@ -82,7 +82,9 @@ const signInWithPassword = async () => {
   if (error) console.log(error)
   if (data) {
     console.log(data);
-    location.replace('/student_overview');
+    if (user.value) {
+      navigateTo('/student_overview');
+    }
   }
 }
 </script>

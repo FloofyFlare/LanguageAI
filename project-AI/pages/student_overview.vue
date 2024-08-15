@@ -23,16 +23,16 @@
                 </span>
                 seconds
               </div>
-              
-                <article class="clip">
-                <audio id="audio"></audio>
-                <audio id="audio-save"></audio>
-                </article>             
+              <p class="text-3xl font-bold text-primary">Unique words: {{ wordSet.size }}</p>
+              <article class="clip">
+              <audio id="audio"></audio>
+              <audio id="audio-save"></audio>
+              </article>      
             </div>
           </div>
           <div class="text-center h-1/3 mb-8 justify-right mt-24">
             <div class="avatar h-full w-full flex justify-center">
-              <div class="w-2/4 h-2/4 ">
+              <div class="w-2/4 min-w-80 h-2/4 ">
                 <div v-if="isAI" class="h-full w-full rounded-full bg-secondary p-2 shadow-2xl rounded-full border-8 border-gray-300 p-2 ai_animation_talking"></div>
                 <div v-else class="h-full w-full rounded-full bg-orange-500 p-2 shadow-2xl rounded-full border-8 border-gray-300 p-2 ai_animation"></div>
               </div>
@@ -41,8 +41,8 @@
           
           <div class="text-center h-1/3 justify-right">
             <p class="text-xl font-bold pb-2">Hold down to speak!</p>
-            <button id="audio-Btn" class="btn btn-circle h-full p-4 mb-8 w-1/4 bg-info text-neutral shadow-2xl" @mousedown="conversation(true)" @mouseup="conversation(false)" @mouseout="conversation(false)">
-              <span v-if="speaking" class="loading w-1/4 h-20 loading-bars bg-secondary loading-lg"></span>
+            <button id="audio-Btn" class="btn btn-circle h-full p-4 mb-8 w-1/4 min-w-48 bg-info text-neutral shadow-2xl" @mousedown="conversation(true)" @mouseup="conversation(false)" @mouseout="conversation(false)">
+              <span v-if="speaking" class="loading w-1/4  h-20 loading-bars bg-secondary loading-lg"></span>
               <NuxtImg v-else :src="'/images/mic.png'" class="w-20 h-20"></NuxtImg>
             </button>
           </div>
@@ -83,6 +83,29 @@
             <div class="chat-bubble shadow-xl chat_enter text-xl">{{content}}</div>
           </div>
         </div>
+        <div v-if="timeup" class="fixed top-0 left-0 z-10 w-full h-full bg-opacity-50 bg-black">
+          <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 card bg-base-100 w-96 shadow-xl">
+            <div class="card-body">
+              <div class="card-actions justify-end">
+                <button class="btn btn-square btn-sm" @click="timeup = false">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <p>Time is up! ("you can close this and continue in the demo")</p>
+            </div>
+          </div>
+        </div>
       </div>
     </body>
   </ClientOnly>
@@ -90,14 +113,15 @@
 
 <script setup lang="ts">
   import { ref, onMounted} from 'vue';
-  import { getUserMedia, curlDeepInfra, textToSpeech } from '../scripts/SpeechAPI.js';
+  import { getUserMedia, speachToText, textToSpeech } from '../scripts/SpeechAPI.js';
   import { infrence } from '../scripts/OpenAI.js';
 
+  const wordSet = ref(new Set<string>());
   const isAI = ref(false);
-  const order = 0;
   const minuets = ref(14);
   const seconds = ref(30);
   const speaking = ref(false);
+  const timeup = ref(true);
 
   function countdown() {
     if (seconds.value > 0) {
@@ -117,6 +141,7 @@
 
   function stopChat() {
     console.log('Time is up!');
+    timeup.value = true;
     // Add your code here
     // ...
     // ...
@@ -146,13 +171,19 @@
       { role: 'assistant', content: "Tu t'appelles comment ?" },
     ]
   }
+
   function conversation(speak : boolean) {
     // Needs a timeout for speaking
     if (speaking.value == true && speak == false) {
-      curlDeepInfra().then((result) => {
+      speachToText().then((result) => {
         if (result == undefined) {
           return;
         }
+        let wordArray = result.split(" ");
+        for (let i = 0; i < wordArray.length; i++) {
+          wordSet.value.add(wordArray[i]);
+        }
+        wordSet.value.add(result);
         chatHistory.value.push({ role: 'user', content: `${result}` });
         infrence(chatHistory.value).then((tutorResponse) => {
           isAI.value = true;

@@ -1,7 +1,7 @@
 
 let hasSpoken = false;
 let newVoice = null;
-export async function curlDeepInfra() {
+export async function speachToText() {
     const runtimeConfig = useRuntimeConfig()
     const DEEPINFRA_API_KEY = `${runtimeConfig.public.deepInfra}`;
     while (!hasSpoken) {

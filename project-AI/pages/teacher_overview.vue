@@ -41,12 +41,14 @@
                 <h2 class="font-bold text-2xl pr-4 pt-16">Class Topic</h2>
               </div>
               <select v-model="classTopic" class="select text-info text-lg select-secondary w-full max-w-xs">
-                  <option disabled selected>choose topic</option>
-                  <option value="0">Free Style</option>
-                  <option value="1">Classroom Chat</option>
-                  <option value="2">Introuductions</option>
-                  <option value="3">Tell me about yourself</option>
-                </select>
+                <option disabled selected>choose topic</option>
+                <option value="0">Free Style</option>
+                <option value="1">Classroom Chat</option>
+                <option value="2">Introuductions</option>
+                <option value="3">Tell me about yourself</option>
+              </select>
+              <h2 class="font-bold text-2xl pr-4 pt-16">Word Bank</h2>
+              <textarea v-model="words" class="textarea text-info text-lg h-full textarea-bordered resize-none" placeholder="Enter" style="resize: none;"></textarea>
               <div class="flex items-center justify-center">
                 <button type="submit" class="btn btn-primary w-1/3 text-base-100">Apply</button>
               </div>
@@ -61,13 +63,14 @@
           </div>
          </div>
       </div>
-      <div class="w-full min-h-screen overflow-y-scroll border-l-2 h-full bg-base-100  pt-0 lg:p-10 border-gray-300">
-        <h1 class="font-bold text-2xl pr-4 w-36">Preview</h1>
-        <div v-for="{ name, DaysComplete, id} in students" :key="id" class="card w-full mt-10 bg-base-100 hover:bg-neutral shadow-xl border-2 border-gray-300">
+      <div class="w-full min-h-screen overflow-y-scroll border-l-2 h-full bg-base-100  pt-0 xl:p-10 border-gray-300">
+        <h1 class="font-bold text-2xl pr-4 w-36 bg-secondary p-4  rounded-2xl text-base-100">Preview</h1>
+        <div v-for="{ name, DaysComplete, id, wordCount} in students" :key="id" class="card w-screen lg:w-full mt-10 bg-base-100 hover:bg-neutral shadow-xl border-2 border-gray-300">
           <div class="card-body">
-            <div class="flex w-full  ">
+            <div class="flex w-full">
                 <div class="flex items-center justify-center">
                   <h2 class="font-bold text-2xl pr-4 w-36">{{ name }}</h2>
+                  <h2 class="font-bold text-lg pr-4 ">Days Practiced:</h2>
                   <div class="flex items-center justify-center">
                     <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'Sa')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">S</h2>
                     <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'M')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">M</h2>
@@ -77,6 +80,7 @@
                     <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'F')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">F</h2>
                     <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'Su')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">S</h2>
                   </div>
+                  <h2 class="font-bold text-lg pl-4 ">Total Unique words: {{ wordCount }}</h2>
                 </div>
               </div>
           </div>
@@ -88,18 +92,20 @@
 <script setup lang="ts">
 
   import { ref } from 'vue';
-
+  
   const students = ref<Students[]>([]);
   const teacher = ref<Teacher>({} as Teacher);
   const time = ref('0');
   const difficulty = ref('0');
   const classTopic = ref('choose topic');
+  const words = ref('');
   const classCode = ref('123456');
   interface Students {
     id: number;
     name: string;
     DaysComplete: string;
     Teacher: number;
+    wordCount: number;
   }
   interface Teacher {
     id: number;
@@ -107,13 +113,14 @@
     Time: number;
     Difficulty: number;
     ClassTopic: String;
+    words: string;
   }
 
   testInput();
   function testInput() {
     students.value = [
-      { id: 0, name: 'David', DaysComplete: 'Su', Teacher: 0 },
-      { id: 1, name: 'Raymond', DaysComplete: 'Sa', Teacher: 0 },
+      { id: 0, name: 'David', DaysComplete: 'Sa, M, Tu', Teacher: 0, wordCount: 3743 },
+      { id: 1, name: 'Alisa', DaysComplete: 'Sa, M,', Teacher: 0, wordCount: 4978 },
     ];
 
     teacher.value = {
@@ -121,7 +128,8 @@
       name: 'some teacher',
       Time: 0,
       Difficulty: 0,
-      ClassTopic: 'General Conversation'
+      ClassTopic: 'General Conversation',
+      words: ""
     };
   }
 

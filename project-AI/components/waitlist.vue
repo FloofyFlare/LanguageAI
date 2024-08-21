@@ -1,7 +1,7 @@
 <template>
   <div class="bg-accent rounded-3xl pt-4 pb-4">
     <h1 v-show="showButton" class="text-primary font-bold text-2xl">
-      Stay Informed!
+      Try Today!
     </h1>
     <h2 v-show="showButton" class="w-full pr-12 pl-12 text-info">
       Provide your email and we'll get you started.
@@ -31,7 +31,7 @@
       <div v-show="showThanks" class="w-full flex justify-center">
         <div>
           <h1 class="text-primary font-bold text-xl">
-            Thank you for your interest 🎉
+            Thank you for your interest 🎉 You'll get a email with instructions to start as soon as possible (less than 24hrs).
           </h1>
           <h2 class="w-full pr-12 pl-12">
             Join our
@@ -40,7 +40,7 @@
               href="https://twitter.com/YuueraOfficial"
               >twitter</a
             >
-            for the latests updates and developments in Yuuera
+            Provide your email and we'll get you started.
           </h2>
         </div>
       </div>

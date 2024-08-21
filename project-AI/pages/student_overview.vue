@@ -116,12 +116,14 @@
   import { getUserMedia, speachToText, textToSpeech } from '../scripts/SpeechAPI.js';
   import { infrence } from '../scripts/OpenAI.js';
 
+  
+
   const wordSet = ref(new Set<string>());
   const isAI = ref(false);
   const minuets = ref(14);
   const seconds = ref(30);
   const speaking = ref(false);
-  const timeup = ref(true);
+  const timeup = ref(false);
 
   function countdown() {
     if (seconds.value > 0) {
@@ -131,6 +133,7 @@
       seconds.value = 59;
     }
     if (minuets.value === 0 && seconds.value === 0) {
+      console.log('Time is up!');
       stopChat();
       return;
     }
@@ -170,6 +173,16 @@
       { role: 'assistant', content: "You are a language tutor bot that helps students helping them introduce themselves in French. You may ONLY respond in ACTFL Intermediate Low French." },
       { role: 'assistant', content: "Tu t'appelles comment ?" },
     ]
+  }
+
+  
+  submit();
+  async function submit() {
+    const response = await $fetch('/api/OpenAI', {
+      method: 'post',
+      body: { chat: chatHistory.value }
+    })
+    console.log(response)
   }
 
   function conversation(speak : boolean) {

@@ -114,7 +114,6 @@
 <script setup lang="ts">
   import { ref, onMounted} from 'vue';
   import { getUserMedia, speachToText, textToSpeech } from '../scripts/SpeechAPI.js';
-  import { infrence } from '../scripts/OpenAI.js';
 
   
 
@@ -175,8 +174,6 @@
     ]
   }
 
-  
-  submit();
   async function submit() {
     const response = await $fetch('/api/OpenAI', {
       method: 'post',
@@ -198,7 +195,10 @@
         }
         wordSet.value.add(result);
         chatHistory.value.push({ role: 'user', content: `${result}` });
-        infrence(chatHistory.value).then((tutorResponse) => {
+        const infrence = $fetch('/api/OpenAI', {
+          method: 'post',
+          body: { chat: chatHistory.value }
+        }).then((tutorResponse) => {
           isAI.value = true;
           textToSpeech(`${tutorResponse}`, "fr-FR", "fr-FR-Standard-C", "LINEAR16", 1).then((error) => {
             isAI.value = false;

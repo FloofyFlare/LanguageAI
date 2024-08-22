@@ -1,31 +1,22 @@
 
 let hasSpoken = false;
 let newVoice = null;
+
 export async function speachToText() {
-    const runtimeConfig = useRuntimeConfig()
-    const DEEPINFRA_API_KEY = `${runtimeConfig.public.deepInfra}`;
     while (!hasSpoken) {
         await new Promise(resolve => setTimeout(resolve, 100));
     }
-    console.log(DEEPINFRA_API_KEY);
     const blob = newVoice;
     const formData = new FormData();
     formData.append('audio', blob, 'voiceOut.webm');
-
-    const response = await fetch('https://api.deepinfra.com/v1/inference/openai/whisper-large-v3', {
+    console.log(blob)
+    const response = await $fetch('/api/SpeechToTextAPI', {
         method: 'POST',
-        headers: {
-        'Authorization': `Bearer ${DEEPINFRA_API_KEY}`,
-        },
         body: formData,
     });
-
-    const data = await response.json();
-    console.log(data.text);
     hasSpoken = false;
-    return data.text;
+    return response;
 };
-
 export function getUserMedia() {
     navigator.mediaDevices.getUserMedia({audio: true, type: 'audio/webm'})
     .then(function(mediaStreamObj) {
@@ -79,36 +70,11 @@ export function getUserMedia() {
  * @param {Number} rateOfSpeech
  */
 export async function textToSpeech(text, languageCode, voiceName, audioEncoding, rateOfSpeech) {
-    const runtimeConfig = useRuntimeConfig()
-    const GOOGLE_API_KEY = `${runtimeConfig.public.google}`;
-    const projectId = "zeta-dock-430723-p9";
-
-    const headers = {
-        "Authorization": `Bearer ${GOOGLE_API_KEY}`,
-        "x-goog-user-project": projectId,
-        "Content-Type": "application/json; charset=utf-8"
-    };
-
-    const body = {
-        "input": {
-            "text": text,
-        },
-        "voice": {
-            "languageCode": languageCode,
-            "name": voiceName,
-        },
-        "audioConfig": {
-            "audioEncoding": audioEncoding,
-            "speakingRate": rateOfSpeech
-        }
-    };
-
     const audioContext = new window.AudioContext();
-    const response = await fetch("https://texttospeech.googleapis.com/v1/text:synthesize", {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(body)
-    }).then(response => response.json())
+    const response = await $fetch('/api/TextToSpeech', {
+        method: 'post',
+        body: { text, languageCode, voiceName, audioEncoding, rateOfSpeech }
+      }).then(response => response.json())
         .then(async data => {
             const { audioContent } = data;
 

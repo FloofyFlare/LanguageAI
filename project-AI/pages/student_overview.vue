@@ -186,6 +186,7 @@
     // Needs a timeout for speaking
     if (speaking.value == true && speak == false) {
       speachToText().then((result) => {
+        console.log(result)
         if (result == undefined) {
           return;
         }

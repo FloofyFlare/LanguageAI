@@ -10,7 +10,7 @@ interface ChatMessage {
 export default defineEventHandler(async (event) => {
   // Parse the request body as an object containing a 'chat' array
   const body = await readBody<{ chat: ChatMessage[] }>(event);
-
+    
   // Access the 'chat' array from the body
   const chatHistory = body.chat;
   console.log(chatHistory);

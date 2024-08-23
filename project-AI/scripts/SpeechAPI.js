@@ -9,7 +9,6 @@ export async function speachToText() {
     const blob = newVoice;
     const formData = new FormData();
     formData.append('audio', blob, 'voiceOut.webm');
-    console.log(blob)
     const response = await $fetch('/api/SpeechToTextAPI', {
         method: 'POST',
         body: formData,
@@ -72,12 +71,10 @@ export function getUserMedia() {
 export async function textToSpeech(text, languageCode, voiceName, audioEncoding, rateOfSpeech) {
     const audioContext = new window.AudioContext();
     const response = await $fetch('/api/TextToSpeech', {
-        method: 'post',
-        body: { text, languageCode, voiceName, audioEncoding, rateOfSpeech }
-      }).then(response => response.json())
-        .then(async data => {
+        method: 'POST',
+        body: JSON.stringify({ text, languageCode, voiceName, audioEncoding, rateOfSpeech }),
+      }).then(async data => {
             const { audioContent } = data;
-
             // Decode base64 audio data (assuming it's base64 encoded)
             const binaryString = atob(audioContent);
             const len = binaryString.length;

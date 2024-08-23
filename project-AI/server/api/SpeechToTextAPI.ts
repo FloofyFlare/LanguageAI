@@ -17,7 +17,6 @@ export default defineEventHandler(async (event) => {
         body: newformData,
     });
     const data = await response.json();
-    console.log(data.text);
     return data.text;
 });
 

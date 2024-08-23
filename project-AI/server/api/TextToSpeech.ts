@@ -37,6 +37,6 @@ export default defineEventHandler(async (event) => {
         headers: headers,
         body: JSON.stringify(body)
     });
-    console.log(response);
-    return response;
+    const data = await response.json();
+    return data;
 });

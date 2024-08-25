@@ -67,7 +67,7 @@
             </div>
             </div>
           </div>
-          <div v-for="{ role, content } in chatHistory.slice(1)" :class="`chat ${chatSide(role)}`">
+          <div v-for="{ role, content } in chatHistory.slice(2)" :class="`chat ${chatSide(role)}`">
             <div class="chat-image avatar">
               <div class="w-10 rounded-full">
                 <div v-if="role === 'ai'" class="h-full w-full rounded-full bg-orange-500 p-2"></div>
@@ -162,15 +162,116 @@
       return 'chat-start';
     }
   }
+  const language = "French";
+  const level = "ACTFL Novice Low French.";
+  const user_name = "Bob";
+  const user_language = "English";
+  const teacher_name = "Jane";
   const chatHistory = ref<ChatMessage[]>([
-    { role: 'assistant', content: "You are a language tutor bot that helps students helping them introduce themselves in French. You may ONLY respond in ACTFL Intermediate Low French." },
-    { role: 'assistant', content: "Tu t'appelles comment ?" },
+    {
+      role: 'assistant',
+      content: `You are a ${language} teacher named ${teacher_name}. 
+      You are on a 1-on-1 session with your student, ${user_name}. ${user_name}'s 
+      ${language} level is: ${level}.
+      Your task is to assist your student in advancing their ${language}.
+      * When the session begins, offer a suitable session for ${user_name}, unless
+      asked for something else.
+      * ${user_name}'s native language is ${user_language}. ${user_name} might 
+      address you in their own language when felt their ${language} is not well 
+      enough. When that happens, first translate their message to ${language}, 
+      and then reply.
+      * IMPORTANT: If your student makes any mistakes, be it typo or grammar, 
+      you MUST first correct your student and only then reply.
+      * You are only allowed to speak ${language}.`,
+    },
+    { role: 'user', content: `Help me introduce my self in French with repetitive introduction practice. You must respond in ACTFL Intermediate Low French. Example
+        tutor : Bonjour, comment ça va ?
+
+        student : Bonjour ! Ça va bien, merci. Et toi ?
+
+        tutor : Ça va bien, merci. Comment tu t'appelles ?
+
+        student : Je m'appelle [Nom]. Et toi ?
+
+        tutor : Moi, c’est [Nom]. Enchanté(e) de faire ta connaissance !
+
+        student : Enchanté(e) également ! Tu viens d'où ?
+
+        tutor : Je viens de [Ville/ Pays]. Et toi ?
+
+        student : Moi, je viens de [Ville/ Pays]. Qu'est-ce que tu fais dans la vie ?
+
+        tutor : Je suis [Profession/ Étudiant(e)], et toi ?
+
+        student : Je suis [Profession/ Étudiant(e)] aussi. Tu as des hobbies ou des intérêts particuliers ?
+
+        tutor : Oui, j'aime [Activité/Hobby]. Et toi ?
+
+        student : J'aime beaucoup [Activité/Hobby]. Peut-être qu’on pourrait faire ça ensemble un jour !
+
+        tutor : Avec plaisir ! Ça serait sympa.
+
+        student : Super, on reste en contact alors !
+
+        tutor : Oui, ça marche. À bientôt !
+
+        student : À bientôt !
+      ` },
+    { role: 'assistant', content: 'Bonjour, comment ça va ?' },
   ]);
 
   function initialChat() {
     chatHistory.value = [
-      { role: 'assistant', content: "You are a language tutor bot that helps students helping them introduce themselves in French. You may ONLY respond in ACTFL Intermediate Low French." },
-      { role: 'assistant', content: "Tu t'appelles comment ?" },
+      {
+        role: 'assistant',
+        content: `You are a ${language} teacher named ${teacher_name}. 
+        You are on a 1-on-1 session with your student, ${user_name}. ${user_name}'s 
+        ${language} level is: ${level}.
+        Your task is to assist your student in advancing their ${language}.
+        * When the session begins, offer a suitable session for ${user_name}, unless
+        asked for something else.
+        * ${user_name}'s native language is ${user_language}. ${user_name} might 
+        address you in their own language when felt their ${language} is not well 
+        enough. When that happens, first translate their message to ${language}, 
+        and then reply.
+        * IMPORTANT: If your student makes any mistakes, be it typo or grammar, 
+        you MUST first correct your student and only then reply.
+        * You are only allowed to speak ${language}.`,
+      },
+      { role: 'user', content: `Help me introduce my self in French with repetitive introduction practice. You must respond in ACTFL Intermediate Low French. Example
+        tutor : Bonjour, comment ça va ?
+
+        student : Bonjour ! Ça va bien, merci. Et toi ?
+
+        tutor : Ça va bien, merci. Comment tu t'appelles ?
+
+        student : Je m'appelle [Nom]. Et toi ?
+
+        tutor : Moi, c’est [Nom]. Enchanté(e) de faire ta connaissance !
+
+        student : Enchanté(e) également ! Tu viens d'où ?
+
+        tutor : Je viens de [Ville/ Pays]. Et toi ?
+
+        student : Moi, je viens de [Ville/ Pays]. Qu'est-ce que tu fais dans la vie ?
+
+        tutor : Je suis [Profession/ Étudiant(e)], et toi ?
+
+        student : Je suis [Profession/ Étudiant(e)] aussi. Tu as des hobbies ou des intérêts particuliers ?
+
+        tutor : Oui, j'aime [Activité/Hobby]. Et toi ?
+
+        student : J'aime beaucoup [Activité/Hobby]. Peut-être qu’on pourrait faire ça ensemble un jour !
+
+        tutor : Avec plaisir ! Ça serait sympa.
+
+        student : Super, on reste en contact alors !
+
+        tutor : Oui, ça marche. À bientôt !
+
+        student : À bientôt !
+      ` },
+      { role: 'assistant', content: "Bonjour, comment ça va ?" },
     ]
   }
 
@@ -195,16 +296,29 @@
           wordSet.value.add(wordArray[i]);
         }
         wordSet.value.add(result);
-        chatHistory.value.push({ role: 'user', content: `${result}` });
+        const chatHistoryPrep = JSON.parse(JSON.stringify(chatHistory.value));
+        chatHistoryPrep.push({ role: 'user', content: `
+          ${result} 
+          ---
+          IMPORTANT: 
+          * If I replied in ${language} and made any mistakes (grammar, typos, etc), 
+          you must correct me before replying
+          * You must keep the session flow, you're response cannot end the session. 
+          Try to avoid broad questions like "what would you like to do", and prefer 
+          to provide me with related questions and exercises. 
+          * You MUST reply in ${level}.`
+        });
+        chatHistory.value.push({ role: 'user', content: `${result}`});
         const infrence = $fetch('/api/OpenAI', {
           method: 'post',
-          body: { chat: chatHistory.value }
+          body: { chat: chatHistoryPrep }
         }).then((tutorResponse) => {
           isAI.value = true;
           textToSpeech(`${tutorResponse}`, "fr-FR", "fr-FR-Standard-C", "LINEAR16", 1).then((error) => {
             isAI.value = false;
             if (error != "200") {
               console.error(error);
+
               // Could add an error message here
             } else{
               chatHistory.value.push({ role: 'assistant', content: `${tutorResponse}` });

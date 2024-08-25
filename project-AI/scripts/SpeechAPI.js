@@ -1,4 +1,3 @@
-
 let hasSpoken = false;
 let newVoice = null;
 

@@ -43,7 +43,8 @@
                     />
                     <label class="label">
                       <NuxtLink
-                        href="Productpage"
+                        href="#"
+                        to="/"
                         class="label-text-alt link link-hover"
                         >Forgot password?</NuxtLink
                       >
@@ -72,6 +73,7 @@ const signUpEmail = ref('')
 const pass = ref('')
 const badInput = ref(false)
 const supabase = useSupabaseClient()
+supabase.auth.getUser();
 
 const signInWithPassword = async () => {
   

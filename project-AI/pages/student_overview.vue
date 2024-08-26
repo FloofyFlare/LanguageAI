@@ -115,8 +115,6 @@
   import { ref, onMounted} from 'vue';
   import { getUserMedia, speachToText, textToSpeech } from '../scripts/SpeechAPI.js';
 
-  
-
   const wordSet = ref(new Set<string>());
   const isAI = ref(false);
   const minuets = ref(14);

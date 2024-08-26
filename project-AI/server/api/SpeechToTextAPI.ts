@@ -8,6 +8,7 @@ export default defineEventHandler(async (event) => {
 
     const newformData = new FormData();
     newformData.append('audio', audioBlob, 'voiceIn.webm');
+    newformData.append('language', 'fr');
 
     const response = await fetch('https://api.deepinfra.com/v1/inference/openai/whisper-large-v3', {
         method: 'POST',

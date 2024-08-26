@@ -12,7 +12,6 @@ export default defineEventHandler(async (event) => {
     const runtimeConfig = useRuntimeConfig()
     const GOOGLE_API_KEY = `${runtimeConfig.google}`;
     console.log (GOOGLE_API_KEY);
-    const projectId = "zeta-dock-430723-p9";
 
     console.log("API Key:", GOOGLE_API_KEY);
     console.log("Text:", text);

@@ -16,7 +16,7 @@
               <div class="card shrink-0 w-full max-w-sm shadow-2xl border-2 border-primary bg-base-100">
                 <form class="card-body" @submit.prevent="signInWithPassword">
                   <span v-show="badInput" class="text-error"
-                    >Email and/or password is either missing or inccorect</span
+                    >Email and/or password is either missing or incorrect</span
                   >
                   <div class="form-control">
                     <label class="label">
@@ -81,7 +81,7 @@ const signInWithPassword = async () => {
     email: signUpEmail.value,
     password: pass.value,
   })
-  if (error) console.log(error)
+  if (error) console.log(error); badInput.value = true;
   if (data) {
     console.log(data);
     if (user.value) {

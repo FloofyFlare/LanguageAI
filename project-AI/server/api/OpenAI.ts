@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
 
   const assistantMessage = chatHistory.find(message => message.role === 'assistant');
   const assistantContent = assistantMessage.content;
-  const runtimeConfig = useRuntimeConfig()
+  const runtimeConfig = useRuntimeConfig(event);
   
   const openai = new OpenAI({
     baseURL: 'https://api.deepinfra.com/v1/openai',

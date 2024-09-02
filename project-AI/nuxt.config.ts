@@ -32,10 +32,5 @@ export default defineNuxtConfig({
     google: '',
     deepInfra: '',
     // Keys within public, will be also exposed to the client-side
-    public: {
-      google: '',
-      deepInfra: '',
-    }
   },
-  
 })

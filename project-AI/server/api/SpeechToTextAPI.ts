@@ -3,7 +3,7 @@ export default defineEventHandler(async (event) => {
     const audioFile = (await formData).get('audio');
     const audioBlob = new Blob([audioFile], { type: 'audio/webm' }); // Adjust type if necessary
 
-    const runtimeConfig = useRuntimeConfig()
+    const runtimeConfig = useRuntimeConfig(event);
     const DEEPINFRA_API_KEY = `${runtimeConfig.deepInfra}`;
 
     const newformData = new FormData();

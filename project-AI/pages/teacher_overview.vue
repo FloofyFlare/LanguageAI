@@ -18,8 +18,6 @@
                   <option value="1">10 min</option>
                   <option value="2">15 min</option>
                   <option value="3">20 min</option>
-                  <option value="4">25 min</option>
-                  <option value="5">30 min</option>
                 </select>
               </div>
               <div class="flex w-full p-2">
@@ -28,12 +26,12 @@
                 </div>
                 <select v-model="difficulty" class="select text-info text-lg select-secondary w-full max-w-xs">
                   <option disabled selected>choose difficulty</option>
-                  <option value="0">Novice</option>
-                  <option value="1">Novice High</option>
+                  <!-- <option value="0">Novice</option>
+                  <option value="1">Novice High</option> -->
                   <option value="2">Intermediate</option>
-                  <option value="3">Intermediate High</option>
+                  <!-- <option value="3">Intermediate High</option>
                   <option value="4">Advanced Low</option>
-                  <option value="5">Advanced High</option>
+                  <option value="5">Advanced High</option> -->
                 </select>
               </div>
               
@@ -43,9 +41,9 @@
               <select v-model="classTopic" class="select text-info text-lg select-secondary w-full max-w-xs">
                 <option disabled selected>choose topic</option>
                 <option value="0">Free Style</option>
-                <option value="1">Classroom Chat</option>
+                <!-- <option value="1">Classroom Chat</option>
                 <option value="2">Introuductions</option>
-                <option value="3">Tell me about yourself</option>
+                <option value="3">Tell me about yourself</option> -->
               </select>
               <h2 class="font-bold text-2xl pr-4 pt-16">Word Bank</h2>
               <textarea v-model="words" class="textarea text-info text-lg h-full textarea-bordered resize-none" placeholder="Enter" style="resize: none;"></textarea>
@@ -64,7 +62,6 @@
          </div>
       </div>
       <div class="w-full min-h-screen overflow-y-scroll border-l-2 h-full bg-base-100  pt-0 xl:p-10 border-gray-300">
-        <h1 class="font-bold text-2xl pr-4 w-36 bg-secondary p-4  rounded-2xl text-base-100">Preview</h1>
         <div v-for="{ name, DaysComplete, id, wordCount} in students" :key="id" class="card w-screen lg:w-full mt-10 bg-base-100 hover:bg-neutral shadow-xl border-2 border-gray-300">
           <div class="card-body">
             <div class="flex w-full">
@@ -99,7 +96,7 @@
   const difficulty = ref('0');
   const classTopic = ref('choose topic');
   const words = ref('');
-  const classCode = ref('123456');
+  const classCode = ref('12345');
   interface Students {
     id: number;
     name: string;
@@ -117,7 +114,11 @@
   }
 
   testInput();
-  function testInput() {
+  async function testInput() {
+    const { data, error } = await supabase
+      .from('Classrooms')
+      .select('*')
+      .eq('classcode', classCode.value)
     students.value = [
       { id: 0, name: 'David', DaysComplete: 'Sa, M, Tu', Teacher: 0, wordCount: 3743 },
       { id: 1, name: 'Alisa', DaysComplete: 'Sa, M,', Teacher: 0, wordCount: 4978 },
@@ -141,5 +142,25 @@
     }
   }
 
-  function handleSubmit() {}
+  const supabase = useSupabaseClient()
+  const user = supabase.auth.getUser()
+
+  console.log(user);
+  
+  
+  
+
+  async function handleSubmit() {
+    const { data, error } = await supabase
+      .from('Classrooms')
+      .update(
+        { time: time.value ,
+         difficulty: difficulty.value ,
+         classtopic: classCode.value ,
+         wordbank: words.value }
+      )
+      .eq('classcode', classCode.value)
+      console.log(data);
+  }
+
 </script>

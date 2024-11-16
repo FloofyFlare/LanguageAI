@@ -50,19 +50,19 @@
         </div>
         <div class="w-1/2 m-4 mb-10 shadow-xl rounded-3xl shadow-amber-400 overflow-y-scroll border-l-2 h-full min-h-screen bg-base-100 pt-0 p-10 border-gray-300 bg-warning">
           <div class="flex justify-center mb-4">
-            <h1 class="text-center text-3xl p-4">Lesson: Introduce Yourself </h1>
+            <h1 class="text-center text-3xl p-4">{{ currtopic }}</h1>
             <div class="h-1/3 m-2">
               <button class="btn btn-secondary ml-2 w-full" @click="initialChat()">
                 Reset Lesson
               </button>
               <div class="collapse shadow-lg h-1/3 m-2 w-full bg-base-200">
               <input type="checkbox" />
-              <div class="collapse-title text-xl font-medium p-3">Word Bank</div>
-              <div class="collapse-content">
-                <p>hello : Bonjour</p>
-                <p>today : aujourd'hui</p>
-                <p>my name is : Je m'appelle</p>
-                <p>What is your name? : Comment vous appelez-vous?</p>
+              <div class="collapse-title text-xl font-medium p-3 flex"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg> <p class="pl-4">Word Bank </p>
+              </div>
+              <div class="collapse-content min-w-96">
+                {{ wordbank }}
               </div>
             </div>
             </div>
@@ -106,6 +106,18 @@
             </div>
           </div>
         </div>
+        <div v-if="lessonStart" class="fixed top-0 left-0 z-10 w-full h-full bg-opacity-50 bg-black">
+          <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 card bg-base-100 w-96 shadow-xl">
+            <div class="card-body">
+              <div class="card-actions justify-end">
+                <button class="btn btn-square btn-md" @click="lessonStart = false">
+                  Start!
+                </button>
+              </div>
+              <p>Ready to start todays lesson?</p>
+            </div>
+          </div>
+        </div>
       </div>
     </body>
   </ClientOnly>
@@ -117,22 +129,90 @@
 
   const wordSet = ref(new Set<string>());
   const isAI = ref(false);
-  const minuets = ref(14);
+  const minuets = ref(5);
   const seconds = ref(30);
   const speaking = ref(false);
   const timeup = ref(false);
+  const lessonStart = ref(true);
+
+  const time = ref('0');
+  const difficulty = ref('0');
+  //class is for the application curr is for the user
+  const classtopic = ref('0');
+  const currtopic = ref('Topic');
+  const wordbank = ref('');
+  const classcode = ref('');
+  const supabase = useSupabaseClient()
+  const user = supabase.auth.getUser()
+  //getting user ID
+  const userId = ref<string>('');
+  TeacherInput()
+  async function pullUserData() {
+    {
+      const { data, error } = await user;
+      if (error) {
+        console.log(error);
+      } else {
+        userId.value = data.user.id;
+      }
+      console.log(userId.value);
+    }
+    
+    const { data, error } = await supabase
+      .from('UserData')
+      .select('classcode')
+      .eq('User', userId.value) 
+      
+    if (data && data.length > 0) {
+      classcode.value = data[0].classcode;
+    }
+  }
+  
+
+  async function TeacherInput() {
+    await pullUserData();
+    const { data, error } = await supabase
+      .from('Classrooms')
+      .select('classcode, difficulty, wordbank, time, classtopic')
+      .eq('classcode', "" + classcode.value) 
+    console.log(data)
+    if (data && data.length > 0) {
+      time.value = data[0].time;
+      if (time.value == '0') {
+        minuets.value = 5;
+        seconds.value = 0;
+      } else if (time.value == '1') {
+        minuets.value = 10;
+        seconds.value = 0;
+      } else if (time.value == '2') {
+        minuets.value = 15;
+        seconds.value = 0;
+      } else if (time.value == '3') {
+        minuets.value = 20;
+        seconds.value = 0;
+      }
+      difficulty.value = data[0].difficulty;
+      wordbank.value = data[0].wordbank;
+      classtopic.value = data[0].classtopic;
+      if (classtopic.value == '0') {
+        currtopic.value = "Topic : Free Style";
+      } 
+    }
+  }
 
   function countdown() {
-    if (seconds.value > 0) {
-      seconds.value--;
-    } else if (minuets.value > 0 && seconds.value === 0) {
-      minuets.value--;
-      seconds.value = 59;
-    }
-    if (minuets.value === 0 && seconds.value === 0) {
-      console.log('Time is up!');
-      stopChat();
-      return;
+    if(!lessonStart){
+      if (seconds.value > 0) {
+        seconds.value--;
+      } else if (minuets.value > 0 && seconds.value === 0) {
+        minuets.value--;
+        seconds.value = 59;
+      }
+      if (minuets.value === 0 && seconds.value === 0) {
+        console.log('Time is up!');
+        stopChat();
+        return;
+      }
     }
     setTimeout(countdown, 1000);
   }

@@ -122,12 +122,15 @@
       .select('classcode, difficulty, wordbank, time, classtopic')
       .eq('teacher', "" + userId.value) 
     console.log(data)
+    
     if (data && data.length > 0) {
       time.value = data[0].time;
       classCode.value = data[0].classcode;
       difficulty.value = data[0].difficulty;
       wordbank.value = data[0].wordbank;
       classtopic.value = data[0].classtopic;
+    } else {
+      navigateTo('/student_overview');
     }
     studentInput();
   }

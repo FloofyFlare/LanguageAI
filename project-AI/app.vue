@@ -5,11 +5,11 @@
         <NuxtLink to="/" class="btn btn-ghost text-2xl text-primary">Yuuera</NuxtLink>
         <section class="flex w-full justify-end">
           <div class="hidden sm:flex w-full justify-end">
-            <!-- <div class="w-36 pr-2">
-              <NuxtLink v-if="loggedIn" to="/teacher_overview" class="btn btn-primary  rounded-full pr-4 pl-4 w-full text-lg leading-tight text-base-100">Teacher View</NuxtLink>            </div>
             <div class="w-36 pr-2">
-              <NuxtLink v-if="loggedIn" to="/student_overview" class="btn btn-primary  rounded-full pr-4 pl-4 w-full text-lg leading-tight text-base-100">Student View</NuxtLink>
-            </div> -->
+              <NuxtLink v-if="teacherbutton" to="/teacher_overview" class="btn btn-primary  rounded-full pr-4 pl-4 w-full text-lg leading-tight text-base-100">Teacher View</NuxtLink>            </div>
+            <div class="w-36 pr-2">
+              <NuxtLink v-if="teacherbutton" to="/student_overview" class="btn btn-secondary  rounded-full pr-4 pl-4 w-full text-lg leading-tight text-base-100">Student View</NuxtLink>
+            </div>
             <div class="mr-8 w-36">
               <NuxtLink v-if="!loggedIn" to="/login" class="btn btn-primary text-base-100 rounded-full pr-4 pl-4 w-full text-xl ">Login</NuxtLink>
               <button v-else @click="logout()" class="btn btn-base-100  rounded-full pr-4 pl-4 w-full text-xl">Log Out</button>
@@ -100,8 +100,36 @@
 
 <script setup lang="ts">
 const supabase = useSupabaseClient()
+const teacherbutton = ref(false);
+  const user = supabase.auth.getUser()
+  //getting user ID
+  const userId = ref<string>('');
+  TeacherInput()
+  async function pullUserData() {
+    const { data, error } = await user;
+    if (error) {
+      console.log(error);
+    } else {
+      userId.value = data.user.id;
+    }
+  }
+  
 
-
+  async function TeacherInput() {
+    await pullUserData();
+    const { data, error } = await supabase
+      .from('Classrooms')
+      .select('classcode, difficulty, wordbank, time, classtopic')
+      .eq('teacher', "" + userId.value) 
+    console.log(data)
+    
+    if (data && data.length > 0) {
+      teacherbutton.value = true;
+    } else {
+      teacherbutton.value = false;
+    }
+    studentInput();
+  }
 
 const loggedIn = ref(false)
 if (useSupabaseUser().value != null) {

@@ -128,7 +128,6 @@ const teacherbutton = ref(false);
     } else {
       teacherbutton.value = false;
     }
-    studentInput();
   }
 
 const loggedIn = ref(false)

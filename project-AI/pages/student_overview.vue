@@ -142,6 +142,7 @@
   const currtopic = ref('Topic');
   const wordbank = ref('');
   const classcode = ref('');
+  var dayscomplete;
   const supabase = useSupabaseClient()
   const user = supabase.auth.getUser()
   //getting user ID
@@ -160,10 +161,11 @@
     
     const { data, error } = await supabase
       .from('UserData')
-      .select('classcode')
+      .select('classcode, dayscomplete')
       .eq('User', userId.value) 
       
     if (data && data.length > 0) {
+      dayscomplete = data[0].dayscomplete;
       classcode.value = data[0].classcode;
     }
   }
@@ -200,7 +202,7 @@
     }
   }
 
-  function countdown() {
+  async function countdown() {
     if(!lessonStart){
       if (seconds.value > 0) {
         seconds.value--;
@@ -210,7 +212,21 @@
       }
       if (minuets.value === 0 && seconds.value === 0) {
         console.log('Time is up!');
+        const today = new Date();
+        const dayOfWeek = today.getDay();
+
+        // dayOfWeek will be a number from 0 (Sunday) to 6 (Saturday)
+
+        const days = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'];
         stopChat();
+
+        const { data, error } = await supabase
+        .from('UserData')
+        .update(
+          { dayscomplete: days[dayOfWeek] + " " + dayscomplete }
+        )
+        .eq('User', userId.value);
+        console.log(data);
         return;
       }
     }

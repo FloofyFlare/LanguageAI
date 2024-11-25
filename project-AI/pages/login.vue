@@ -64,15 +64,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const user = useSupabaseUser()
-if (user.value) {
-  navigateTo('/student_overview');
-}
 
+const user = useSupabaseUser()
+const supabase = useSupabaseClient()
+const usercheck = supabase.auth.getUser()
+const userId = ref<string>('');
+  //getting user ID
 const signUpEmail = ref('')
 const pass = ref('')
 const badInput = ref(false)
-const supabase = useSupabaseClient()
 supabase.auth.getUser();
 
 const signInWithPassword = async () => {
@@ -85,8 +85,34 @@ const signInWithPassword = async () => {
   if (data) {
     console.log(data);
     if (user.value) {
-      navigateTo('/student_overview');
+      reloadNuxtApp();
     }
+  }
+}
+
+TeacherInput()
+async function pullUserData() {
+  const { data, error } = await usercheck;
+  if (error) {
+    console.log(error);
+  } else {
+    userId.value = data.user.id;
+  }
+}
+  
+
+async function TeacherInput() {
+  await pullUserData();
+  const { data, error } = await supabase
+    .from('Classrooms')
+    .select('classcode, difficulty, wordbank, time, classtopic')
+    .eq('teacher', "" + userId.value) 
+  console.log(data)
+  
+  if (data && data.length > 0) {
+    navigateTo('/teacher_overview');
+  } else {
+    navigateTo('/student_overview');
   }
 }
 </script>

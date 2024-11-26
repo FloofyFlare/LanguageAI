@@ -121,7 +121,6 @@ const teacherbutton = ref(false);
       .from('Classrooms')
       .select('classcode, difficulty, wordbank, time, classtopic')
       .eq('teacher', "" + userId.value) 
-    console.log(data)
     
     if (data && data.length > 0) {
       teacherbutton.value = true;

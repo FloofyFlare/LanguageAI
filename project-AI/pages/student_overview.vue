@@ -110,7 +110,7 @@
           <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 card bg-base-100 w-96 shadow-xl">
             <div class="card-body">
               <div class="card-actions justify-end">
-                <button class="btn btn-square btn-md" @click="lessonStart = false">
+                <button class="btn btn-square btn-md" @click="startlesson()">
                   Start!
                 </button>
               </div>
@@ -147,6 +147,12 @@
   const user = supabase.auth.getUser()
   //getting user ID
   const userId = ref<string>('');
+
+  function startlesson() {
+    lessonStart.value = false;
+    countdown();
+    console.log("start timer");
+  }
   TeacherInput()
   async function pullUserData() {
     {
@@ -177,21 +183,20 @@
       .from('Classrooms')
       .select('classcode, difficulty, wordbank, time, classtopic')
       .eq('classcode', "" + classcode.value) 
-    console.log(data)
     if (data && data.length > 0) {
       time.value = data[0].time;
       if (time.value == '0') {
         minuets.value = 5;
-        seconds.value = 0;
+        seconds.value = 1;
       } else if (time.value == '1') {
         minuets.value = 10;
-        seconds.value = 0;
+        seconds.value = 1;
       } else if (time.value == '2') {
         minuets.value = 15;
-        seconds.value = 0;
+        seconds.value = 1;
       } else if (time.value == '3') {
         minuets.value = 20;
-        seconds.value = 0;
+        seconds.value = 1;
       }
       difficulty.value = data[0].difficulty;
       wordbank.value = data[0].wordbank;
@@ -203,37 +208,36 @@
   }
 
   async function countdown() {
-    if(!lessonStart){
-      if (seconds.value > 0) {
-        seconds.value--;
-      } else if (minuets.value > 0 && seconds.value === 0) {
-        minuets.value--;
-        seconds.value = 59;
-      }
-      if (minuets.value === 0 && seconds.value === 0) {
-        console.log('Time is up!');
-        const today = new Date();
-        const dayOfWeek = today.getDay();
+    console.log(seconds.value);
+    if (seconds.value > 0) {
+      seconds.value--;
+    } else if (minuets.value > 0 && seconds.value == 0) {
+      minuets.value--;
+      seconds.value = 59;
+    }
+    if (minuets.value === 0 && seconds.value === 0) {
+      console.log('Time is up!');
+      const today = new Date();
+      const dayOfWeek = today.getDay();
 
-        // dayOfWeek will be a number from 0 (Sunday) to 6 (Saturday)
+      // dayOfWeek will be a number from 0 (Sunday) to 6 (Saturday)
 
-        const days = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'];
-        stopChat();
+      const days = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'];
+      stopChat();
 
-        const { data, error } = await supabase
-        .from('UserData')
-        .update(
-          { dayscomplete: days[dayOfWeek] + " " + dayscomplete }
-        )
-        .eq('User', userId.value);
-        console.log(data);
-        return;
-      }
+      const { data, error } = await supabase
+      .from('UserData')
+      .update(
+        { dayscomplete: days[dayOfWeek] + " " + dayscomplete }
+      )
+      .eq('User', userId.value);
+      console.log(data);
+      return;
     }
     setTimeout(countdown, 1000);
   }
   
-  countdown();
+  
 
   function stopChat() {
     console.log('Time is up!');

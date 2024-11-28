@@ -142,7 +142,7 @@
   const currtopic = ref('Topic');
   const wordbank = ref('');
   const classcode = ref('');
-  var dayscomplete;
+  var dayscomplete: string;
   const supabase = useSupabaseClient()
   const user = supabase.auth.getUser()
   //getting user ID
@@ -167,13 +167,19 @@
     
     const { data, error } = await supabase
       .from('UserData')
-      .select('classcode, dayscomplete')
+      .select('classcode, dayscomplete, teacher')
       .eq('User', userId.value) 
       
     if (data && data.length > 0) {
       dayscomplete = data[0].dayscomplete;
       classcode.value = data[0].classcode;
+      const d = new Date();
+      const weekday = ["Su", "M", "Tu", "W", "Th", "F", "Sa"][d.getDay()];
+      if (dayscomplete.includes(weekday) && data[0].teacher) {
+        navigateTo('/student_dashboard');
+      }
     }
+    
   }
   
 
@@ -242,10 +248,8 @@
   function stopChat() {
     console.log('Time is up!');
     timeup.value = true;
-    // Add your code here
-    // ...
-    // ...
-    // ...
+    setTimeout(countdown, 2000);
+    navigateTo('/student_dashboard');
   }
   
   interface ChatMessage {

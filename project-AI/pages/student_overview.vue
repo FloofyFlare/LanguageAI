@@ -134,7 +134,7 @@
   const speaking = ref(false);
   const timeup = ref(false);
   const lessonStart = ref(true);
-
+  const user_name = ref('Bob');
   const time = ref('0');
   const difficulty = ref('0');
   //class is for the application curr is for the user
@@ -167,19 +167,20 @@
     
     const { data, error } = await supabase
       .from('UserData')
-      .select('classcode, dayscomplete, teacher')
+      .select('classcode, dayscomplete, teacher, name')
       .eq('User', userId.value) 
       
     if (data && data.length > 0) {
       dayscomplete = data[0].dayscomplete;
+      user_name.value = data[0].name;
       classcode.value = data[0].classcode;
+      console.log(data[0].teacher);
       const d = new Date();
       const weekday = ["Su", "M", "Tu", "W", "Th", "F", "Sa"][d.getDay()];
-      if (dayscomplete.includes(weekday) && data[0].teacher) {
+      if (dayscomplete.includes(weekday) && data[0].teacher == false) {
         navigateTo('/student_dashboard');
-      }
+      } 
     }
-    
   }
   
 
@@ -234,7 +235,9 @@
       const { data, error } = await supabase
       .from('UserData')
       .update(
-        { dayscomplete: days[dayOfWeek] + " " + dayscomplete }
+        { dayscomplete: days[dayOfWeek] + " " + dayscomplete,
+         uniquewords: wordSet.value.size,
+         }
       )
       .eq('User', userId.value);
       console.log(data);
@@ -266,7 +269,6 @@
   }
   const language = "French";
   const level = "ACTFL Novice Low French.";
-  const user_name = "Bob";
   const user_language = "English";
   const teacher_name = "Jane";
   const chatHistory = ref<ChatMessage[]>([

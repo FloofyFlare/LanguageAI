@@ -4,11 +4,13 @@
       <div class="flex w-full">
         <NuxtLink to="/" class="btn btn-ghost text-2xl text-primary">Yuuera</NuxtLink>
         <section class="flex w-full justify-end">
-          <div class="hidden sm:flex w-full justify-end">
+          <div class=" sm:flex w-full justify-end">
             <div class="w-36 pr-2">
-              <NuxtLink v-if="teacherbutton" to="/teacher_overview" class="btn btn-primary  rounded-full pr-4 pl-4 w-full text-lg leading-tight text-base-100">Teacher View</NuxtLink>            </div>
+              <NuxtLink v-if="loggedIn && !teacherbutton" to="/student_dashboard" class="btn btn-secondary  rounded-full pr-4 pl-4 w-full text-lg leading-tight text-base-100">Dashboard</NuxtLink>
+              <NuxtLink v-if="loggedIn && teacherbutton" to="/teacher_overview" class="btn btn-primary text-base-100 rounded-full pr-4 pl-4 w-full text-xl ">Dashboard</NuxtLink>
+            </div>
             <div class="w-36 pr-2">
-              <NuxtLink v-if="teacherbutton" to="/student_overview" class="btn btn-secondary  rounded-full pr-4 pl-4 w-full text-lg leading-tight text-base-100">Student View</NuxtLink>
+              <NuxtLink v-if="loggedIn && teacherbutton" to="/student_overview" class="btn btn-secondary  rounded-full pr-4 pl-4 w-full text-lg leading-tight text-base-100">Student View</NuxtLink>
             </div>
             <div class="mr-8 w-36">
               <NuxtLink v-if="!loggedIn" to="/login" class="btn btn-primary text-base-100 rounded-full pr-4 pl-4 w-full text-xl ">Login</NuxtLink>

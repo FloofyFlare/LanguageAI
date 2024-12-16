@@ -10,7 +10,7 @@
             <p class="text-4xl font-bold">Hello: {{ name }}</p>
           </div>
           <div class="card bg-base-100 m-4 p-4">
-            <p class="text-4xl font-bold">Current Word Count: {{ wordCount }}</p>
+            <p class="text-4xl font-bold">Today's Unique Word Count: {{ wordCount }}</p>
           </div>
           <div class="card bg-base-100 m-4 p-4">
             <p class="text-4xl font-bold">Days Completed: {{ dayscomplete }}</p>
@@ -27,7 +27,7 @@
             Lets Start Today's Lesson!
           </NuxtLink>
           <Button class="btn btn-primary mt-4 text-2xl" v-if="complete" :disabled="true">
-            <p class="text-info">Good Job! Lesson Complete!</p>
+            <p class="text-info">Good Job! Today's Lesson Complete!</p>
           </Button>
         </div>      
       </div>
@@ -85,7 +85,9 @@
         classCode.value = data[0].classcode;
       } else {
         navigateTo('/teacher_overview');
+        return;
       } 
+      
       complete.value = checkDay(dayscomplete.value);
       checkStudent();
   }

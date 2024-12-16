@@ -230,7 +230,7 @@
       // dayOfWeek will be a number from 0 (Sunday) to 6 (Saturday)
 
       const days = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'];
-      stopChat();
+      
 
       const { data, error } = await supabase
       .from('UserData')
@@ -241,6 +241,7 @@
       )
       .eq('User', userId.value);
       console.log(data);
+      stopChat();
       return;
     }
     setTimeout(countdown, 1000);
@@ -391,21 +392,24 @@
     // Needs a timeout for speaking
     if (speaking.value == true && speak == false) {
       speachToText().then((result) => {
-        console.log(result)
         if (result == undefined) {
           return;
         }
-        let wordArray = result.split(" ");
+        if (result === " Sous-titrage Société Radio-Canada") {
+          chatHistory.value.push({ role: 'assistant', content: "No speech detected. \n Please check if your mic is working and is allowed in your browser settings." });
+          return;
+        }
+        let wordArray = result.split(" ").slice(1);
+        
         for (let i = 0; i < wordArray.length; i++) {
           wordSet.value.add(wordArray[i]);
         }
-        wordSet.value.add(result);
         const chatHistoryPrep = JSON.parse(JSON.stringify(chatHistory.value));
         chatHistoryPrep.push({ role: 'user', content: `
           ${result} 
           ---
           IMPORTANT: 
-          * If I replied in ${language} and made any mistakes (grammar, typos, etc), 
+          * If I replied in ${language} and made any major mistakes (confusing or off topic responses), 
           you must correct me before replying
           * You must keep the session flow, you're response cannot end the session. 
           Try to avoid broad questions like "what would you like to do", and prefer 

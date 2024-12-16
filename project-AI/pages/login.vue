@@ -112,7 +112,7 @@ async function TeacherInput() {
   if (data && data.length > 0) {
     navigateTo('/teacher_overview');
   } else {
-    navigateTo('/student_overview');
+    navigateTo('/student_dashboard');
   }
 }
 </script>

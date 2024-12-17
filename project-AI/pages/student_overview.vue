@@ -3,7 +3,7 @@
     <h1 class="text-2xl font-bold text-center">Your window is too small. Please exstend the window or use a larger screen size.</h1>
   </div>
   <ClientOnly>
-    <body class="hidden sm:block bg-base-100">
+    <body class="hidden sm:block bg-base-100 ">
       <div class="flex justify-center">
         <div class="w-1/2 overflow-y-scroll border-l-2 h-full bg-base-100 pt-0 p-10 border-gray-300">
           <div class="text-center h-1/3 mt-10 justify-right">
@@ -48,41 +48,46 @@
           </div>
           
         </div>
-        <div class="w-1/2 m-4 mb-10 shadow-xl rounded-3xl shadow-amber-400 overflow-y-scroll border-l-2 h-full min-h-screen bg-base-100 pt-0 p-10 border-gray-300 bg-warning">
-          <div class="flex justify-center mb-4">
-            <h1 class="text-center text-3xl p-4">{{ currtopic }}</h1>
-            <div class="h-1/3 m-2">
-              <button class="btn btn-secondary ml-2 w-full" @click="initialChat()">
-                Reset Lesson
-              </button>
-              <div class="collapse shadow-lg h-1/3 m-2 w-full bg-base-200">
-              <input type="checkbox" />
-              <div class="collapse-title text-xl font-medium p-3 flex"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                </svg> <p class="pl-4">Word Bank </p>
+        <div class="w-1/2">
+          <div class=" m-4 mt-12 shadow-xl rounded-3xl shadow-amber-400 border-l-2 h-5/6 bg-base-100 pt-0 p-10 border-gray-300 bg-warning">
+            <div class="flex justify-center mb-4">
+              <h1 class="text-center text-3xl p-4">{{ currtopic }}</h1>
+              <div class="h-1/3 m-2">
+                <button class="btn btn-secondary ml-2 w-full" @click="initialChat(), resetTime()">
+                  Reset Lesson
+                </button>
+                <div class="collapse shadow-lg h-1/3 m-2 w-full bg-base-200">
+                <input type="checkbox" />
+                <div class="collapse-title text-xl font-medium p-3 flex"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                  </svg> <p class="pl-4">Word Bank </p>
+                </div>
+                <div class="collapse-content min-w-96">
+                  {{ wordbank }}
+                </div>
               </div>
-              <div class="collapse-content min-w-96">
-                {{ wordbank }}
-              </div>
-            </div>
-            </div>
-          </div>
-          <div v-for="{ role, content } in chatHistory.slice(2)" :class="`chat ${chatSide(role)}`">
-            <div class="chat-image avatar">
-              <div class="w-10 rounded-full">
-                <div v-if="role === 'ai'" class="h-full w-full rounded-full bg-orange-500 p-2"></div>
-                <img
-                  v-if="role !== 'ai'"
-                  alt="Tailwind CSS chat bubble component"
-                  src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/250px-Flag_of_France.svg.png" />
               </div>
             </div>
-            <div class="chat-header">
-              {{role}}
+            <div class="overflow-y-scroll max-h-full" style="max-height: 450px;" ref="scrollDiv" id="conversation">
+              <div  v-for="{ role, content } in chatHistory.slice(2)" :class="`chat ${chatSide(role)}`">
+                <div class="chat-image avatar">
+                  <div class="w-10 rounded-full">
+                    <div v-if="role === 'ai'" class="w-full rounded-full bg-orange-500 p-2"></div>
+                    <img
+                      v-if="role !== 'ai'"
+                      alt="Tailwind CSS chat bubble component"
+                      src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/250px-Flag_of_France.svg.png" />
+                  </div>
+                </div>
+                <div class="chat-header">
+                  {{role}}
+                </div>
+                <div class="chat-bubble shadow-xl chat_enter text-xl">{{content}}</div>
+              </div>
             </div>
-            <div class="chat-bubble shadow-xl chat_enter text-xl">{{content}}</div>
           </div>
         </div>
+        
         <div v-if="timeup" class="fixed top-0 left-0 z-10 w-full h-full bg-opacity-50 bg-black">
           <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 card bg-base-100 w-96 shadow-xl">
             <div class="card-body">
@@ -102,7 +107,7 @@
                   </svg>
                 </button>
               </div>
-              <p>Time is up! ("you can close this and continue in the demo")</p>
+              <p>Time is up! ("you can close this and continue in the preview")</p>
             </div>
           </div>
         </div>
@@ -124,9 +129,10 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted} from 'vue';
+  import { ref, onMounted, watch} from 'vue';
   import { getUserMedia, speachToText, textToSpeech } from '../scripts/SpeechAPI.js';
 
+  const scrollDiv = ref<HTMLElement | null>(null); 
   const wordSet = ref(new Set<string>());
   const isAI = ref(false);
   const minuets = ref(5);
@@ -147,6 +153,8 @@
   const user = supabase.auth.getUser()
   //getting user ID
   const userId = ref<string>('');
+
+  
 
   function startlesson() {
     lessonStart.value = false;
@@ -179,6 +187,7 @@
       const weekday = ["Su", "M", "Tu", "W", "Th", "F", "Sa"][d.getDay()];
       if (dayscomplete.includes(weekday) && data[0].teacher == false) {
         navigateTo('/student_dashboard');
+        return;
       } 
     }
   }
@@ -254,6 +263,7 @@
     timeup.value = true;
     setTimeout(countdown, 2000);
     navigateTo('/student_dashboard');
+    return;
   }
   
   interface ChatMessage {
@@ -269,7 +279,7 @@
     }
   }
   const language = "French";
-  const level = "ACTFL Novice Low French.";
+  const level = "Novice Low French (ACTFL).";
   const user_language = "English";
   const teacher_name = "Jane";
   const chatHistory = ref<ChatMessage[]>([
@@ -324,7 +334,11 @@
       ` },
     { role: 'assistant', content: 'Bonjour, comment ça va ?' },
   ]);
-
+  async function scrollToBottom() {
+    
+    scrollable.scrollTop = scrollable.scrollHeight - scrollable.clientHeight;
+  }
+  
   function initialChat() {
     chatHistory.value = [
       {
@@ -333,17 +347,15 @@
         You are on a 1-on-1 session with your student, ${user_name}. ${user_name}'s 
         ${language} level is: ${level}.
         Your task is to assist your student in advancing their ${language}.
-        * When the session begins, offer a suitable session for ${user_name}, unless
-        asked for something else.
         * ${user_name}'s native language is ${user_language}. ${user_name} might 
         address you in their own language when felt their ${language} is not well 
         enough. When that happens, first translate their message to ${language}, 
         and then reply.
-        * IMPORTANT: If your student makes any mistakes, be it typo or grammar, 
+        * IMPORTANT: If your student makes any mistakes (confusing or off topic responses), 
         you MUST first correct your student and only then reply.
         * You are only allowed to speak ${language}.`,
       },
-      { role: 'user', content: `Help me introduce my self in French with repetitive introduction practice. You must respond in ACTFL Intermediate Low French. Example
+      { role: 'user', content: `Help me introduce my self in French with repetitive introduction practice. You must respond in ACTFL Novice Low French. Example
         tutor : Bonjour, comment ça va ?
 
         student : Bonjour ! Ça va bien, merci. Et toi ?
@@ -387,6 +399,21 @@
     })
     console.log(response)
   }
+  function resetTime() {
+      if (time.value == '0') {
+        minuets.value = 5;
+        seconds.value = 1;
+      } else if (time.value == '1') {
+        minuets.value = 10;
+        seconds.value = 1;
+      } else if (time.value == '2') {
+        minuets.value = 15;
+        seconds.value = 1;
+      } else if (time.value == '3') {
+        minuets.value = 20;
+        seconds.value = 1;
+      }
+  }
 
   function conversation(speak : boolean) {
     // Needs a timeout for speaking
@@ -395,7 +422,7 @@
         if (result == undefined) {
           return;
         }
-        if (result === " Sous-titrage Société Radio-Canada") {
+        if (result === " Sous-titrage Société Radio-Canada" || result === "Sous-titrage Société Radio-Canada") {
           chatHistory.value.push({ role: 'assistant', content: "No speech detected. \n Please check if your mic is working and is allowed in your browser settings." });
           return;
         }
@@ -437,7 +464,13 @@
     }
     speaking.value = speak;
   }
-  
+  watch(chatHistory, () => {
+    nextTick(() => {
+      if (scrollDiv.value) {
+        scrollDiv.value.scrollTop = scrollDiv.value.scrollHeight;
+      }
+    });
+  }, { deep: true });
   onMounted(() => {
     getUserMedia();
     console.log('mounted');

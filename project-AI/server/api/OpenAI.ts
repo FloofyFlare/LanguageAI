@@ -36,7 +36,7 @@ export default defineEventHandler(async (event) => {
     messages: chatHistory,
     model: "meta-llama/Meta-Llama-3.1-8B-Instruct",
     stream: stream,
-    max_new_tokens: 200,
+    max_new_tokens: 150,
     usage: {prompt_tokens: 15, completion_tokens: 16, total_tokens: 31},
   });
 

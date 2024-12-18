@@ -80,7 +80,7 @@
                     <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(dayscomplete, 'F')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">F</h2>
                     <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(dayscomplete, 'Su')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">S</h2>
                   </div>
-                  <h2 class="font-bold text-lg pl-4 ">Total Unique words: {{ uniquewords }}</h2>
+                  <h2 class="font-bold text-lg pl-4 ">Lastest Assignment's Unique words: {{ uniquewords }}</h2>
                 </div>
               </div>
           </div>

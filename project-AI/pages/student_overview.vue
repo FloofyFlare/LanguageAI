@@ -41,7 +41,7 @@
           
           <div class="text-center h-1/3 justify-right">
             <p class="text-xl font-bold pb-2">Hold down to speak!</p>
-            <button id="audio-Btn" class="btn btn-circle h-full p-4 mb-8 w-1/4 min-w-48 bg-info text-neutral shadow-2xl" @mousedown="conversation(true)" @mouseup="conversation(false)" @mouseout="conversation(false)">
+            <button id="audio-Btn" :disabled="talking" class="btn btn-circle h-full p-4 mb-8 w-1/4 min-w-48 bg-info text-neutral shadow-2xl" @mousedown="conversation(true)" @mouseup="conversation(false)" @mouseout="conversation(false)">
               <span v-if="speaking" class="loading w-1/4  h-20 loading-bars bg-secondary loading-lg"></span>
               <NuxtImg v-else :src="'/images/mic.png'" class="w-20 h-20"></NuxtImg>
             </button>
@@ -137,6 +137,7 @@
   const isAI = ref(false);
   const minuets = ref(5);
   const seconds = ref(30);
+  const talking = ref(false);
   const speaking = ref(false);
   const timeup = ref(false);
   const lessonStart = ref(true);
@@ -159,7 +160,7 @@
   function startlesson() {
     lessonStart.value = false;
     countdown();
-    console.log("start timer");
+    
   }
   TeacherInput()
   async function pullUserData() {
@@ -224,7 +225,6 @@
   }
 
   async function countdown() {
-    console.log(seconds.value);
     if (seconds.value > 0) {
       seconds.value--;
     } else if (minuets.value > 0 && seconds.value == 0) {
@@ -244,12 +244,11 @@
       const { data, error } = await supabase
       .from('UserData')
       .update(
-        { dayscomplete: days[dayOfWeek] + " " + dayscomplete,
+        { dayscomplete:  dayscomplete + " " + days[dayOfWeek] ,
          uniquewords: wordSet.value.size,
          }
       )
       .eq('User', userId.value);
-      console.log(data);
       stopChat();
       return;
     }
@@ -419,6 +418,7 @@
     // Needs a timeout for speaking
     if (speaking.value == true && speak == false) {
       speachToText().then((result) => {
+        talking.value = true;
         if (result == undefined) {
           return;
         }
@@ -449,16 +449,19 @@
           body: { chat: chatHistoryPrep }
         }).then((tutorResponse) => {
           isAI.value = true;
+
           textToSpeech(`${tutorResponse}`, "fr-FR", "fr-FR-Standard-C", "LINEAR16", 1).then((error) => {
             isAI.value = false;
             if (error != "200") {
               console.error(error);
-
+              talking.value = false;
               // Could add an error message here
             } else{
               chatHistory.value.push({ role: 'assistant', content: `${tutorResponse}` });
+              talking.value = false;
             }
           });
+          
         });
       });
     }

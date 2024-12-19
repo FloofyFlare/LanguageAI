@@ -41,9 +41,9 @@
               </div>
               <select v-model="classtopic" class="select text-info text-lg select-secondary w-full max-w-xs">
                 <option disabled selected>choose topic</option>
-                <option value="0">Free Style</option>
+                <option value="0">Introductions</option>
                 <!-- <option value="1">Classroom Chat</option>words
-                <option value="2">Introuductions</option>
+                <option value="2">Free Style</option>
                 <option value="3">Tell me about yourself</option> -->
               </select>
               <div class="flex items-center justify-center">

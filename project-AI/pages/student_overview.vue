@@ -153,6 +153,7 @@
   const supabase = useSupabaseClient()
   const user = supabase.auth.getUser()
   //getting user ID
+  var isteacher = false;
   const userId = ref<string>('');
 
   
@@ -183,7 +184,7 @@
       dayscomplete = data[0].dayscomplete;
       user_name.value = data[0].name;
       classcode.value = data[0].classcode;
-      console.log(data[0].teacher);
+      isteacher = data[0].teacher;
       const d = new Date();
       const weekday = ["Su", "M", "Tu", "W", "Th", "F", "Sa"][d.getDay()];
       if (dayscomplete.includes(weekday) && data[0].teacher == false) {
@@ -260,8 +261,11 @@
   function stopChat() {
     console.log('Time is up!');
     timeup.value = true;
-    setTimeout(countdown, 2000);
+    if(isteacher) {
+      navigateTo('/teacher_overview');
+    }
     navigateTo('/student_dashboard');
+    
     return;
   }
   
@@ -438,6 +442,7 @@
           IMPORTANT: 
           * If I replied in ${language} and made any major mistakes (confusing or off topic responses), 
           you must correct me before replying
+          * Keep the response appropriate for a high school student. ABSOLUTLY NO  inappropriate content.
           * You must keep the session flow, you're response cannot end the session. 
           Try to avoid broad questions like "what would you like to do", and prefer 
           to provide me with related questions and exercises. 

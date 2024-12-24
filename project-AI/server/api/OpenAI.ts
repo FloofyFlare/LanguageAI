@@ -1,25 +1,28 @@
 
 import {getBearerTokenProvider, ClientSecretCredential } from "@azure/identity";
 import { AzureOpenAI } from "openai";
-const cred = new ClientSecretCredential(
-    "36a942fb-f7e8-4862-82e4-3c7f655d4d2c",
-    "cdeece57-68b3-4625-ba3e-d1e37f9f6d6c",
-    "46M8Q~RpT2Q2uX9PLMxf6xiB.SnHmLjEqB4rka5s"
-);
-const tokenProvider = getBearerTokenProvider(
-  cred,
-  "https://cognitiveservices.azure.com/.default"
-);
 
-interface ChatMessage {
-  role: string;
-  content: string;
-}
-const client = new AzureOpenAI(
-  "https://yuuera.openai.azure.com/",
-  { tokenProvider }
-);
 export default defineEventHandler(async (event) => {
+  const runtimeConfig = useRuntimeConfig(event);
+  const cred = new ClientSecretCredential(
+    `${runtimeConfig.azureClient}`,
+    `${runtimeConfig.azureTenant}`,
+    `${runtimeConfig.azureSecret}`
+  );
+  const tokenProvider = getBearerTokenProvider(
+    cred,
+    "https://cognitiveservices.azure.com/.default"
+  );
+
+  interface ChatMessage {
+    role: string;
+    content: string;
+  }
+  const client = new AzureOpenAI(
+    `${runtimeConfig.azureEndpoint}`,
+    { tokenProvider }
+  );
+
   // Parse the request body as an object containing a 'chat' array
   const body = await readBody<{ chat: ChatMessage[] }>(event);
 
@@ -37,7 +40,6 @@ export default defineEventHandler(async (event) => {
 
   const assistantMessage = chatHistory.find(message => message.role === 'assistant');
   const assistantContent = assistantMessage.content;
-  const runtimeConfig = useRuntimeConfig(event);
 
   const result = await client.chat.completions.create({
     model: 'gpt-4o-mini',

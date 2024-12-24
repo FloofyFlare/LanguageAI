@@ -107,7 +107,7 @@
                   </svg>
                 </button>
               </div>
-              <p>Time is up! ("you can close this and continue in the preview")</p>
+              <p>Time is up! ("This would be the end of the lesson, you can close this and continue in the preview")</p>
             </div>
           </div>
         </div>
@@ -262,7 +262,7 @@
     console.log('Time is up!');
     timeup.value = true;
     if(isteacher) {
-      navigateTo('/teacher_overview');
+      return;
     }
     navigateTo('/student_dashboard');
     

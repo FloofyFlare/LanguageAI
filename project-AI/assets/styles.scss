@@ -6,7 +6,31 @@ body {
 h1 {
   color: #333;
 }
-
+#policy {
+    * {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    h2 {
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+    p {
+        margin-bottom: 15px;
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        margin-bottom: 5px;
+    }
+}
 @keyframes grow_ai {
     from {
         transform: scale(0.7);

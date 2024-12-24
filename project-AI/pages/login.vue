@@ -45,7 +45,7 @@
                       <NuxtLink
                         href="#"
                         to="/"
-                        class="label-text-alt link link-hover"
+                        class="hidden label-text-alt link link-hover"
                         >Forgot password?</NuxtLink
                       >
                     </label>

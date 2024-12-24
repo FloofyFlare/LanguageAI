@@ -8,7 +8,7 @@
                 <h1 class="text-primary text-5xl font-bold">Login!</h1>
                 <p class="hidden text-primary">Or create an account</p>
                 <div class="hidden flex-col justify-center">
-                  <NuxtLink to="/signup" class="btn mt-8 btn-primary text-neutral"
+                  <NuxtLink to="/" class="btn mt-8 btn-primary text-neutral"
                     >Create an account?</NuxtLink
                   >
                 </div>

@@ -43,7 +43,6 @@
                     />
                     <label class="label">
                       <NuxtLink
-                        href="#"
                         to="/"
                         class="hidden label-text-alt link link-hover"
                         >Forgot password?</NuxtLink

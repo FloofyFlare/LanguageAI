@@ -14,15 +14,18 @@ export default defineEventHandler(async (event) => {
     cred,
     "https://cognitiveservices.azure.com/.default"
   );
-  console.log(tokenProvider);
-  console.log(endpointazure);
-  
+  if (tokenProvider === undefined) {
+    throw createError(500, 'tokenProvider is undefined');
+  }
+
+  if (endpointazure === undefined) {
+    throw createError(500, 'endpointazure is undefined');
+  }
   
   interface ChatMessage {
     role: string;
     content: string;
   }
-  console.log(endpointazure);
   const client = new AzureOpenAI(
     {
       tokenProvider,
@@ -30,13 +33,17 @@ export default defineEventHandler(async (event) => {
       endpoint: endpointazure,
     }
   );
-  console.log(client);
+  if (client === undefined) {
+    throw createError(500, 'client is undefined');
+  }
   // Parse the request body as an object containing a 'chat' array
   const body = await readBody<{ chat: ChatMessage[] }>(event);
 
   // Access the 'chat' array from the body
   const chatHistory = body.chat;
-  console.log(chatHistory);
+  if (chatHistory === undefined) {
+    throw createError(500, 'chat is undefined');
+  }
   // Check if chatMessages is an array
   if (Array.isArray(chatHistory)) {
     // Iterate over each ChatMessage object and print its content

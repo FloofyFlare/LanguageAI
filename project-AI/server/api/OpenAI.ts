@@ -4,6 +4,7 @@ import { AzureOpenAI } from "openai";
 
 export default defineEventHandler(async (event) => {
   const runtimeConfig = useRuntimeConfig(event);
+  const endpointazure = `${runtimeConfig.azureEndpoint}`;
   const cred = new ClientSecretCredential(
     `${runtimeConfig.azureClient}`,
     `${runtimeConfig.azureTenant}`,
@@ -13,18 +14,17 @@ export default defineEventHandler(async (event) => {
     cred,
     "https://cognitiveservices.azure.com/.default"
   );
-  throw createError({
-    statusCode: 500,
-    message: "Internal Server Error",
-  });
+
   interface ChatMessage {
     role: string;
     content: string;
   }
+  console.log(endpointazure);
   const client = new AzureOpenAI(
     {
       tokenProvider,
-      endpoint: `${runtimeConfig.azureEndpoint}`,
+      apiVersion: "2024-08-01-preview",
+      endpoint: endpointazure,
     }
   );
 

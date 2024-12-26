@@ -14,7 +14,6 @@ export default defineEventHandler(async (event) => {
     cred,
     "https://cognitiveservices.azure.com/.default"
   );
-  throw createError(500, 'point1');
   
   interface ChatMessage {
     role: string;

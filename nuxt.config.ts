@@ -25,16 +25,7 @@ export default defineNuxtConfig({
   css: [
     '@/assets/styles.scss'
   ],
-  nitro: {
-    azure: {
-      config: {
-        // ...
-        platform: {
-          apiRuntime: 'node:20.15.0'
-        }
-      }
-    }
-  }
+
   runtimeConfig: {
     // The private keys which are only available within server-side
     google: '',

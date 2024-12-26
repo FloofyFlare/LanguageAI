@@ -454,7 +454,7 @@
           body: { chat: chatHistoryPrep }
         }).then((tutorResponse) => {
           isAI.value = true;
-
+          console.log(tutorResponse);
           textToSpeech(`${tutorResponse}`, "fr-FR", "fr-FR-Standard-C", "LINEAR16", 1).then((error) => {
             isAI.value = false;
             if (error != "200") {
@@ -466,7 +466,6 @@
               talking.value = false;
             }
           });
-          
         });
       });
     }

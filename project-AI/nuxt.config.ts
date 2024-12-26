@@ -14,7 +14,7 @@ export default defineNuxtConfig({
       cookieRedirect: false,
     },
   },
-
+  debug: true,
   modules: [
     "@nuxtjs/tailwindcss",
     "@nuxt/image",

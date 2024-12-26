@@ -19,7 +19,6 @@ export default defineEventHandler(async (event) => {
     content: string;
   }
   const client = new AzureOpenAI(
-    `${runtimeConfig.azureEndpoint}`,
     { tokenProvider }
   );
 

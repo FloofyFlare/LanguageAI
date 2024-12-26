@@ -14,13 +14,7 @@ export default defineEventHandler(async (event) => {
     cred,
     "https://cognitiveservices.azure.com/.default"
   );
-  if (tokenProvider === undefined) {
-    throw createError(500, 'tokenProvider is undefined');
-  }
-
-  if (endpointazure === undefined) {
-    throw createError(500, 'endpointazure is undefined');
-  }
+  throw createError(500, 'point1');
   
   interface ChatMessage {
     role: string;

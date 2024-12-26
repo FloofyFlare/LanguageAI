@@ -14,7 +14,10 @@ export default defineEventHandler(async (event) => {
     cred,
     "https://cognitiveservices.azure.com/.default"
   );
-
+  console.log(tokenProvider);
+  console.log(endpointazure);
+  
+  
   interface ChatMessage {
     role: string;
     content: string;
@@ -27,12 +30,13 @@ export default defineEventHandler(async (event) => {
       endpoint: endpointazure,
     }
   );
-
+  console.log(client);
   // Parse the request body as an object containing a 'chat' array
   const body = await readBody<{ chat: ChatMessage[] }>(event);
 
   // Access the 'chat' array from the body
   const chatHistory = body.chat;
+  console.log(chatHistory);
   // Check if chatMessages is an array
   if (Array.isArray(chatHistory)) {
     // Iterate over each ChatMessage object and print its content

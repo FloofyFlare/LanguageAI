@@ -13,13 +13,19 @@ export default defineEventHandler(async (event) => {
     cred,
     "https://cognitiveservices.azure.com/.default"
   );
-
+  throw createError({
+    statusCode: 500,
+    message: "Internal Server Error",
+  });
   interface ChatMessage {
     role: string;
     content: string;
   }
   const client = new AzureOpenAI(
-    { tokenProvider }
+    {
+      tokenProvider,
+      endpoint: `${runtimeConfig.azureEndpoint}`,
+    }
   );
 
   // Parse the request body as an object containing a 'chat' array

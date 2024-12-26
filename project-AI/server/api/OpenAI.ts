@@ -43,9 +43,6 @@ export default defineEventHandler(async (event) => {
     return { error: 'Invalid chat format' };
   }
 
-  const assistantMessage = chatHistory.find(message => message.role === 'assistant');
-  const assistantContent = assistantMessage.content;
-
   const result = await client.chat.completions.create({
     model: 'gpt-4o-mini',
     messages: chatHistory,

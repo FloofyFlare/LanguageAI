@@ -394,14 +394,6 @@
       { role: 'assistant', content: "Bonjour, comment ça va ?" },
     ]
   }
-
-  async function submit() {
-    const response = await $fetch('/api/OpenAI', {
-      method: 'post',
-      body: { chat: chatHistory.value }
-    })
-    console.log(response)
-  }
   function resetTime() {
       if (time.value == '0') {
         minuets.value = 5;
@@ -454,7 +446,6 @@
           body: { chat: chatHistoryPrep }
         }).then((tutorResponse) => {
           isAI.value = true;
-          console.log(tutorResponse);
           textToSpeech(`${tutorResponse}`, "fr-FR", "fr-FR-Standard-C", "LINEAR16", 1).then((error) => {
             isAI.value = false;
             if (error != "200") {

@@ -5,6 +5,7 @@ import { AzureOpenAI } from "openai";
 export default defineEventHandler(async (event) => {
   const runtimeConfig = useRuntimeConfig(event);
   const endpointazure = `${runtimeConfig.azureEndpoint}`;
+  const keyazure = `${runtimeConfig.azureKey}`;
   const cred = new ClientSecretCredential(
     `${runtimeConfig.azureClient}`,
     `${runtimeConfig.azureTenant}`,
@@ -24,6 +25,7 @@ export default defineEventHandler(async (event) => {
       tokenProvider,
       apiVersion: "2024-08-01-preview",
       endpoint: endpointazure,
+      apiKey: keyazure,
     }
   );
   if (client === undefined) {

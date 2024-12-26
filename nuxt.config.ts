@@ -34,6 +34,7 @@ export default defineNuxtConfig({
     azureClient: '',
     azureTenant: '',
     azureSecret: '',
+    azureKey: '',
     // Keys within public, will be also exposed to the client-side
   },
 })

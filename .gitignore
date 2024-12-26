@@ -1,37 +1,25 @@
-# Ignore node_modules directory
-node_modules/
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
 
-# Ignore build output directory
-dist/
+# Node dependencies
+node_modules
 
-# Ignore environment variables
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Local env files
 .env
 .env.*
-
-yarn.lock
-
-# Ignore editor-specific files
-.vscode/
-.idea/
-*.sublime-project
-*.sublime-workspace
-*.tmproj
-*.tmproj.loc
-*.code-workspace
-
-# Ignore other common files
-*.log
-*.key
-*.pem
-*.p12
-*.crt
-*.csr
-*.srl
-*.der
-*.jks
-*.pkcs12
-*.pem
-*.p7b
-*.p8
-*.p12.txt
-*.pem.txt
+!.env.example
+node_modules

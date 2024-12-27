@@ -5,6 +5,7 @@ import { AzureOpenAI } from "openai";
 export default defineEventHandler(async (event) => {
   const runtimeConfig = useRuntimeConfig(event);
   const endpointazure = `${runtimeConfig.azureEndpoint}`;
+  const keyazure = `${runtimeConfig.azureKey}`;
   const cred = new ClientSecretCredential(
     `${runtimeConfig.azureClient}`,
     `${runtimeConfig.azureTenant}`,
@@ -14,7 +15,6 @@ export default defineEventHandler(async (event) => {
     cred,
     "https://cognitiveservices.azure.com/.default"
   );
-  throw createError(500, 'point1');
   
   interface ChatMessage {
     role: string;
@@ -25,6 +25,7 @@ export default defineEventHandler(async (event) => {
       tokenProvider,
       apiVersion: "2024-08-01-preview",
       endpoint: endpointazure,
+      apiKey: keyazure,
     }
   );
   if (client === undefined) {

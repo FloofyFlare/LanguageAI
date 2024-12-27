@@ -160,7 +160,7 @@
     <div class="text-center bg-accent rounded-3xl mt-56">
       <div class="flex text-center justify-center text-balance">
       <p class="font-bold text-2xl text-balance mt-12">
-        Teach the Next Generation of <p class="text-primary">Confident</p> 2nd language Speakers
+        Teach the Next Generation of <span class="text-primary">Confident</span> 2nd language Speakers
       </p>
     </div>
       <div class="text-left justify-left lg:justify-center lg:items-center mt-12 ml-24 lg:ml-96">

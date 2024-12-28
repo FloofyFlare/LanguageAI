@@ -8,7 +8,7 @@
                 <h1 class="text-primary text-5xl font-bold">Login!</h1>
                 <p class="hidden text-primary">Or create an account</p>
                 <div class="hidden flex-col justify-center">
-                  <NuxtLink to="/signup" class="btn mt-8 btn-primary text-neutral"
+                  <NuxtLink to="/" class="btn mt-8 btn-primary text-neutral"
                     >Create an account?</NuxtLink
                   >
                 </div>
@@ -43,9 +43,8 @@
                     />
                     <label class="label">
                       <NuxtLink
-                        href="#"
                         to="/"
-                        class="label-text-alt link link-hover"
+                        class="hidden label-text-alt link link-hover"
                         >Forgot password?</NuxtLink
                       >
                     </label>
@@ -64,15 +63,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const user = useSupabaseUser()
-if (user.value) {
-  navigateTo('/student_overview');
-}
 
+const user = useSupabaseUser()
+const supabase = useSupabaseClient()
+const usercheck = supabase.auth.getUser()
+const userId = ref<string>('');
+  //getting user ID
 const signUpEmail = ref('')
 const pass = ref('')
 const badInput = ref(false)
-const supabase = useSupabaseClient()
 supabase.auth.getUser();
 
 const signInWithPassword = async () => {
@@ -85,8 +84,34 @@ const signInWithPassword = async () => {
   if (data) {
     console.log(data);
     if (user.value) {
-      navigateTo('/student_overview');
+      reloadNuxtApp();
     }
+  }
+}
+
+TeacherInput()
+async function pullUserData() {
+  const { data, error } = await usercheck;
+  if (error) {
+    console.log(error);
+  } else {
+    userId.value = data.user.id;
+  }
+}
+  
+
+async function TeacherInput() {
+  await pullUserData();
+  const { data, error } = await supabase
+    .from('Classrooms')
+    .select('classcode, difficulty, wordbank, time, classtopic')
+    .eq('teacher', "" + userId.value) 
+  console.log(data)
+  
+  if (data && data.length > 0) {
+    navigateTo('/teacher_overview');
+  } else {
+    navigateTo('/student_dashboard');
   }
 }
 </script>

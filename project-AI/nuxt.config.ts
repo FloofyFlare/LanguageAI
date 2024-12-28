@@ -10,11 +10,10 @@ export default defineNuxtConfig({
       login: '/login',
       callback: '/confirm',
       include: undefined,
-      exclude: ['/'],
+      exclude: ['/', '/privacy'],
       cookieRedirect: false,
     },
   },
-
   modules: [
     "@nuxtjs/tailwindcss",
     "@nuxt/image",
@@ -31,6 +30,11 @@ export default defineNuxtConfig({
     // The private keys which are only available within server-side
     google: '',
     deepInfra: '',
+    azureEndpoint: '',
+    azureClient: '',
+    azureTenant: '',
+    azureSecret: '',
+    azureKey: '',
     // Keys within public, will be also exposed to the client-side
   },
 })

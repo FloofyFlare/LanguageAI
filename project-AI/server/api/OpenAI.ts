@@ -1,18 +1,44 @@
-import OpenAI from "openai";
 
-const stream = false; // or true
-
-interface ChatMessage {
-  role: string;
-  content: string;
-}
+import {getBearerTokenProvider, ClientSecretCredential } from "@azure/identity";
+import { AzureOpenAI } from "openai";
 
 export default defineEventHandler(async (event) => {
+  const runtimeConfig = useRuntimeConfig(event);
+  const endpointazure = `${runtimeConfig.azureEndpoint}`;
+  const keyazure = `${runtimeConfig.azureKey}`;
+  const cred = new ClientSecretCredential(
+    `${runtimeConfig.azureClient}`,
+    `${runtimeConfig.azureTenant}`,
+    `${runtimeConfig.azureSecret}`
+  );
+  const tokenProvider = getBearerTokenProvider(
+    cred,
+    "https://cognitiveservices.azure.com/.default"
+  );
+  
+  interface ChatMessage {
+    role: string;
+    content: string;
+  }
+  const client = new AzureOpenAI(
+    {
+      tokenProvider,
+      apiVersion: "2024-08-01-preview",
+      endpoint: endpointazure,
+      apiKey: keyazure,
+    }
+  );
+  if (client === undefined) {
+    throw createError(500, 'client is undefined');
+  }
   // Parse the request body as an object containing a 'chat' array
   const body = await readBody<{ chat: ChatMessage[] }>(event);
 
   // Access the 'chat' array from the body
   const chatHistory = body.chat;
+  if (chatHistory === undefined) {
+    throw createError(500, 'chat is undefined');
+  }
   // Check if chatMessages is an array
   if (Array.isArray(chatHistory)) {
     // Iterate over each ChatMessage object and print its content
@@ -23,25 +49,15 @@ export default defineEventHandler(async (event) => {
     return { error: 'Invalid chat format' };
   }
 
-  const assistantMessage = chatHistory.find(message => message.role === 'assistant');
-  const assistantContent = assistantMessage.content;
-  const runtimeConfig = useRuntimeConfig(event);
-  
-  const openai = new OpenAI({
-    baseURL: 'https://api.deepinfra.com/v1/openai',
-    apiKey: `${runtimeConfig.deepInfra}`,
-    "dangerouslyAllowBrowser": true,
-  });
-  const completion = await openai.chat.completions.create({
+  const result = await client.chat.completions.create({
+    model: 'gpt-4o-mini',
     messages: chatHistory,
-    model: "meta-llama/Meta-Llama-3.1-8B-Instruct",
-    stream: stream,
-    max_new_tokens: 200,
-    usage: {prompt_tokens: 15, completion_tokens: 16, total_tokens: 31},
+    max_tokens: 150,
   });
 
-  return completion.choices[0].message.content;
-  return result.data
+
+  console.log(result.choices[0].message.content);
+  return result.choices[0].message.content;
+
+
 });
-
-

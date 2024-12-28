@@ -8,6 +8,7 @@
          <div class="w-full h-full">
           <div class="card m-4 bg-accent text-primary-content">
             <form class="card-body pb-16" @submit.prevent="handleSubmit">
+              <h2 class="font-bold text-2xl p-4 underline">Current Class Topic</h2>
               <div class="flex w-full p-2">
                 <div class="flex items-center justify-center">
                   <h2 class="font-bold text-2xl pr-4">Time</h2>
@@ -18,8 +19,6 @@
                   <option value="1">10 min</option>
                   <option value="2">15 min</option>
                   <option value="3">20 min</option>
-                  <option value="4">25 min</option>
-                  <option value="5">30 min</option>
                 </select>
               </div>
               <div class="flex w-full p-2">
@@ -28,27 +27,29 @@
                 </div>
                 <select v-model="difficulty" class="select text-info text-lg select-secondary w-full max-w-xs">
                   <option disabled selected>choose difficulty</option>
-                  <option value="0">Novice</option>
-                  <option value="1">Novice High</option>
+                  <!-- <option value="0">Novice</option>
+                  <option value="1">Novice High</option> -->
                   <option value="2">Intermediate</option>
-                  <option value="3">Intermediate High</option>
+                  <!-- <option value="3">Intermediate High</option>
                   <option value="4">Advanced Low</option>
-                  <option value="5">Advanced High</option>
+                  <option value="5">Advanced High</option> -->
                 </select>
               </div>
               
               <div class="flex items-center justify-center">
                 <h2 class="font-bold text-2xl pr-4 pt-16">Class Topic</h2>
               </div>
-              <select v-model="classTopic" class="select text-info text-lg select-secondary w-full max-w-xs">
+              <select v-model="classtopic" class="select text-info text-lg select-secondary w-full max-w-xs">
                 <option disabled selected>choose topic</option>
-                <option value="0">Free Style</option>
-                <option value="1">Classroom Chat</option>
-                <option value="2">Introuductions</option>
-                <option value="3">Tell me about yourself</option>
+                <option value="0">Introductions</option>
+                <!-- <option value="1">Classroom Chat</option>words
+                <option value="2">Free Style</option>
+                <option value="3">Tell me about yourself</option> -->
               </select>
-              <h2 class="font-bold text-2xl pr-4 pt-16">Word Bank</h2>
-              <textarea v-model="words" class="textarea text-info text-lg h-full textarea-bordered resize-none" placeholder="Enter" style="resize: none;"></textarea>
+              <div class="flex items-center justify-center">
+                <h2 class="font-bold text-2xl pr-4 pt-16">Word Bank</h2>
+              </div>
+              <textarea v-model="wordbank" class="textarea text-info text-lg h-full textarea-bordered resize-none" placeholder="Enter" style="resize: none;"></textarea>
               <div class="flex items-center justify-center">
                 <button type="submit" class="btn btn-primary w-1/3 text-base-100">Apply</button>
               </div>
@@ -64,23 +65,22 @@
          </div>
       </div>
       <div class="w-full min-h-screen overflow-y-scroll border-l-2 h-full bg-base-100  pt-0 xl:p-10 border-gray-300">
-        <h1 class="font-bold text-2xl pr-4 w-36 bg-secondary p-4  rounded-2xl text-base-100">Preview</h1>
-        <div v-for="{ name, DaysComplete, id, wordCount} in students" :key="id" class="card w-screen lg:w-full mt-10 bg-base-100 hover:bg-neutral shadow-xl border-2 border-gray-300">
+        <div v-for="{ name, dayscomplete, uniquewords} in students" :key="id" class="card w-screen lg:w-full mt-10 bg-base-100 hover:bg-neutral shadow-xl border-2 border-gray-300">
           <div class="card-body">
             <div class="flex w-full">
                 <div class="flex items-center justify-center">
                   <h2 class="font-bold text-2xl pr-4 w-36">{{ name }}</h2>
                   <h2 class="font-bold text-lg pr-4 ">Days Practiced:</h2>
                   <div class="flex items-center justify-center">
-                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'Sa')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">S</h2>
-                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'M')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">M</h2>
-                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'Tu')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">T</h2>
-                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'W')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">W</h2>
-                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'Th')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">T</h2>
-                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'F')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">F</h2>
-                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(DaysComplete, 'Su')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">S</h2>
+                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(dayscomplete, 'Sa')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">S</h2>
+                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(dayscomplete, 'M')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">M</h2>
+                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(dayscomplete, 'Tu')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">T</h2>
+                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(dayscomplete, 'W')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">W</h2>
+                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(dayscomplete, 'Th')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">T</h2>
+                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(dayscomplete, 'F')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">F</h2>
+                    <h2 :class="`border-2 border-gray-300 ${DaysCompleteTranslate(dayscomplete, 'Su')} rounded-full pl-3 ml-3 font-bold text-2xl pr-4`">S</h2>
                   </div>
-                  <h2 class="font-bold text-lg pl-4 ">Total Unique words: {{ wordCount }}</h2>
+                  <h2 class="font-bold text-lg pl-4 ">Lastest Assignment's Unique words: {{ uniquewords }}</h2>
                 </div>
               </div>
           </div>
@@ -97,15 +97,51 @@
   const teacher = ref<Teacher>({} as Teacher);
   const time = ref('0');
   const difficulty = ref('0');
-  const classTopic = ref('choose topic');
-  const words = ref('');
-  const classCode = ref('123456');
+  const classtopic = ref('choose topic');
+  const wordbank = ref('');
+  const classCode = ref('');
+  const supabase = useSupabaseClient()
+  const user = supabase.auth.getUser()
+  //getting user ID
+  const userId = ref<string>('');
+  TeacherInput()
+  async function pullUserData() {
+    const { data, error } = await user;
+    if (error) {
+      console.log(error);
+    } else {
+      userId.value = data.user.id;
+    }
+  }
+  
+
+  async function TeacherInput() {
+    await pullUserData();
+    const { data, error } = await supabase
+      .from('Classrooms')
+      .select('classcode, difficulty, wordbank, time, classtopic')
+      .eq('teacher', "" + userId.value) 
+    console.log(data)
+    
+    if (data && data.length > 0) {
+      time.value = data[0].time;
+      classCode.value = data[0].classcode;
+      difficulty.value = data[0].difficulty;
+      wordbank.value = data[0].wordbank;
+      classtopic.value = data[0].classtopic;
+      studentInput();
+    } else {
+      navigateTo('/student_dashboard');
+    }
+  }
+  
   interface Students {
-    id: number;
-    name: string;
-    DaysComplete: string;
-    Teacher: number;
-    wordCount: number;
+    User: string;
+    classcode: string;
+    dayscomplete: string;
+    name: number;
+    teacher: boolean;
+    uniquewords: number;
   }
   interface Teacher {
     id: number;
@@ -116,13 +152,28 @@
     words: string;
   }
 
-  testInput();
-  function testInput() {
-    students.value = [
-      { id: 0, name: 'David', DaysComplete: 'Sa, M, Tu', Teacher: 0, wordCount: 3743 },
-      { id: 1, name: 'Alisa', DaysComplete: 'Sa, M,', Teacher: 0, wordCount: 4978 },
-    ];
 
+  
+  
+  async function studentInput() {
+    const { data, error } = await supabase
+      .from('UserData')
+      .select('User, classcode, dayscomplete, name, teacher, uniquewords')
+      .eq('classcode', classCode.value)
+      .eq('teacher', false)
+
+    
+    data?.forEach((student) => {
+      students.value.push({
+        User: student.User,
+        classcode: student.classcode,
+        dayscomplete: student.dayscomplete,
+        name: student.name,
+        teacher: student.teacher,
+        uniquewords: student.uniquewords,
+      });
+    });
+    
     teacher.value = {
       id: 0,
       name: 'some teacher',
@@ -140,6 +191,19 @@
       return ''
     }
   }
+  
 
-  function handleSubmit() {}
+  async function handleSubmit() {
+    const { data, error } = await supabase
+      .from('Classrooms')
+      .update(
+        { time: time.value ,
+         difficulty: difficulty.value ,
+         classtopic: classtopic.value ,
+         wordbank: wordbank.value }
+      )
+      .eq('classcode', classCode.value)
+      console.log(data);
+  }
+
 </script>

@@ -31,15 +31,15 @@ export function getUserMedia() {
         
         start.addEventListener('mousedown', (ev)=>{
             mediaRecorder.start();
-            console.log(mediaRecorder.state);
+            
         })
         stop.addEventListener('mouseout', (ev)=>{
             mediaRecorder.stop();
-            console.log(mediaRecorder.state);
+            
         })
         stop.addEventListener('mouseup', (ev)=>{
             mediaRecorder.stop();
-            console.log(mediaRecorder.state);
+            
         });
         mediaRecorder.ondataavailable = function(ev) {
             chunks.push(ev.data);

@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  nuxt-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000" # Map container port 3000 to host port 3000
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - SUPABASE_URL=https://kmsqiywjsqoxwctpvkqv.supabase.co
+      - SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imttc3FpeXdqc3FveHdjdHB2a3F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjIzODI3NzgsImV4cCI6MjAzNzk1ODc3OH0.ileLTKVXznu3FLFWbhs9emHlcjSCxGxbtybSB3RiEq8
+      - NUXT_GOOGLE=AIzaSyBZsuGsClndCNnyzUQ3oXY9cRAGj3LGV8M
+      - NUXT_DEEP_INFRA=93m4KBwYEIpDpmAZQwswvN2UM2bFQY6Z
+      - NUXT_AZURE_ENDPOINT=https://yuuera.openai.azure.com/
+      - NUXT_AZURE_CLIENT=36a942fb-f7e8-4862-82e4-3c7f655d4d2c
+      - NUXT_AZURE_TENANT=cdeece57-68b3-4625-ba3e-d1e37f9f6d6c
+      - NUXT_AZURE_SECRET=46M8Q~RpT2Q2uX9PLMxf6xiB.SnHmLjEqB4rka5s
+      - NUXT_AZURE_KEY=79S96ShlEgH4vq1PTqJANxo6M4BqQQ5vPDte95kE7icwNvzb6242JQQJ99ALACYeBjFXJ3w3AAABACOGI65S
+      - AZURE_CLIENT_ID=36a942fb-f7e8-4862-82e4-3c7f655d4d2c
+      - AZURE_TENANT_ID=cdeece57-68b3-4625-ba3e-d1e37f9f6d6c
+      - AZURE_CLIENT_SECRET=46M8Q~RpT2Q2uX9PLMxf6xiB.SnHmLjEqB4rka5s
+    stdin_open: true
+    tty: true

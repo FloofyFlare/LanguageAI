@@ -3,7 +3,7 @@
     <h1 class="text-2xl font-bold text-center">Your window is too small. Please exstend the window or use a larger screen size.</h1>
   </div>
   <ClientOnly>
-    <body class="hidden sm:block bg-base-100 ">
+    <body class="hidden h-screen sm:block bg-base-100 ">
       <div class="flex justify-center">
         <div class="w-1/2 overflow-y-scroll border-l-2 h-full bg-base-100 pt-0 p-10 border-gray-300">
           <div class="text-center h-1/3 mt-10 justify-right">

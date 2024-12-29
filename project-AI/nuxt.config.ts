@@ -14,6 +14,7 @@ export default defineNuxtConfig({
       cookieRedirect: false,
     },
   },
+
   modules: [
     "@nuxtjs/tailwindcss",
     "@nuxt/image",
@@ -21,7 +22,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@nuxtjs/supabase"
   ],
-  
+
   css: [
     '@/assets/styles.scss'
   ],
@@ -37,4 +38,6 @@ export default defineNuxtConfig({
     azureKey: '',
     // Keys within public, will be also exposed to the client-side
   },
+
+  compatibilityDate: "2024-12-28",
 })

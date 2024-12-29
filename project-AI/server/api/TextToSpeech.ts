@@ -10,10 +10,6 @@ interface toSpeech {
 export default defineEventHandler(async (event) => {
     const { text, languageCode, voiceName, audioEncoding, rateOfSpeech } = await readBody<toSpeech>(event);
     const runtimeConfig = useRuntimeConfig(event);
-    const GOOGLE_API_KEY = `${runtimeConfig.google}`;
-    console.log (GOOGLE_API_KEY);
-
-    console.log("API Key:", GOOGLE_API_KEY);
     console.log("Text:", text);
     console.log("Language Code:", languageCode);
     console.log("Voice Name:", voiceName);
@@ -45,7 +41,7 @@ export default defineEventHandler(async (event) => {
 
     if (!response.ok) {
         const errorText = await response.text();
-        console.error(`Error: ${response.status} ${response.statusText}`, errorText);
+        // console.error(`Error: ${response.status} ${response.statusText}`, errorText);
         throw new Error(`Request failed with status ${response.status}`);
     }
     

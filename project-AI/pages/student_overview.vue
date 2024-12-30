@@ -381,15 +381,7 @@
 
         tutor : Oui, j'aime [Activité/Hobby]. Et toi ?
 
-        student : J'aime beaucoup [Activité/Hobby]. Peut-être qu’on pourrait faire ça ensemble un jour !
-
-        tutor : Avec plaisir ! Ça serait sympa.
-
-        student : Super, on reste en contact alors !
-
-        tutor : Oui, ça marche. À bientôt !
-
-        student : À bientôt !
+        ...
       ` },
       { role: 'assistant', content: "Bonjour, comment ça va ?" },
     ]
@@ -420,6 +412,7 @@
         }
         if (result === " Sous-titrage Société Radio-Canada" || result === "Sous-titrage Société Radio-Canada") {
           chatHistory.value.push({ role: 'assistant', content: "No speech detected. \n Please check if your mic is working and is allowed in your browser settings." });
+          talking.value = false
           return;
         }
         let wordArray = result.split(" ").slice(1);
@@ -451,6 +444,7 @@
             if (error != "200") {
               console.error(error);
               talking.value = false;
+              chatHistory.value.push({ role: 'assistant', content: "Something went wrong please refresh the page." });
               // Could add an error message here
             } else{
               chatHistory.value.push({ role: 'assistant', content: `${tutorResponse}` });

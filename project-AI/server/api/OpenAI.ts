@@ -7,8 +7,8 @@ export default defineEventHandler(async (event) => {
   const endpointazure = `${runtimeConfig.azureEndpoint}`;
   const keyazure = `${runtimeConfig.azureKey}`;
   const cred = new ClientSecretCredential(
-    `${runtimeConfig.azureClient}`,
     `${runtimeConfig.azureTenant}`,
+    `${runtimeConfig.azureClient}`,
     `${runtimeConfig.azureSecret}`
   );
   const tokenProvider = getBearerTokenProvider(

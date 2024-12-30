@@ -10,6 +10,7 @@ interface toSpeech {
 export default defineEventHandler(async (event) => {
     const { text, languageCode, voiceName, audioEncoding, rateOfSpeech } = await readBody<toSpeech>(event);
     const runtimeConfig = useRuntimeConfig(event);
+    const GOOGLE_API_KEY = `${runtimeConfig.google}`;
     console.log("Text:", text);
     console.log("Language Code:", languageCode);
     console.log("Voice Name:", voiceName);

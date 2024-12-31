@@ -130,7 +130,7 @@
 
 <script setup lang="ts">
   import { ref, onMounted, watch} from 'vue';
-  import { getUserMedia, speachToText, textToSpeech } from '../scripts/SpeechAPI.js';
+  import { getUserMedia, speechToText, textToSpeech } from '../scripts/SpeechAPI.js';
 
   const scrollDiv = ref<HTMLElement | null>(null); 
   const wordSet = ref(new Set<string>());
@@ -282,9 +282,9 @@
     }
   }
   const language = "French";
-  const level = "Novice Low French (ACTFL).";
+  const level = "Novice Intermediate French (ACTFL).";
   const user_language = "English";
-  const teacher_name = "Jane";
+  const teacher_name = "Emma";
   const chatHistory = ref<ChatMessage[]>([
     {
       role: 'assistant',
@@ -298,11 +298,11 @@
       address you in their own language when felt their ${language} is not well 
       enough. When that happens, first translate their message to ${language}, 
       and then reply.
-      * IMPORTANT: If your student makes any mistakes, be it typo or grammar, 
+      * IMPORTANT: If your student makes any major mistakes (confusing or off topic responses), 
       you MUST first correct your student and only then reply.
       * You are only allowed to speak ${language}.`,
     },
-    { role: 'user', content: `Help me introduce my self in French with repetitive introduction practice. You must respond in ACTFL Intermediate Low French. Example
+    { role: 'user', content: `Help me introduce my self in French with repetitive introduction practice. You must respond in ${level}. Example
         tutor : Bonjour, comment ça va ?
 
         student : Bonjour ! Ça va bien, merci. Et toi ?
@@ -319,9 +319,9 @@
 
         student : Moi, je viens de [Ville/ Pays]. Qu'est-ce que tu fais dans la vie ?
 
-        tutor : Je suis [Profession/ Étudiant(e)], et toi ?
+        tutor : Je suis [Profession/ Étudiante / Étudiant], et toi ?
 
-        student : Je suis [Profession/ Étudiant(e)] aussi. Tu as des hobbies ou des intérêts particuliers ?
+        student : Je suis [Profession/ Étudiante / Étudiant] aussi. Tu as des hobbies ou des intérêts particuliers ?
 
         tutor : Oui, j'aime [Activité/Hobby]. Et toi ?
 
@@ -405,7 +405,7 @@
   function conversation(speak : boolean) {
     // Needs a timeout for speaking
     if (speaking.value == true && speak == false) {
-      speachToText().then((result) => {
+      speechToText().then((result) => {
         talking.value = true;
         if (result == undefined) {
           return;

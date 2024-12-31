@@ -1,7 +1,7 @@
 let hasSpoken = false;
 let newVoice = null;
 
-export async function speachToText() {
+export async function speechToText() {
     while (!hasSpoken) {
         await new Promise(resolve => setTimeout(resolve, 100));
     }

@@ -20,9 +20,9 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxt/fonts",
     "@pinia/nuxt",
-    "@nuxtjs/supabase"
+    "@nuxtjs/supabase",
+    "@nuxt/eslint"
   ],
-
   css: [
     '@/assets/styles.scss'
   ],

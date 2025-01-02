@@ -22,7 +22,7 @@
           </main>
           <div class="hidden lg:block flex text-left justify-start items-center mt-12">
             <button>
-              <ClientOnly><Waitlist></Waitlist></ClientOnly>
+              <ClientOnly><Waitlist/></ClientOnly>
             </button>
           </div>
           <div class="lg:hidden flex text-left justify-center items-center mt-8 md:m-20">
@@ -33,21 +33,21 @@
         </section>
         <section class="lg:flex-1">
           <div class="block sm:hidden animated-text flex mt-16 justify-center ">
-            <span class="md:text-6xl"></span>
+            <span class="md:text-6xl"/>
           </div>
           <div class="text-center justify-center lg:justify-end">
             <div class="avatar h-full w-full lg:flex justify-center">
               <div class="w-4/5 h-4/5 p-8 ">
-                <div class="h-full w-full rounded-full bg-orange-500 p-2 shadow-xl rounded-full border-8 border-gray-300 p-2" id="ai_animation"></div>
+                <div id="ai_animation" class="h-full w-full rounded-full bg-orange-500 p-2 shadow-xl rounded-full border-8 border-gray-300 p-2"/>
               </div>
             </div>
           </div>
           <div class="hidden sm:block animated-text text-center flex justify-center">
-            <span class=" md:text-7xl"></span>
+            <span class=" md:text-7xl"/>
           </div>
           <div id="waitlist" class="block sm:hidden flex text-left justify-center sm:justify-start items-center mt-12 mb-4 sm:mb-0">
             <button class="flex justify-center">
-              <ClientOnly><Waitlist></Waitlist></ClientOnly>
+              <ClientOnly><Waitlist/></ClientOnly>
             </button>
           </div>
         </section>
@@ -112,7 +112,7 @@
                 <div class="flex items-center justify-center">
                   <h2 class="font-bold text-2xl pr-4 pt-16">Class Topic</h2>
                 </div>
-                <textarea class="textarea text-info text-lg h-full textarea-bordered resize-none" placeholder="Enter" style="resize: none;"></textarea>
+                <textarea class="textarea text-info text-lg h-full textarea-bordered resize-none" placeholder="Enter" style="resize: none;"/>
                 <div class="flex items-center justify-center">
                   <button class="btn btn-primary w-1/3 text-base-100">Filter</button>
                 </div>

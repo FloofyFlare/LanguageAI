@@ -23,10 +23,10 @@
       </div>
       <div class="flex w-full min-h-screen overflow-y-scroll border-l-2 h-full bg-base-100  pt-0 xl:p-10 border-gray-300 justify-center items-center">
         <div class="">
-          <NuxtLink class="btn btn-primary mt-4 text-2xl" v-if="!complete" to="/student_overview">
+          <NuxtLink v-if="!complete" class="btn btn-primary mt-4 text-2xl" to="/student_overview">
             Lets Start Today's Lesson!
           </NuxtLink>
-          <Button class="btn btn-primary mt-4 text-2xl" v-if="complete" :disabled="true">
+          <Button v-if="complete" class="btn btn-primary mt-4 text-2xl" :disabled="true">
             <p class="text-info">Good Job! Today's Lesson Complete!</p>
           </Button>
         </div>      

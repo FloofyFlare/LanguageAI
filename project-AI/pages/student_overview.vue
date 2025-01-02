@@ -7,34 +7,33 @@
       <div class="flex justify-center">
         <div class="w-1/2 overflow-y-scroll border-l-2 h-full bg-base-100 pt-0 p-10 border-gray-300">
           <div class="text-center h-1/3 mt-10 justify-right">
-            <div class="flex text-center align-left">
-            </div>
+            <div class="flex text-center align-left"/>
             <div class="flex gap-5 items-end justify-center flex-end">
               <p class="text-3xl font-bold">Timer:</p>
               <div>
                 <span class="countdown font-mono text-4xl">
-                  <span :style="`--value:${minuets}`"></span>
+                  <span :style="`--value:${minuets}`"/>
                 </span>
                 minutes
               </div>
               <div class="hidden">
                 <span class="countdown font-mono text-4xl">
-                  <span :style="`--value:${seconds}`"></span>
+                  <span :style="`--value:${seconds}`"/>
                 </span>
                 seconds
               </div>
               <p class="text-3xl font-bold text-primary">Unique words: {{ wordSet.size }}</p>
               <article class="clip">
-              <audio id="audio"></audio>
-              <audio id="audio-save"></audio>
+              <audio id="audio"/>
+              <audio id="audio-save"/>
               </article>      
             </div>
           </div>
           <div class="text-center h-1/3 mb-8 justify-right mt-24">
             <div class="avatar h-full w-full flex justify-center">
               <div class="w-2/4 min-w-80 h-2/4 ">
-                <div v-if="isAI" class="h-full w-full rounded-full bg-secondary p-2 shadow-2xl rounded-full border-8 border-gray-300 p-2 ai_animation_talking"></div>
-                <div v-else class="h-full w-full rounded-full bg-orange-500 p-2 shadow-2xl rounded-full border-8 border-gray-300 p-2 ai_animation"></div>
+                <div v-if="isAI" class="h-full w-full rounded-full bg-secondary p-2 shadow-2xl rounded-full border-8 border-gray-300 p-2 ai_animation_talking"/>
+                <div v-else class="h-full w-full rounded-full bg-orange-500 p-2 shadow-2xl rounded-full border-8 border-gray-300 p-2 ai_animation"/>
               </div>
             </div>
           </div>
@@ -42,8 +41,8 @@
           <div class="text-center h-1/3 justify-right">
             <p class="text-xl font-bold pb-2">Hold down to speak!</p>
             <button id="audio-Btn" :disabled="talking" class="btn btn-circle h-full p-4 mb-8 w-1/4 min-w-48 bg-info text-neutral shadow-2xl" @mousedown="conversation(true)" @mouseup="conversation(false)" @mouseout="conversation(false)">
-              <span v-if="speaking" class="loading w-1/4  h-20 loading-bars bg-secondary loading-lg"></span>
-              <NuxtImg v-else :src="'/images/mic.png'" class="w-20 h-20"></NuxtImg>
+              <span v-if="speaking" class="loading w-1/4  h-20 loading-bars bg-secondary loading-lg"/>
+              <NuxtImg v-else :src="'/images/mic.png'" class="w-20 h-20"/>
             </button>
           </div>
           
@@ -57,7 +56,7 @@
                   Reset Lesson
                 </button>
                 <div class="collapse shadow-lg h-1/3 m-2 w-full bg-base-200">
-                <input type="checkbox" />
+                <input type="checkbox" >
                 <div class="collapse-title text-xl font-medium p-3 flex"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                   </svg> <p class="pl-4">Word Bank </p>
@@ -68,15 +67,15 @@
               </div>
               </div>
             </div>
-            <div class="overflow-y-scroll max-h-full" style="max-height: 450px;" ref="scrollDiv" id="conversation">
+            <div id="conversation" ref="scrollDiv" class="overflow-y-scroll max-h-full" style="max-height: 450px;">
               <div  v-for="{ role, content } in chatHistory.slice(2)" :class="`chat ${chatSide(role)}`">
                 <div class="chat-image avatar">
                   <div class="w-10 rounded-full">
-                    <div v-if="role === 'ai'" class="w-full rounded-full bg-orange-500 p-2"></div>
+                    <div v-if="role === 'ai'" class="w-full rounded-full bg-orange-500 p-2"/>
                     <img
                       v-if="role !== 'ai'"
                       alt="Tailwind CSS chat bubble component"
-                      src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/250px-Flag_of_France.svg.png" />
+                      src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/250px-Flag_of_France.svg.png" >
                   </div>
                 </div>
                 <div class="chat-header">
@@ -130,7 +129,8 @@
 
 <script setup lang="ts">
   import { ref, onMounted, watch} from 'vue';
-  import { getUserMedia, speechToText, textToSpeech } from '../scripts/SpeechAPI.js';
+  import { getUserMedia, speachToText, textToSpeech } from '../scripts/SpeechAPI.js';
+  import { conversationTopics } from '../scripts/Conversations.js';
 
   const scrollDiv = ref<HTMLElement | null>(null); 
   const wordSet = ref(new Set<string>());
@@ -145,17 +145,17 @@
   const time = ref('0');
   const difficulty = ref('0');
   //class is for the application curr is for the user
-  const classtopic = ref('0');
+  const classtopic = ref(0);
   const currtopic = ref('Topic');
   const wordbank = ref('');
   const classcode = ref('');
-  var dayscomplete: string;
+  let dayscomplete: string;
   const supabase = useSupabaseClient()
   const user = supabase.auth.getUser()
   //getting user ID
-  var isteacher = false;
+  let isteacher = false;
   const userId = ref<string>('');
-
+  const chatHistory = ref<ChatMessage[]>([]);
   
 
   function startlesson() {
@@ -219,10 +219,14 @@
       difficulty.value = data[0].difficulty;
       wordbank.value = data[0].wordbank;
       classtopic.value = data[0].classtopic;
-      if (classtopic.value == '0') {
-        currtopic.value = "Topic : Free Style";
+      if (classtopic.value == 0) {
+        currtopic.value = "Topic : Introductions";
       } 
+      else if (classtopic.value == 1) {
+        currtopic.value = "Topic : Streaming and Digital Media";
+      }
     }
+    initialChat();
   }
 
   async function countdown() {
@@ -284,107 +288,31 @@
   const language = "French";
   const level = "Novice Intermediate French (ACTFL).";
   const user_language = "English";
-  const teacher_name = "Emma";
-  const chatHistory = ref<ChatMessage[]>([
-    {
+  const teacher_name = "Jane";
+  
+
+  
+  function initialChat() {
+    chatHistory.value = [{
       role: 'assistant',
       content: `You are a ${language} teacher named ${teacher_name}. 
-      You are on a 1-on-1 session with your student, ${user_name}. ${user_name}'s 
+      You are on a 1-on-1 session with your student, ${user_name.value}. ${user_name.value}'s 
       ${language} level is: ${level}.
       Your task is to assist your student in advancing their ${language}.
-      * When the session begins, offer a suitable session for ${user_name}, unless
+      * When the session begins, offer a suitable session for ${user_name.value}, unless
       asked for something else.
-      * ${user_name}'s native language is ${user_language}. ${user_name} might 
+      * ${user_name.value}'s native language is ${user_language}. ${user_name.value} might 
       address you in their own language when felt their ${language} is not well 
       enough. When that happens, first translate their message to ${language}, 
       and then reply.
       * IMPORTANT: If your student makes any major mistakes (confusing or off topic responses), 
       you MUST first correct your student and only then reply.
       * You are only allowed to speak ${language}.`,
-    },
-    { role: 'user', content: `Help me introduce my self in French with repetitive introduction practice. You must respond in ${level}. Example
-        tutor : Bonjour, comment ça va ?
-
-        student : Bonjour ! Ça va bien, merci. Et toi ?
-
-        tutor : Ça va bien, merci. Comment tu t'appelles ?
-
-        student : Je m'appelle [Nom]. Et toi ?
-
-        tutor : Moi, c’est [Nom]. Enchanté(e) de faire ta connaissance !
-
-        student : Enchanté(e) également ! Tu viens d'où ?
-
-        tutor : Je viens de [Ville/ Pays]. Et toi ?
-
-        student : Moi, je viens de [Ville/ Pays]. Qu'est-ce que tu fais dans la vie ?
-
-        tutor : Je suis [Profession/ Étudiante / Étudiant], et toi ?
-
-        student : Je suis [Profession/ Étudiante / Étudiant] aussi. Tu as des hobbies ou des intérêts particuliers ?
-
-        tutor : Oui, j'aime [Activité/Hobby]. Et toi ?
-
-        student : J'aime beaucoup [Activité/Hobby]. Peut-être qu’on pourrait faire ça ensemble un jour !
-
-        tutor : Avec plaisir ! Ça serait sympa.
-
-        student : Super, on reste en contact alors !
-
-        tutor : Oui, ça marche. À bientôt !
-
-        student : À bientôt !
-      ` },
-    { role: 'assistant', content: 'Bonjour, comment ça va ?' },
-  ]);
-  async function scrollToBottom() {
-    
-    scrollable.scrollTop = scrollable.scrollHeight - scrollable.clientHeight;
-  }
-  
-  function initialChat() {
-    chatHistory.value = [
-      {
-        role: 'assistant',
-        content: `You are a ${language} teacher named ${teacher_name}. 
-        You are on a 1-on-1 session with your student, ${user_name}. ${user_name}'s 
-        ${language} level is: ${level}.
-        Your task is to assist your student in advancing their ${language}.
-        * ${user_name}'s native language is ${user_language}. ${user_name} might 
-        address you in their own language when felt their ${language} is not well 
-        enough. When that happens, first translate their message to ${language}, 
-        and then reply.
-        * IMPORTANT: If your student makes any mistakes (confusing or off topic responses), 
-        you MUST first correct your student and only then reply.
-        * You are only allowed to speak ${language}.`,
-      },
-      { role: 'user', content: `Help me introduce my self in French with repetitive introduction practice. You must respond in ACTFL Novice Low French. Example
-        tutor : Bonjour, comment ça va ?
-
-        student : Bonjour ! Ça va bien, merci. Et toi ?
-
-        tutor : Ça va bien, merci. Comment tu t'appelles ?
-
-        student : Je m'appelle [Nom]. Et toi ?
-
-        tutor : Moi, c’est [Nom]. Enchanté(e) de faire ta connaissance !
-
-        student : Enchanté(e) également ! Tu viens d'où ?
-
-        tutor : Je viens de [Ville/ Pays]. Et toi ?
-
-        student : Moi, je viens de [Ville/ Pays]. Qu'est-ce que tu fais dans la vie ?
-
-        tutor : Je suis [Profession/ Étudiant(e)], et toi ?
-
-        student : Je suis [Profession/ Étudiant(e)] aussi. Tu as des hobbies ou des intérêts particuliers ?
-
-        tutor : Oui, j'aime [Activité/Hobby]. Et toi ?
-
-        ...
-      ` },
-      { role: 'assistant', content: "Bonjour, comment ça va ?" },
-    ]
+      }
+    ];
+    conversationTopics[classtopic.value].forEach((item) => {
+      chatHistory.value.push(item);
+    });
   }
   function resetTime() {
       if (time.value == '0') {
@@ -411,11 +339,11 @@
           return;
         }
         if (result === " Sous-titrage Société Radio-Canada" || result === "Sous-titrage Société Radio-Canada") {
-          chatHistory.value.push({ role: 'assistant', content: "No speech detected. \n Please check if your mic is working and is allowed in your browser settings." });
+          chatHistory.value.push({ role: 'system', content: "No speech detected. \n Please check if your mic is working and is allowed in your browser settings." });
           talking.value = false
           return;
         }
-        let wordArray = result.split(" ").slice(1);
+        const wordArray = result.split(" ").slice(1);
         
         for (let i = 0; i < wordArray.length; i++) {
           wordSet.value.add(wordArray[i]);
@@ -444,7 +372,7 @@
             if (error != "200") {
               console.error(error);
               talking.value = false;
-              chatHistory.value.push({ role: 'assistant', content: "Something went wrong please refresh the page." });
+              chatHistory.value.push({ role: 'system', content: "Something went wrong please refresh the page." });
               // Could add an error message here
             } else{
               chatHistory.value.push({ role: 'assistant', content: `${tutorResponse}` });

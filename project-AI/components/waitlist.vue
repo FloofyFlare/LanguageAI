@@ -18,7 +18,7 @@
             type="email"
             class="input input-bordered mb-2"
             @keyup.enter="handleSubmit"
-          />
+          >
           <button
             type="submit"
             class="btn button no-animation bg-primary"

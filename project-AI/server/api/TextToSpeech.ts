@@ -1,10 +1,10 @@
 
 interface toSpeech {
-    text : String, 
-    languageCode : String, 
-    voiceName : String, 
-    audioEncoding : String, 
-    rateOfSpeech : Number
+    text : string, 
+    languageCode : string, 
+    voiceName : string, 
+    audioEncoding : string, 
+    rateOfSpeech : number
 }
 
 export default defineEventHandler(async (event) => {

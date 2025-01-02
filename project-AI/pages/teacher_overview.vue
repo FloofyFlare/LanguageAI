@@ -42,14 +42,14 @@
               <select v-model="classtopic" class="select text-info text-lg select-secondary w-full max-w-xs">
                 <option disabled selected>choose topic</option>
                 <option value="0">Introductions</option>
-                <!-- <option value="1">Classroom Chat</option>words
-                <option value="2">Free Style</option>
+                <option value="1">(NEW) Streaming and Digital Media</option>
+                <!-- <option value="2">Free Style</option>
                 <option value="3">Tell me about yourself</option> -->
               </select>
               <div class="flex items-center justify-center">
                 <h2 class="font-bold text-2xl pr-4 pt-16">Word Bank</h2>
               </div>
-              <textarea v-model="wordbank" class="textarea text-info text-lg h-full textarea-bordered resize-none" placeholder="Enter" style="resize: none;"></textarea>
+              <textarea v-model="wordbank" class="textarea text-info text-lg h-full textarea-bordered resize-none" placeholder="Enter" style="resize: none;"/>
               <div class="flex items-center justify-center">
                 <button type="submit" class="btn btn-primary w-1/3 text-base-100">Apply</button>
               </div>
@@ -148,7 +148,7 @@
     name: string;
     Time: number;
     Difficulty: number;
-    ClassTopic: String;
+    ClassTopic: string;
     words: string;
   }
 

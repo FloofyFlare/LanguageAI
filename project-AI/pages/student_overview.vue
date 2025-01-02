@@ -129,7 +129,7 @@
 
 <script setup lang="ts">
   import { ref, onMounted, watch} from 'vue';
-  import { getUserMedia, speachToText, textToSpeech } from '../scripts/SpeechAPI.js';
+  import { getUserMedia, speechToText, textToSpeech } from '../scripts/SpeechAPI.js';
   import { conversationTopics } from '../scripts/Conversations.js';
 
   const scrollDiv = ref<HTMLElement | null>(null); 

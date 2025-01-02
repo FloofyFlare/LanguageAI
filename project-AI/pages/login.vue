@@ -28,7 +28,7 @@
                       placeholder="email"
                       class="input input-bordered"
                       required
-                    />
+                    >
                   </div>
                   <div class="form-control">
                     <label class="label">
@@ -40,7 +40,7 @@
                       placeholder="password"
                       class="input input-bordered"
                       required
-                    />
+                    >
                     <label class="label">
                       <NuxtLink
                         to="/"

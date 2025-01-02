@@ -46,5 +46,5 @@ export const conversationTopics = [
 
       ...
     ` },
-    { role: 'assistant', content: "Tu regardes des films ou des séries sur des plateformes de streaming" }]
+    { role: 'assistant', content: "Tu regardes des films ou des séries sur des plateformes de streaming ?" }]
     ];

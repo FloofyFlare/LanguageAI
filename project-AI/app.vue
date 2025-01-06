@@ -13,11 +13,11 @@
               <NuxtLink v-if="loggedIn && teacherbutton" to="/student_overview" class="btn btn-secondary  rounded-full pr-4 pl-4 w-full text-lg leading-tight text-base-100">Student View</NuxtLink>
             </div>
             <div class="mr-8 w-36">
-              <NuxtLink v-if="!loggedIn" to="/login" class="btn btn-primary text-base-100 rounded-full pr-4 pl-4 w-full text-xl ">Login</NuxtLink>
+              <NuxtLink v-if="!loggedIn" to="/login" class="btn btn-secondary text-base-100 rounded-full pr-4 pl-4 w-full text-xl ">Login</NuxtLink>
               <button v-else class="btn btn-base-100  rounded-full pr-4 pl-4 w-full text-xl" @click="logout()">Log Out</button>
             </div>
             <div class="w-36">
-              <NuxtLink to="/login" class="hidden btn btn-primary rounded-full pr-4 pl-4 w-full text-base-100 text-xl">Sign up</NuxtLink>
+              <NuxtLink to="/sign_up" class=" btn btn-primary rounded-full pr-4 pl-4 w-full text-base-100 text-xl">Sign up</NuxtLink>
             </div>
             
           </div>
@@ -104,6 +104,7 @@
 <script setup lang="ts">
 const supabase = useSupabaseClient()
 const teacherbutton = ref(false);
+const loggedIn = ref(false)
   const user = supabase.auth.getUser()
   //getting user ID
   const userId = ref<string>('');
@@ -112,32 +113,37 @@ const teacherbutton = ref(false);
     const { data, error } = await user;
     if (error) {
       console.log(error);
+      return false;
     } else {
       userId.value = data.user.id;
+      return true;
     }
   }
   
 
   async function TeacherInput() {
-    await pullUserData();
-    const { data, error } = await supabase
-      .from('Classrooms')
-      .select('classcode, difficulty, wordbank, time, classtopic')
-      .eq('teacher', "" + userId.value) 
+    const usercheck = await pullUserData();
+      if (usercheck == true){
+        const { data, error } = await supabase
+        .from('Classrooms')
+        .select('classcode, difficulty, wordbank, time, classtopic')
+        .eq('teacher', "" + userId.value) 
+      
+      if (data && data.length > 0) {
+        teacherbutton.value = true;
+      } else {
+        teacherbutton.value = false;
+      }
+    }
     
-    if (data && data.length > 0) {
-      teacherbutton.value = true;
-    } else {
-      teacherbutton.value = false;
+    if (useSupabaseUser().value != null) {
+      if (useSupabaseUser().value.aud == 'authenticated') {
+        loggedIn.value = true
+      }
     }
   }
+  
 
-const loggedIn = ref(false)
-if (useSupabaseUser().value != null) {
-  if (useSupabaseUser().value.aud == 'authenticated') {
-    loggedIn.value = true
-  }
-}
 async function logout() {
   const { error } = await supabase.auth.signOut();
   if (error) console.log(error)

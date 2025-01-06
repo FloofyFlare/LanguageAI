@@ -1,7 +1,7 @@
 <template>
     <body class="bg-base-100">
       <main>
-        <section class="bg-base-100 w-full flex items-center justify-center">
+        <section v-if="!verify" class="bg-base-100 w-full flex items-center justify-center">
           <form
             class="flex flex-col w-full justify-center pb-48 pt-12 max-w-xs"
             @submit.prevent="handleSubmit"
@@ -116,6 +116,12 @@
             <button class="btn btn-primary w-full max-w-xs text-neutral">Sign up</button>
             </form>
           </section>
+          <section v-if="verify" class="bg-base-100 w-full flex items-center justify-center">
+            <div class="w-screen h-screen flex flex-col items-center justify-center">
+                <p class="text-2xl">Sign up sucessful!</p>
+                <p class="text-2xl">Check your email for your <span class="text-primary">verification link!</span></p>
+            </div>
+          </section>
         </main>
     </body>
 </template>
@@ -127,6 +133,7 @@
 
     const userId = ref<string>('');
     //getting user ID
+    const verify = ref(false)
     const password = ref('')
     const password2 = ref('')
     const firstName = ref('')
@@ -211,7 +218,7 @@
             ])
             .select()
         }
-        
+        verify.value = true;
           
     }
 

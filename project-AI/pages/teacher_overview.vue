@@ -39,13 +39,35 @@
               <div class="flex items-center justify-center">
                 <h2 class="font-bold text-2xl pr-4 pt-16">Class Topic</h2>
               </div>
-              <select v-model="classtopic" class="select text-info text-lg select-secondary w-full max-w-xs">
+              <!-- <select v-model="classtopic" class=" select text-info text-lg select-secondary w-full max-w-xs">
                 <option disabled selected>choose topic</option>
-                <option value="0">Introductions</option>
+                <option value="0" class="checkbox">Introductions</option>
                 <option value="1">(NEW) Streaming and Digital Media</option>
-                <!-- <option value="2">Free Style</option>
-                <option value="3">Tell me about yourself</option> -->
-              </select>
+                          <option value="2">Free Style</option>
+                        <option value="3">Tell me about yourself</option> 
+              </select> -->
+              <div tabindex="0" class="collapse bg-base-200">
+                <input type="checkbox" />
+                <div class="collapse-title text-xl flex font-medium bg-base-100 border-2">
+                  Topics 
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 ml-auto">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                  </svg>
+                </div>
+                <div class="collapse-content bg-base-100">
+                  <div class="form-control">
+                    <label class="cursor-pointer label">
+                      <span class="label-text text-lg">Introductions</span>
+                      <input v-model="classLesson[0]" type="checkbox" :checked="classLesson[0]" class="checkbox checkbox-info" />
+                    </label>
+                    <label class="cursor-pointer label">
+                      <span class="label-text text-lg">(NEW) Streaming and Digital Media</span>
+                      <input v-model="classLesson[1]" type="checkbox" :checked="classLesson[1]" class="checkbox checkbox-info" />
+                    </label>
+                  </div>
+                </div>
+              </div>
+              
               <div class="flex items-center justify-center">
                 <h2 class="font-bold text-2xl pr-4 pt-16">Word Bank</h2>
               </div>
@@ -99,6 +121,7 @@
   const difficulty = ref('0');
   const classtopic = ref('choose topic');
   const wordbank = ref('');
+  const classLesson = ref([false, false, false, false, false, false]);
   const classCode = ref('');
   const supabase = useSupabaseClient()
   const user = supabase.auth.getUser()

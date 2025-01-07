@@ -5,12 +5,12 @@
         <section class=" flex lg:flex-1 flex-col text-left justify-left lg:items-left mt-16 lg:mt-32 lg:ml-32 m-2">
           <main>
             <div class="text-left justify-left">
-              <p class="text-4xl md:4xl lg:text-7xl font-bold text-pretty" font-family="arial">
+              <p class="text-4xl lg:text-7xl font-bold text-pretty" font-family="arial">
                 World Language
               </p>
             </div>
             <div class="text-left justify-left mt-4">
-              <p class="text-3xl md:4xl text-nowrap lg:text-7xl lg:mr-0 font-bold text-primary">
+              <p class="text-3xl text-nowrap lg:text-7xl lg:mr-0 font-bold text-primary">
                 Beyond the Classroom
               </p>
             </div>

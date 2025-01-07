@@ -16,7 +16,7 @@
             <p class="text-4xl font-bold">Days Completed: {{ dayscomplete }}</p>
           </div>
           <div class="card bg-base-100 m-4 p-4">
-            <p class="text-4xl font-bold">Todays Topic: {{ classLesson }}</p>
+            <p class="text-4xl font-bold">Today's Topic: {{ classLesson }}</p>
           </div>
           
        </div>
@@ -62,10 +62,12 @@
       .from('Classrooms')
       .select('classcode,classtopic')
       .eq('classcode', "" + classCode.value) 
-    studentInput();
     if (data && data.length > 0) {
       if (data[0].classtopic == '0') {
         classLesson.value = "Free Style";
+      } 
+      if (data[0].classtopic == '1') {
+        classLesson.value = "Streaming and Digital Media";
       } 
     }
   }
@@ -87,9 +89,8 @@
         navigateTo('/teacher_overview');
         return;
       } 
-      
-      complete.value = checkDay(dayscomplete.value);
       checkStudent();
+      complete.value = checkDay(dayscomplete.value);
   }
 
   function checkDay(dayscomplete: string) {

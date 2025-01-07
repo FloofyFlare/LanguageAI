@@ -118,8 +118,19 @@
           </section>
           <section v-if="verify" class="bg-base-100 w-full flex items-center justify-center">
             <div class="w-screen h-screen flex flex-col items-center justify-center">
-                <p class="text-2xl">Sign up sucessful!</p>
-                <p class="text-2xl">Check your email for your <span class="text-primary">verification link!</span></p>
+              <div class="card w-96 md:w-1/3 bg-base-100 shadow-xl">
+                <div class="card-body">
+                  <div class="flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-20">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                    </svg>
+                  </div>
+                  
+                  <h2 class="card-title md:text-3xl">Verify your email!</h2>
+                  <p class="text-base md:text-xl">We sent a verification link to your email address. Please check your email and follow the instructions to activate your account.</p>
+                  <p class="text-base md:text-xl">If you didn't receive an email, you can <a @click="resendEmailConfirm" class="link link-primary">request another one</a>.</p>
+                </div>
+              </div>
             </div>
           </section>
         </main>
@@ -133,7 +144,7 @@
 
     const userId = ref<string>('');
     //getting user ID
-    const verify = ref(false)
+    const verify = ref(false);
     const password = ref('')
     const password2 = ref('')
     const firstName = ref('')
@@ -175,6 +186,15 @@
     }
     }
 
+    async function resendEmailConfirm() {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: email.value,
+        options: {
+          emailRedirectTo: 'https://yuuera.com/login'
+        }
+      })
+    }
 
     function handleSubmit() {
         if (!validateEmail(email.value)) {

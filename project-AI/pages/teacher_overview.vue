@@ -142,7 +142,7 @@
     await pullUserData();
     const { data, error } = await supabase
       .from('Classrooms')
-      .select('classcode, difficulty, wordbank, time, classtopic')
+      .select('classcode, difficulty, wordbank, time, classtopic,topics')
       .eq('teacher', "" + userId.value) 
     console.log(data)
     
@@ -152,6 +152,7 @@
       difficulty.value = data[0].difficulty;
       wordbank.value = data[0].wordbank;
       classtopic.value = data[0].classtopic;
+      classLesson.value = data[0].topics;
       studentInput();
     } else {
       navigateTo('/student_dashboard');
@@ -223,7 +224,9 @@
         { time: time.value ,
          difficulty: difficulty.value ,
          classtopic: classtopic.value ,
-         wordbank: wordbank.value }
+         wordbank: wordbank.value,
+         topics: classLesson.value
+        }
       )
       .eq('classcode', classCode.value)
       console.log(data);

@@ -1,134 +1,100 @@
 import { defineStore } from 'pinia'
 
-interface AuthState {
-  accessToken: string | null
-  refreshToken: string | null
-  account: JSON | null
+interface UserState {
+  //User's Classroom
+  topics: boolean[] 
+  classCode: string 
+  time: number 
+  difficulty: number 
+  wordBank: string 
+
+  //User Info
+  username: string 
+  wordCount: number 
+  daysComplete: string 
+  teacher: boolean
+  userId: string
+
+  //student activity
+  chosenTopic: number
+}
+interface UserData {
+  User: string;
+  classcode: string;
+  dayscomplete: string;
+  name: string;
+  teacher: boolean;
+  uniquewords: number;
 }
 
-export const useAuthStore = defineStore('auth-store', {
-  state: (): AuthState => ({
-    accessToken: null,
-    refreshToken: null,
-    account: null,
+interface ClassroomData {
+  topics: boolean[];
+  classcode: string;
+  time: number;
+  difficulty: number;
+  wordbank: string;
+}
+export const useUserStore = defineStore('user-store', {
+  state: (): UserState => ({
+    //User's Classroom
+    topics: [],
+    classCode: "",
+    time: 0,
+    difficulty: 0,
+    wordBank: "",
+    chosenTopic: 0,
+    //User Info
+    username: "",
+    wordCount: 0,
+    daysComplete: "",
+    teacher: false,
+    userId: "",
   }),
   actions: {
-    setTokens(tokens: { accessToken: string; refreshToken: string }) {
-      this.accessToken = tokens.accessToken
-      this.refreshToken = tokens.refreshToken
-    },
-
-    clearTokens() {
-      this.accessToken = null
-      this.refreshToken = null
-    },
-
-    async getAccount() {
-      const url = new URL('https://api.yuuera.com/api/auth/account-settings/');
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.accessToken}`,
-        },
-      })
-
-      if (response.ok) {
-        const responseData = await response.json()
-        console.log('account stored')
-        this.account = responseData.user
-        console.log(this.account)
-      } else {
-        console.error('account store failed:', response.statusText)
-      }
-    },
-
-    async refreshAccessToken() {
-      // Simulate a refresh token action (replace this with your actual refresh token logic)
-      if (this.accessToken != null && this.refreshToken != null) {
-        if (!isTokenExpired(this.accessToken)) {
-          const timeRemaining = timeUntilTokenExpiration(this.accessToken) // Use this.accessToken
-          console.log(`Access token expires in ${timeRemaining} seconds`)
-          // You can use timeRemaining to decide when to refresh the token
+    async setUser() {
+      const supabase = useSupabaseClient();
+      const user = supabase.auth.getUser();
+      //getting user ID
+      {
+        const { data, error } = await user;
+        if (error) {
+          navigateTo('/login');
+          return;
         } else {
-          // const accessToken = 'your_access_token_here'; // Remove this line
-          console.log('Access token has expired')
-          // Perform token refresh or re-authentication
-          if (this.refreshToken) {
-            try {
-              // Change the URL to your production server
-              const response = await fetch('http://api.yuuera.com/api/token/refresh/', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ refresh: this.refreshToken }),
-              });
-      
-              if (response.ok) {
-                const responseData = await response.json()
-                const tokens = {
-                  accessToken: responseData.access,
-                  refreshToken: this.refreshToken,
-                }
-                console.log('Token refresh successful:', tokens)
-                this.setTokens(tokens) // Use setTokens instead of login
-                // Do something with the responseData, such as updating the component state
-                await this.getAccount()
-                return responseData
-              } else {
-                // Handle errors for non-2xx status codes
-                console.log('Token refresh failed')
-                this.accessToken = null
-                this.refreshToken = null
-              }
-            } catch (error) {
-              console.error(error)
-              this.accessToken = null
-              this.refreshToken = null
-            }
-          } else {
-            console.log('Refresh token is not available')
-            this.accessToken = null
-            this.refreshToken = null
-          }
+          this.userId = data.user.id;
         }
       }
+      {
+        //Getting User Data
+        const { data, error }: { data: UserData[] | null, error: any } = await supabase
+        .from('UserData')
+        .select('User, classcode, dayscomplete, name, teacher, uniquewords')
+        .eq('User', this.userId)
+        
+        if (data && data.length > 0) {
+          this.username = data[0].name;
+          this.wordCount = data[0].uniquewords;
+          this.daysComplete = data[0].dayscomplete;
+          this.classCode = data[0].classcode;
+          this.teacher = data[0].teacher;
+        }
+      }
+      {
+        const { data, error }: { data: ClassroomData[] | null, error: any } = await supabase
+        .from('Classrooms')
+        .select('classcode, difficulty, wordbank, time, topics')
+        .eq('classcode', "" + this.classCode) 
+
+        if (data && data.length > 0) {
+          this.time = data[0].time;
+          this.difficulty = data[0].difficulty;
+          this.wordBank = data[0].wordbank;
+          this.topics = data[0].topics;
+        }
+      }   
+    },
+    chooseTopic(topic: number) {
+      this.chosenTopic = topic;
     },
   },
 })
-
-function decodeAccessToken(accessToken: string) {
-  try {
-    console.log(accessToken.split('.'))
-    const base64Url = accessToken.split('.')[1]
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-    const decoded = JSON.parse(atob(base64))
-    return decoded
-  } catch (error) {
-    console.error('Error decoding access token:', error)
-    return null
-  }
-}
-
-function isTokenExpired(accessToken: string) {
-  const decodedToken = decodeAccessToken(accessToken)
-
-  if (decodedToken && decodedToken.exp) {
-    const currentTime = Math.floor(Date.now() / 1000)
-    return decodedToken.exp < currentTime
-  }
-
-  return true // Assume expired if decoding fails or no expiration time
-}
-
-function timeUntilTokenExpiration(accessToken: string) {
-  const decodedToken = decodeAccessToken(accessToken)
-
-  if (decodedToken && decodedToken.exp) {
-    const currentTime = Math.floor(Date.now() / 1000)
-    return decodedToken.exp - currentTime
-  }
-
-  return 0 // Return 0 if decoding fails or no expiration time
-}

@@ -59,25 +59,26 @@
   const userId = ref<string>('');
   import { useUserStore } from '../store/LoginStore';
   const store = useUserStore();
-  store.setUser();
-  //Importing user data
-  classCode.value = store.classCode;
-  name.value = store.username;
-  wordCount.value = store.wordCount;
-  dayscomplete.value = store.daysComplete;
+  async function setUserInfo(){
+    await store.setUser();
+    //Importing user data
+    classCode.value = store.classCode;
+    name.value = store.username;
+    wordCount.value = store.wordCount;
+    dayscomplete.value = store.daysComplete;
+    
+    //checking days
+    complete.value = checkDay(store.daysComplete);
 
-  //checking days
-  complete.value = checkDay(store.daysComplete);
-
-  //Checking if user is teacher
-  if (store.teacher) {
-    navigateTo('/teacher_overview');
+    //Checking if user is teacher
+    if (store.teacher) {
+      navigateTo('/teacher_overview');
+    }
+    console.log(store.topics)
+    // Giving lesson choices
+    topics.value = store.topics;
   }
-  console.log(store.topics)
-  // Giving lesson choices
-  topics.value = store.topics;
-  
-
+  setUserInfo();
 
   function checkDay(dayscomplete: string) {
     const d = new Date();

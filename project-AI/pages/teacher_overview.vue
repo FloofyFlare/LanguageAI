@@ -73,7 +73,8 @@
               </div>
               <textarea v-model="wordbank" class="textarea text-info text-lg h-full textarea-bordered resize-none" placeholder="Enter" style="resize: none;"/>
               <div class="flex items-center justify-center">
-                <button type="submit" class="btn btn-primary w-1/3 text-base-100">Apply</button>
+                <button v-if="!applied" type="submit" class="btn btn-primary w-1/3 text-base-100">Apply</button>
+                <button v-if="applied" type="submit" class="btn btn-secondary w-1/3 text-base-100">Applied</button>
               </div>
               
             </form>
@@ -114,7 +115,7 @@
 <script setup lang="ts">
 
   import { ref } from 'vue';
-  
+  const applied = ref(false);
   const students = ref<Students[]>([]);
   const teacher = ref<Teacher>({} as Teacher);
   const time = ref('0');
@@ -230,6 +231,17 @@
       )
       .eq('classcode', classCode.value)
       console.log(data);
+      applied.value = true;
   }
+  watch(time, (newVal, oldVal) => {
+    applied.value = false;
+  });
+  watch(classLesson, (newVal, oldVal) => {
+    applied.value = false;
+  },{deep: true});
+  watch(wordbank, (newVal, oldVal) => {
+    applied.value = false;
+  });
+
 
 </script>

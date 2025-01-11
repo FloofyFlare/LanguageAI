@@ -57,19 +57,37 @@
                 <div class="collapse-content bg-base-100">
                   <div class="form-control">
                     <label class="cursor-pointer label">
-                      <span class="label-text text-lg">Introductions</span>
+                      <span class="label-text text-lg">Who Am I?</span>
                       <input v-model="classLesson[0]" type="checkbox" :checked="classLesson[0]" class="checkbox checkbox-info" />
                     </label>
                     <label class="cursor-pointer label">
                       <span class="label-text text-lg">(NEW) Streaming and Digital Media</span>
                       <input v-model="classLesson[1]" type="checkbox" :checked="classLesson[1]" class="checkbox checkbox-info" />
                     </label>
+                    <label class="cursor-pointer label">
+                      <span class="label-text text-lg">(NEW) Professions, Careers & Work</span>
+                      <input v-model="classLesson[2]" type="checkbox" :checked="classLesson[2]" class="checkbox checkbox-info" />
+                    </label>
+                    <label class="cursor-pointer label">
+                      <span class="label-text text-lg">(NEW) Food</span>
+                      <input v-model="classLesson[3]" type="checkbox" :checked="classLesson[3]" class="checkbox checkbox-info" />
+                    </label>
                   </div>
                 </div>
               </div>
-              
+              <div class="w-36 pr-2">
+                  <div class="dropdown">
+                    <div tabindex="0" role="button" class="btn dropdown btn-secondary rounded-full pr-4 pl-4 w-full text-lg leading-tight text-base-100">Student View</div>
+                      <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                        <li><button @click="startLesson(0)">Who Am I?"</button></li>
+                        <li><button @click="startLesson(1)">Streaming and Digital Media</button></li>
+                        <li><button @click="startLesson(2)">Professions, Careers & Work</button></li>
+                        <li><button @click="startLesson(3)">Food</button></li>
+                      </ul>
+                  </div>
+                </div>
               <div class="flex items-center justify-center">
-                <h2 class="font-bold text-2xl pr-4 pt-16">Word Bank</h2>
+                <h2 class="font-bold text-2xl pr-4 pt-4">Word Bank</h2>
               </div>
               <textarea v-model="wordbank" class="textarea text-info text-lg h-full textarea-bordered resize-none" placeholder="Enter" style="resize: none;"/>
               <div class="flex items-center justify-center">
@@ -113,7 +131,7 @@
   </div>
 </template>
 <script setup lang="ts">
-
+  import { useUserStore } from '../store/LoginStore';
   import { ref } from 'vue';
   const applied = ref(false);
   const students = ref<Students[]>([]);
@@ -126,6 +144,7 @@
   const classCode = ref('');
   const supabase = useSupabaseClient()
   const user = supabase.auth.getUser()
+  const store = useUserStore();
   //getting user ID
   const userId = ref<string>('');
   TeacherInput()
@@ -137,7 +156,12 @@
       userId.value = data.user.id;
     }
   }
-  
+
+  async function startLesson(topic: number) {
+    await store.chooseTopic(topic);
+    navigateTo('/student_overview');
+  }  
+
 
   async function TeacherInput() {
     await pullUserData();
@@ -242,6 +266,4 @@
   watch(wordbank, (newVal, oldVal) => {
     applied.value = false;
   });
-
-
 </script>

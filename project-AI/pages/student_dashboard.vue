@@ -22,10 +22,8 @@
             <option  disabled selected class="text-primary">Topics</option>
             <option v-if="topics[0]" value="0">Introductions</option>
             <option v-if="topics[1]" value="1">Streaming and Digital Media</option>
-            <!-- <option value="2">Intermediate</option>
-            <!-- <option value="3">Intermediate High</option>
-            <option value="4">Advanced Low</option>
-            <option value="5">Advanced High</option> -->
+            <option v-if="topics[2]" value="2">Professions, Careers & Work</option>
+            <option v-if="topics[3]" value="3">Food</option> 
           </select>
           
        </div>

@@ -52,7 +52,10 @@
             <div class="flex justify-center mb-4">
               <h1 class="text-center text-3xl p-4">{{ currtopic }}</h1>
               <div class="h-1/3 m-2">
-                <button class="btn btn-secondary ml-2 w-full" @click="initialChat(), resetTime()">
+                <button v-if="isteacher" class="btn btn-secondary ml-2 w-full" @click="initialChat(), resetTime()">
+                  Reset Lesson
+                </button>
+                <button v-if="!isteacher" class="btn btn-secondary ml-2 w-full" @click="initialChat()">
                   Reset Lesson
                 </button>
                 <div class="collapse shadow-lg h-1/3 m-2 w-full bg-base-200">
@@ -168,10 +171,11 @@
     isteacher = store.teacher;
     time.value = store.time;
     classtopic.value = store.chosenTopic;
+    console.log(classtopic.value);
     difficulty.value = store.difficulty;
     wordbank.value = store.wordBank;
     //Checking if user is teacher
-    if (store.teacher) {
+    if (store.teacher && classtopic.value == 100) {
       navigateTo('/teacher_overview');
     }
     if(classtopic.value == 100){
@@ -211,10 +215,16 @@
       seconds.value = 1;
     }
     if (classtopic.value == 0) {
-      currtopic.value = "Topic : Introductions";
+      currtopic.value = "Topic : Who Am I?";
     } 
     else if (classtopic.value == 1) {
       currtopic.value = "Topic : Streaming and Digital Media";
+    }
+    else if (classtopic.value == 2) {
+      currtopic.value = "Topic : Professions, Careers & Work";
+    } 
+    else if (classtopic.value == 3) {
+      currtopic.value = "Topic : Food";
     }
     initialChat();
   }

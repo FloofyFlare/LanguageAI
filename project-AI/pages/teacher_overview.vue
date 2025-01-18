@@ -106,7 +106,7 @@
          </div>
       </div>
       <div class="w-full min-h-screen overflow-y-scroll border-l-2 h-full bg-base-100  pt-0 xl:p-10 border-gray-300">
-        <div v-for="{ name, dayscomplete, uniquewords} in students" :key="id" class="card w-screen lg:w-full mt-10 bg-base-100 hover:bg-neutral shadow-xl border-2 border-gray-300">
+        <div v-if="students.length > 0" v-for="{ name, dayscomplete, uniquewords} in students" :key="id" class="card w-screen lg:w-full mt-10 bg-base-100 hover:bg-neutral shadow-xl border-2 border-gray-300">
           <div class="card-body">
             <div class="flex w-full">
                 <div class="flex items-center justify-center">
@@ -124,6 +124,13 @@
                   <h2 class="font-bold text-lg pl-4 ">Lastest Assignment's Unique words: {{ uniquewords }}</h2>
                 </div>
               </div>
+          </div>
+        </div>
+        <div v-else class="card w-screen lg:w-full mt-10 bg-base-100 hover:bg-neutral shadow-xl border-2 border-gray-300">
+          <div class="card-body">
+            <div class="flex items-center justify-center">
+              <h2 class="font-bold text-2xl pr-4">No Students</h2>
+            </div>
           </div>
         </div>
       </div>

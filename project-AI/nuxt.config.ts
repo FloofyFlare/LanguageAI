@@ -21,11 +21,15 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
     "@pinia/nuxt",
     "@nuxtjs/supabase",
-    "@nuxt/eslint"
+    "@nuxt/eslint",
+    "nuxt-gtag"
   ],
   css: [
     '@/assets/styles.scss'
   ],
+  gtag: {
+    id: 'G-CBV29SPVWD',
+  },
 
   runtimeConfig: {
     // The private keys which are only available within server-side

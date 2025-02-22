@@ -15,19 +15,29 @@
           <div class="card bg-base-100 m-4 p-4">
             <p class="text-4xl font-bold">Days Completed: {{ dayscomplete }}</p>
           </div>
-          <div class="card bg-base-100 m-4 p-4">
-            <p class="text-4xl font-bold">Todays Topic: {{ classLesson }}</p>
+          <div class="card bg-secondary m-4 p-4">
+            <p class="text-4xl font-bold">Choose practice topic:</p>
           </div>
+          <select v-model="chosenTopic" class="select text-info text-4xl font-bold select-secondary w-full max-w-xs">
+            <option  disabled selected class="text-primary">Topics</option>
+            <option v-if="topics[0]" value="0">Introductions</option>
+            <option v-if="topics[1]" value="1">Streaming and Digital Media</option>
+            <option v-if="topics[2]" value="2">Professions, Careers & Work</option>
+            <option v-if="topics[3]" value="3">Food</option> 
+          </select>
           
        </div>
       </div>
       <div class="flex w-full min-h-screen overflow-y-scroll border-l-2 h-full bg-base-100  pt-0 xl:p-10 border-gray-300 justify-center items-center">
         <div class="">
-          <NuxtLink v-if="!complete" class="btn btn-primary mt-4 text-2xl" to="/student_overview">
-            Lets Start Today's Lesson!
-          </NuxtLink>
+          <Button v-if="!complete && chosenTopic != 100" class="btn btn-primary mt-4 text-2xl" @click="startLesson()">
+            Start Today's Lesson!
+          </Button>
+          <Button v-if="!complete && chosenTopic == 100" class="btn btn-primary mt-4 text-3xl" disabled>
+            <p class="text-primary">choose a topic to practice!</p>
+          </Button>
           <Button v-if="complete" class="btn btn-primary mt-4 text-2xl" :disabled="true">
-            <p class="text-info">Good Job! Today's Lesson Complete!</p>
+            <p class="text-info">Good Job! Today's Lesson Complete!</p> 
           </Button>
         </div>      
       </div>
@@ -38,64 +48,46 @@
   import { ref } from 'vue';
   const wordCount = ref(0);
   const name = ref('');
+  const chosenTopic = ref(100);
   const classCode = ref('');
   const dayscomplete = ref('');
-  const classLesson = ref('');
   const complete = ref(true);
   const supabase = useSupabaseClient()
   const user = supabase.auth.getUser()
+  const topics = ref<boolean[]>([]);
   //getting user ID
-  const userId = ref<string>('');
-  studentInput()
-  async function pullUserData() {
-    const { data, error } = await user;
-    if (error) {
-      navigateTo('/login');
-    } else {
-      userId.value = data.user.id;
-    }
-  }
-  
+  import { useUserStore } from '../store/LoginStore';
+  const store = useUserStore();
+  async function setUserInfo(){
+    await store.setUser();
+    //Importing user data
+    classCode.value = store.classCode;
+    name.value = store.username;
+    wordCount.value = store.wordCount;
+    dayscomplete.value = store.daysComplete;
+    
+    //checking days
+    complete.value = checkDay(store.daysComplete);
 
-  async function checkStudent() {
-    const { data, error } = await supabase
-      .from('Classrooms')
-      .select('classcode,classtopic')
-      .eq('classcode', "" + classCode.value) 
-    studentInput();
-    if (data && data.length > 0) {
-      if (data[0].classtopic == '0') {
-        classLesson.value = "Free Style";
-      } 
+    //Checking if user is teacher
+    if (store.teacher) {
+      navigateTo('/teacher_overview');
     }
+    console.log(store.topics)
+    // Giving lesson choices
+    topics.value = store.topics;
   }
-  
-  async function studentInput() {
-    await pullUserData();
-    const { data, error } = await supabase
-      .from('UserData')
-      .select('User, classcode, dayscomplete, name, teacher, uniquewords')
-      .eq('User', userId.value)
-      .eq('teacher', false)
-      
-      if (data && data.length > 0) {
-        name.value = data[0].name;
-        wordCount.value = data[0].uniquewords;
-        dayscomplete.value = data[0].dayscomplete;
-        classCode.value = data[0].classcode;
-      } else {
-        navigateTo('/teacher_overview');
-        return;
-      } 
-      
-      complete.value = checkDay(dayscomplete.value);
-      checkStudent();
-  }
+  setUserInfo();
 
   function checkDay(dayscomplete: string) {
     const d = new Date();
     const weekday = ["Su", "M", "Tu", "W", "Th", "F", "Sa"][d.getDay()];
     return dayscomplete.includes(weekday);
+  }
+
+  async function startLesson() {
+    await store.chooseTopic(chosenTopic.value);
+    navigateTo('/student_overview');
   }
 
 </script>

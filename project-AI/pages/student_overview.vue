@@ -52,7 +52,10 @@
             <div class="flex justify-center mb-4">
               <h1 class="text-center text-3xl p-4">{{ currtopic }}</h1>
               <div class="h-1/3 m-2">
-                <button class="btn btn-secondary ml-2 w-full" @click="initialChat(), resetTime()">
+                <button v-if="isteacher" class="btn btn-secondary ml-2 w-full" @click="initialChat(), resetTime()">
+                  Reset Lesson
+                </button>
+                <button v-if="!isteacher" class="btn btn-secondary ml-2 w-full" @click="initialChat()">
                   Reset Lesson
                 </button>
                 <div class="collapse shadow-lg h-1/3 m-2 w-full bg-base-200">
@@ -142,20 +145,53 @@
   const timeup = ref(false);
   const lessonStart = ref(true);
   const user_name = ref('Bob');
-  const time = ref('0');
-  const difficulty = ref('0');
+  const time = ref(0);
+  const difficulty = ref(0);
   //class is for the application curr is for the user
-  const classtopic = ref(0);
+  const classtopic = ref(100);
   const currtopic = ref('Topic');
   const wordbank = ref('');
   const classcode = ref('');
-  let dayscomplete: string;
+  const dayscomplete = ref('')
   const supabase = useSupabaseClient()
   const user = supabase.auth.getUser()
   //getting user ID
   let isteacher = false;
   const userId = ref<string>('');
   const chatHistory = ref<ChatMessage[]>([]);
+  //getting user ID
+  import { useUserStore } from '../store/LoginStore';
+  const store = useUserStore();
+  async function setUserInfo(){
+    await store.setUser();
+    //Importing user data
+    classcode.value = store.classCode;
+    user_name.value = store.username;
+    dayscomplete.value = store.daysComplete;
+    isteacher = store.teacher;
+    time.value = store.time;
+    classtopic.value = store.chosenTopic;
+    console.log(classtopic.value);
+    difficulty.value = store.difficulty;
+    wordbank.value = store.wordBank;
+    //Checking if user is teacher
+    if (store.teacher && classtopic.value == 100) {
+      navigateTo('/teacher_overview');
+    }
+    if(classtopic.value == 100){
+      navigateTo('/student_dashboard');
+    }
+    // checking days
+    
+    const d = new Date();
+    const weekday = ["Su", "M", "Tu", "W", "Th", "F", "Sa"][d.getDay()];
+    if (dayscomplete.value.includes(weekday) && isteacher == false) {
+      navigateTo('/student_dashboard');
+      return;
+    } 
+    TeacherInput();
+  }
+  setUserInfo();
   
 
   function startlesson() {
@@ -163,68 +199,32 @@
     countdown();
     
   }
-  TeacherInput()
-  async function pullUserData() {
-    {
-      const { data, error } = await user;
-      if (error) {
-        console.log(error);
-      } else {
-        userId.value = data.user.id;
-      }
-      console.log(userId.value);
-    }
-    
-    const { data, error } = await supabase
-      .from('UserData')
-      .select('classcode, dayscomplete, teacher, name')
-      .eq('User', userId.value) 
-      
-    if (data && data.length > 0) {
-      dayscomplete = data[0].dayscomplete;
-      user_name.value = data[0].name;
-      classcode.value = data[0].classcode;
-      isteacher = data[0].teacher;
-      const d = new Date();
-      const weekday = ["Su", "M", "Tu", "W", "Th", "F", "Sa"][d.getDay()];
-      if (dayscomplete.includes(weekday) && data[0].teacher == false) {
-        navigateTo('/student_dashboard');
-        return;
-      } 
-    }
-  }
   
-
   async function TeacherInput() {
-    await pullUserData();
-    const { data, error } = await supabase
-      .from('Classrooms')
-      .select('classcode, difficulty, wordbank, time, classtopic')
-      .eq('classcode', "" + classcode.value) 
-    if (data && data.length > 0) {
-      time.value = data[0].time;
-      if (time.value == '0') {
-        minuets.value = 5;
-        seconds.value = 1;
-      } else if (time.value == '1') {
-        minuets.value = 10;
-        seconds.value = 1;
-      } else if (time.value == '2') {
-        minuets.value = 15;
-        seconds.value = 1;
-      } else if (time.value == '3') {
-        minuets.value = 20;
-        seconds.value = 1;
-      }
-      difficulty.value = data[0].difficulty;
-      wordbank.value = data[0].wordbank;
-      classtopic.value = data[0].classtopic;
-      if (classtopic.value == 0) {
-        currtopic.value = "Topic : Introductions";
-      } 
-      else if (classtopic.value == 1) {
-        currtopic.value = "Topic : Streaming and Digital Media";
-      }
+    if (time.value == 0) {
+      minuets.value = 5;
+      seconds.value = 1;
+    } else if (time.value == 1) {
+      minuets.value = 10;
+      seconds.value = 1;
+    } else if (time.value == 2) {
+      minuets.value = 15;
+      seconds.value = 1;
+    } else if (time.value == 3) {
+      minuets.value = 20;
+      seconds.value = 1;
+    }
+    if (classtopic.value == 0) {
+      currtopic.value = "Topic : Who Am I?";
+    } 
+    else if (classtopic.value == 1) {
+      currtopic.value = "Topic : Streaming and Digital Media";
+    }
+    else if (classtopic.value == 2) {
+      currtopic.value = "Topic : Professions, Careers & Work";
+    } 
+    else if (classtopic.value == 3) {
+      currtopic.value = "Topic : Food";
     }
     initialChat();
   }
@@ -249,7 +249,7 @@
       const { data, error } = await supabase
       .from('UserData')
       .update(
-        { dayscomplete:  dayscomplete + " " + days[dayOfWeek] ,
+        { dayscomplete:  dayscomplete.value + " " + days[dayOfWeek] ,
          uniquewords: wordSet.value.size,
          }
       )

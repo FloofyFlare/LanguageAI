@@ -9,40 +9,15 @@
               <NuxtLink v-if="loggedIn && !teacherbutton" to="/student_dashboard" class="btn btn-secondary  rounded-full pr-4 pl-4 w-full text-lg leading-tight text-base-100">Dashboard</NuxtLink>
               <NuxtLink v-if="loggedIn && teacherbutton" to="/teacher_overview" class="btn btn-primary text-base-100 rounded-full pr-4 pl-4 w-full text-xl ">Dashboard</NuxtLink>
             </div>
-            <div class="w-36 pr-2">
-              <NuxtLink v-if="loggedIn && teacherbutton" to="/student_overview" class="btn btn-secondary  rounded-full pr-4 pl-4 w-full text-lg leading-tight text-base-100">Student View</NuxtLink>
-            </div>
             <div class="mr-8 w-36">
-              <NuxtLink v-if="!loggedIn" to="/login" class="btn btn-primary text-base-100 rounded-full pr-4 pl-4 w-full text-xl ">Login</NuxtLink>
+              <NuxtLink v-if="!loggedIn" to="/login" class="btn btn-secondary text-base-100 rounded-full pr-4 pl-4 w-full text-xl ">Login</NuxtLink>
               <button v-else class="btn btn-base-100  rounded-full pr-4 pl-4 w-full text-xl" @click="logout()">Log Out</button>
             </div>
             <div class="w-36">
-              <NuxtLink to="/login" class="hidden btn btn-primary rounded-full pr-4 pl-4 w-full text-base-100 text-xl">Sign up</NuxtLink>
+              <NuxtLink  v-if="!loggedIn" to="/sign_up" class=" btn btn-primary rounded-full pr-4 pl-4 w-full text-base-100 text-xl">Sign up</NuxtLink>
             </div>
-            
-          </div>
-          <div class="flex-1 flex justify-end flex-direction visible sm:hidden dropdown dropdown-end ml-24 md:ml-0">
-            <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-              <div class="avatar placeholder">
-                <div class="bg-neutral text-neutral-content w-10 rounded-full">
-                  <span class="text-xs">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                    </svg>
-                  </span>
-                </div>
-              </div>
-            </div>
-            <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box md:w-52">
-              <li>
-                <NuxtLink to="/login" class="btn btn-ghost">Login</NuxtLink>
-              </li>
-              <li><NuxtLink to="/login" class="hidden btn btn-ghost">Sign up</NuxtLink></li>
-              <button class="btn btn-ghost hidden" @click="logout"> Logout</button>
-            </ul>
           </div>
         </section>
-        
       </div>
   </div>
 </header>
@@ -104,7 +79,8 @@
 <script setup lang="ts">
 const supabase = useSupabaseClient()
 const teacherbutton = ref(false);
-  const user = supabase.auth.getUser()
+const loggedIn = ref(false)
+const user = supabase.auth.getUser()
   //getting user ID
   const userId = ref<string>('');
   TeacherInput()
@@ -112,32 +88,37 @@ const teacherbutton = ref(false);
     const { data, error } = await user;
     if (error) {
       console.log(error);
+      return false;
     } else {
       userId.value = data.user.id;
+      return true;
     }
   }
   
 
   async function TeacherInput() {
-    await pullUserData();
-    const { data, error } = await supabase
-      .from('Classrooms')
-      .select('classcode, difficulty, wordbank, time, classtopic')
-      .eq('teacher', "" + userId.value) 
+    const usercheck = await pullUserData();
+      if (usercheck == true){
+        const { data, error } = await supabase
+        .from('Classrooms')
+        .select('classcode, difficulty, wordbank, time, classtopic')
+        .eq('teacher', "" + userId.value) 
+      
+      if (data && data.length > 0) {
+        teacherbutton.value = true;
+      } else {
+        teacherbutton.value = false;
+      }
+    }
     
-    if (data && data.length > 0) {
-      teacherbutton.value = true;
-    } else {
-      teacherbutton.value = false;
+    if (useSupabaseUser().value != null) {
+      if (useSupabaseUser().value.aud == 'authenticated') {
+        loggedIn.value = true
+      }
     }
   }
+  
 
-const loggedIn = ref(false)
-if (useSupabaseUser().value != null) {
-  if (useSupabaseUser().value.aud == 'authenticated') {
-    loggedIn.value = true
-  }
-}
 async function logout() {
   const { error } = await supabase.auth.signOut();
   if (error) console.log(error)
@@ -145,5 +126,4 @@ async function logout() {
   
   
 }
-
 </script>

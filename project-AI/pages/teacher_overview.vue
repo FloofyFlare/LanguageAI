@@ -39,19 +39,60 @@
               <div class="flex items-center justify-center">
                 <h2 class="font-bold text-2xl pr-4 pt-16">Class Topic</h2>
               </div>
-              <select v-model="classtopic" class="select text-info text-lg select-secondary w-full max-w-xs">
+              <!-- <select v-model="classtopic" class=" select text-info text-lg select-secondary w-full max-w-xs">
                 <option disabled selected>choose topic</option>
-                <option value="0">Introductions</option>
+                <option value="0" class="checkbox">Introductions</option>
                 <option value="1">(NEW) Streaming and Digital Media</option>
-                <!-- <option value="2">Free Style</option>
-                <option value="3">Tell me about yourself</option> -->
-              </select>
+                          <option value="2">Free Style</option>
+                        <option value="3">Tell me about yourself</option> 
+              </select> -->
+              <div tabindex="0" class="collapse bg-base-200">
+                <input type="checkbox" />
+                <div class="collapse-title text-xl flex font-medium bg-base-100 border-2">
+                  Topics 
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 ml-auto">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                  </svg>
+                </div>
+                <div class="collapse-content bg-base-100">
+                  <div class="form-control">
+                    <label class="cursor-pointer label">
+                      <span class="label-text text-lg">Who Am I?</span>
+                      <input v-model="classLesson[0]" type="checkbox" :checked="classLesson[0]" class="checkbox checkbox-info" />
+                    </label>
+                    <label class="cursor-pointer label">
+                      <span class="label-text text-lg">(NEW) Streaming and Digital Media</span>
+                      <input v-model="classLesson[1]" type="checkbox" :checked="classLesson[1]" class="checkbox checkbox-info" />
+                    </label>
+                    <label class="cursor-pointer label">
+                      <span class="label-text text-lg">(NEW) Professions, Careers & Work</span>
+                      <input v-model="classLesson[2]" type="checkbox" :checked="classLesson[2]" class="checkbox checkbox-info" />
+                    </label>
+                    <label class="cursor-pointer label">
+                      <span class="label-text text-lg">(NEW) Food</span>
+                      <input v-model="classLesson[3]" type="checkbox" :checked="classLesson[3]" class="checkbox checkbox-info" />
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="w-36 pr-2">
+                  <div class="dropdown">
+                    <div tabindex="0" role="button" class="btn dropdown btn-secondary rounded-full pr-4 pl-4 w-full text-lg leading-tight text-base-100">Student View</div>
+                      <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                        <li><button @click="startLesson(0)">Who Am I?"</button></li>
+                        <li><button @click="startLesson(1)">Streaming and Digital Media</button></li>
+                        <li><button @click="startLesson(2)">Professions, Careers & Work</button></li>
+                        <li><button @click="startLesson(3)">Food</button></li>
+                      </ul>
+                  </div>
+                </div>
               <div class="flex items-center justify-center">
-                <h2 class="font-bold text-2xl pr-4 pt-16">Word Bank</h2>
+                <h2 class="font-bold text-2xl pr-4 pt-4">Word Bank</h2>
               </div>
               <textarea v-model="wordbank" class="textarea text-info text-lg h-full textarea-bordered resize-none" placeholder="Enter" style="resize: none;"/>
               <div class="flex items-center justify-center">
-                <button type="submit" class="btn btn-primary w-1/3 text-base-100">Apply</button>
+                <button v-if="!applied" type="submit" class="btn btn-primary w-1/3 text-base-100">Apply</button>
+                <button v-if="applied" type="submit" class="btn btn-secondary w-1/3 text-base-100">Applied</button>
               </div>
               
             </form>
@@ -65,7 +106,7 @@
          </div>
       </div>
       <div class="w-full min-h-screen overflow-y-scroll border-l-2 h-full bg-base-100  pt-0 xl:p-10 border-gray-300">
-        <div v-for="{ name, dayscomplete, uniquewords} in students" :key="id" class="card w-screen lg:w-full mt-10 bg-base-100 hover:bg-neutral shadow-xl border-2 border-gray-300">
+        <div v-if="students.length > 0" v-for="{ name, dayscomplete, uniquewords} in students" :key="id" class="card w-screen lg:w-full mt-10 bg-base-100 hover:bg-neutral shadow-xl border-2 border-gray-300">
           <div class="card-body">
             <div class="flex w-full">
                 <div class="flex items-center justify-center">
@@ -85,23 +126,32 @@
               </div>
           </div>
         </div>
+        <div v-else class="card w-screen lg:w-full mt-10 bg-base-100 hover:bg-neutral shadow-xl border-2 border-gray-300">
+          <div class="card-body">
+            <div class="flex items-center justify-center">
+              <h2 class="font-bold text-2xl pr-4">No Students</h2>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-
+  import { useUserStore } from '../store/LoginStore';
   import { ref } from 'vue';
-  
+  const applied = ref(false);
   const students = ref<Students[]>([]);
   const teacher = ref<Teacher>({} as Teacher);
   const time = ref('0');
   const difficulty = ref('0');
   const classtopic = ref('choose topic');
   const wordbank = ref('');
+  const classLesson = ref([false, false, false, false, false, false]);
   const classCode = ref('');
   const supabase = useSupabaseClient()
   const user = supabase.auth.getUser()
+  const store = useUserStore();
   //getting user ID
   const userId = ref<string>('');
   TeacherInput()
@@ -113,13 +163,18 @@
       userId.value = data.user.id;
     }
   }
-  
+
+  async function startLesson(topic: number) {
+    await store.chooseTopic(topic);
+    navigateTo('/student_overview');
+  }  
+
 
   async function TeacherInput() {
     await pullUserData();
     const { data, error } = await supabase
       .from('Classrooms')
-      .select('classcode, difficulty, wordbank, time, classtopic')
+      .select('classcode, difficulty, wordbank, time, classtopic,topics')
       .eq('teacher', "" + userId.value) 
     console.log(data)
     
@@ -129,6 +184,7 @@
       difficulty.value = data[0].difficulty;
       wordbank.value = data[0].wordbank;
       classtopic.value = data[0].classtopic;
+      classLesson.value = data[0].topics;
       studentInput();
     } else {
       navigateTo('/student_dashboard');
@@ -200,10 +256,21 @@
         { time: time.value ,
          difficulty: difficulty.value ,
          classtopic: classtopic.value ,
-         wordbank: wordbank.value }
+         wordbank: wordbank.value,
+         topics: classLesson.value
+        }
       )
       .eq('classcode', classCode.value)
       console.log(data);
+      applied.value = true;
   }
-
+  watch(time, (newVal, oldVal) => {
+    applied.value = false;
+  });
+  watch(classLesson, (newVal, oldVal) => {
+    applied.value = false;
+  },{deep: true});
+  watch(wordbank, (newVal, oldVal) => {
+    applied.value = false;
+  });
 </script>

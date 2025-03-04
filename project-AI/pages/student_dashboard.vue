@@ -10,7 +10,7 @@
             <p class="text-4xl font-bold">Hello: {{ name }}</p>
           </div>
           <div class="card bg-base-100 m-4 p-4">
-            <p class="text-4xl font-bold">Today's Unique Word Count: {{ wordCount }}</p>
+            <p class="text-4xl font-bold">Total Unique Word Points: {{ wordCount }}</p>
           </div>
           <div class="card bg-base-100 m-4 p-4">
             <p class="text-4xl font-bold">Days Completed: {{ dayscomplete }}</p>
@@ -67,7 +67,7 @@
     dayscomplete.value = store.daysComplete;
     
     //checking days
-    complete.value = checkDay(store.daysComplete);
+    complete.value = false;
 
     //Checking if user is teacher
     if (store.teacher) {

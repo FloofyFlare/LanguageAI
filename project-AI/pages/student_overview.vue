@@ -22,7 +22,7 @@
                 </span>
                 seconds
               </div>
-              <p class="text-3xl font-bold text-primary">Unique words: {{ wordSet.size }}</p>
+              <p class="text-3xl font-bold text-primary">Unique word points: {{ wordSet.size }}</p>
               <article class="clip">
               <audio id="audio"/>
               <audio id="audio-save"/>
@@ -165,6 +165,7 @@
   async function setUserInfo(){
     await store.setUser();
     //Importing user data
+    userId.value = store.userId;
     classcode.value = store.classCode;
     user_name.value = store.username;
     dayscomplete.value = store.daysComplete;
@@ -250,10 +251,9 @@
       .from('UserData')
       .update(
         { dayscomplete:  dayscomplete.value + " " + days[dayOfWeek] ,
-         uniquewords: wordSet.value.size,
+         uniquewords: store.wordCount + wordSet.value.size,
          }
-      )
-      .eq('User', userId.value);
+      ).eq('User', userId.value);
       stopChat();
       return;
     }

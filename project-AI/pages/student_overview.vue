@@ -247,7 +247,7 @@
         const { data, error } = await supabase
         .from('UserData')
         .update(
-          { uniquewords: wordSet.value.size, }
+          { uniquewords: store.wordCount + wordSet.value.size,}
         )
         .eq('User', userId.value);
         stopChat();

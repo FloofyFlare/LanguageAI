@@ -72,6 +72,7 @@ export const useUserStore = defineStore('user-store', {
         .eq('User', this.userId)
         
         if (data && data.length > 0) {
+          this.userId = data[0].User
           this.username = data[0].name;
           this.wordCount = data[0].uniquewords;
           this.daysComplete = data[0].dayscomplete;

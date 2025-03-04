@@ -184,12 +184,12 @@
     }
     // checking days
     
-    const d = new Date();
-    const weekday = ["Su", "M", "Tu", "W", "Th", "F", "Sa"][d.getDay()];
-    if (dayscomplete.value.includes(weekday) && isteacher == false) {
-      navigateTo('/student_dashboard');
-      return;
-    } 
+    // const d = new Date();
+    // const weekday = ["Su", "M", "Tu", "W", "Th", "F", "Sa"][d.getDay()];
+    // if (dayscomplete.value.includes(weekday) && isteacher == false) {
+    //   navigateTo('/student_dashboard');
+    //   return;
+    // } 
     TeacherInput();
   }
   setUserInfo();
@@ -239,18 +239,25 @@
     }
     if (minuets.value === 0 && seconds.value === 0) {
       console.log('Time is up!');
-      const today = new Date();
-      const dayOfWeek = today.getDay();
-
       // dayOfWeek will be a number from 0 (Sunday) to 6 (Saturday)
 
-      const days = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'];
-      
+      const d = new Date();
+      const weekday = ["Su", "M", "Tu", "W", "Th", "F", "Sa"][d.getDay()];
+      if (dayscomplete.value.includes(weekday)) {
+        const { data, error } = await supabase
+        .from('UserData')
+        .update(
+          { uniquewords: wordSet.value.size, }
+        )
+        .eq('User', userId.value);
+        stopChat();
+        return;
+      }
 
       const { data, error } = await supabase
       .from('UserData')
       .update(
-        { dayscomplete:  dayscomplete.value + " " + days[dayOfWeek] ,
+        { dayscomplete:  dayscomplete.value + " " + weekday,
          uniquewords: store.wordCount + wordSet.value.size,
          }
       ).eq('User', userId.value);

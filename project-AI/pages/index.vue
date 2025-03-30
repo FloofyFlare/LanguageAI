@@ -27,7 +27,7 @@
           </div>
           <div class="lg:hidden flex text-left justify-center items-center mt-8 md:m-20">
             <button>
-              <a href="#waitlist" class="btn btn-primary text-accent text-xl w-48 h-16 rounded-3xl">Try Today!</a>
+              <a href="#waitlist" class="btn btn-primary text-accent text-xl w-48 h-16 rounded-3xl">Try for Free!</a>
             </button>
           </div>
         </section>
@@ -62,7 +62,7 @@
     {
       name: 'description',
       content:
-        'The foreign language tool that helps students practice speaking outside the classroom.',
+        'The Free foreign language tool that helps students practice speaking outside the classroom.',
     },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
   ],

@@ -227,6 +227,9 @@
     else if (classtopic.value == 3) {
       currtopic.value = "Topic : Food";
     }
+    else if (classtopic.value == 4) {
+      currtopic.value = "Topic : Free Style";
+    }
     initialChat();
   }
 
@@ -312,8 +315,6 @@
       address you in their own language when felt their ${language} is not well 
       enough. When that happens, first translate their message to ${language}, 
       and then reply.
-      * IMPORTANT: If your student makes any MAJOR mistakes (confusing or off topic responses), 
-      you MUST first correct your student and only then reply otherwise dont correct them.
       * You are only allowed to speak ${language}.`,
       }
     ];

@@ -101,4 +101,31 @@ export const conversationTopics = [
       ...
     ` },
     { role: 'assistant', content: " Quelle est ta routine du petit déjeuner ? Tu prends le petit déjeuner avec ta famille ? D'habitude, qu'est-ce qui arrive ?" }],
+  // Professions
+    [{ role: 'user', content: `Have a conversation with me in French. You must respond in ACTFL Novice Low French. Example of a conversation in Novice Low French is provided below.
+    tutor : Bonjour, comment ça va ?
+
+    student : Bonjour ! Ça va bien, merci. Et toi ?
+
+    tutor : Ça va bien, merci. Comment tu t'appelles ?
+
+    student : Je m'appelle [Nom]. Et toi ?
+
+    tutor : Moi, c’est [Nom]. Enchanté(e) de faire ta connaissance !
+
+    student : Enchanté(e) également ! Tu viens d'où ?
+
+    tutor : Je viens de [Ville/ Pays]. Et toi ?
+
+    student : Moi, je viens de [Ville/ Pays]. Qu'est-ce que tu fais dans la vie ?
+
+    tutor : Je suis [Profession/ Étudiant(e)], et toi ?
+
+    student : Je suis [Profession/ Étudiant(e)] aussi. Tu as des hobbies ou des intérêts particuliers ?
+
+    tutor : Oui, j'aime [Activité/Hobby]. Et toi ?
+
+    ...
+    ` },
+    { role: 'assistant', content: "Bonjour, comment ça va ?" }],
     ];

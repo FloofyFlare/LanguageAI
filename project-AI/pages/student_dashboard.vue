@@ -24,6 +24,7 @@
             <option v-if="topics[1]" value="1">Streaming and Digital Media</option>
             <option v-if="topics[2]" value="2">Professions, Careers & Work</option>
             <option v-if="topics[3]" value="3">Food</option> 
+            <option v-if="topics[4]" value="4">Free Style</option> 
           </select>
           
        </div>

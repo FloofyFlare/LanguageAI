@@ -61,16 +61,20 @@
                       <input v-model="classLesson[0]" type="checkbox" :checked="classLesson[0]" class="checkbox checkbox-info" />
                     </label>
                     <label class="cursor-pointer label">
-                      <span class="label-text text-lg">(NEW) Streaming and Digital Media</span>
+                      <span class="label-text text-lg">Streaming and Digital Media</span>
                       <input v-model="classLesson[1]" type="checkbox" :checked="classLesson[1]" class="checkbox checkbox-info" />
                     </label>
                     <label class="cursor-pointer label">
-                      <span class="label-text text-lg">(NEW) Professions, Careers & Work</span>
+                      <span class="label-text text-lg">Professions, Careers & Work</span>
                       <input v-model="classLesson[2]" type="checkbox" :checked="classLesson[2]" class="checkbox checkbox-info" />
                     </label>
                     <label class="cursor-pointer label">
-                      <span class="label-text text-lg">(NEW) Food</span>
+                      <span class="label-text text-lg">Food</span>
                       <input v-model="classLesson[3]" type="checkbox" :checked="classLesson[3]" class="checkbox checkbox-info" />
+                    </label>
+                    <label class="cursor-pointer label">
+                      <span class="label-text text-lg">(NEW) Free Style</span>
+                      <input v-model="classLesson[4]" type="checkbox" :checked="classLesson[4]" class="checkbox checkbox-info" />
                     </label>
                   </div>
                 </div>
@@ -83,6 +87,7 @@
                         <li><button @click="startLesson(1)">Streaming and Digital Media</button></li>
                         <li><button @click="startLesson(2)">Professions, Careers & Work</button></li>
                         <li><button @click="startLesson(3)">Food</button></li>
+                        <li><button @click="startLesson(4)">Free Style</button></li>
                       </ul>
                   </div>
                 </div>

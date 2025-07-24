@@ -28,7 +28,7 @@ export default defineNuxtConfig({
     '@/assets/styles.scss'
   ],
   gtag: {
-    id: 'G-CBV29SPVWD',
+    id: '',
   },
 
   runtimeConfig: {

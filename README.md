@@ -23,7 +23,7 @@ This project combines speech recognition, LLM-powered tutoring, and voice synthe
 | **Workflow**      | Cloudflare Workers coordinate API calls and session flow                     |
 | **User Input**    | Voice input via microphone (Whisper) and chat interface (Nuxt + Supabase)    |
 | **Memory/State**  | Supabase stores user progress, session history, and lesson metadata          |
-| **Deployment**    | Cloudflare Pages + Workers for edge-native CI/CD and routing                 |
+| **Deployment**    | Cloudflare Pages + Workers for CI/CD and routing                 |
 
 ## 🚀 Try Out the UI
 

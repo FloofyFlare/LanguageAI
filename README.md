@@ -73,6 +73,8 @@ These videos were showcased at MOVE’s pitch competition and demonstrate how th
 
 ---
 
+**Note this read me was made by AI if you have any questions ask me at raymondflowersiv@gmail.com
+
 
 
 

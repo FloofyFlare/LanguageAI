@@ -1,4 +1,4 @@
-# cf_ai_language_tutor
+# AI language_tutor
 
 An AI-powered language tutoring tool that helps students practice foreign languages through voice and chat. Built entirely on Cloudflare infrastructure using Nuxt, Supabase, and a combination of cutting-edge AI models.
 

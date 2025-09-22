@@ -25,6 +25,10 @@ This project combines speech recognition, LLM-powered tutoring, and voice synthe
 | **Memory/State**  | Supabase stores user progress, session history, and lesson progress metadata |
 | **Deployment**    | Cloudflare Pages + Workers for edge-native CI/CD and routing               |
 
+## 📺 Live Demos!
+** These videos showcase the websites AI functionality and were used at MOVE's pitch competition
+https://drive.google.com/drive/folders/1WX_JkIMXxrEPqqpeAr81287FTuQvkNso?usp=drive_link
+
 ## 🚀 Try Out the UI
 
 https://languageai.pages.dev/
@@ -38,7 +42,4 @@ password: password
 Teacher login: raymondflowersiv@gmail.com
 password: password
 
-## Live Demos!
-** These videos showcase the websites AI functionality and were used at MOVE's pitch competition
-https://drive.google.com/drive/folders/1WX_JkIMXxrEPqqpeAr81287FTuQvkNso?usp=drive_link
 

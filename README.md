@@ -19,10 +19,10 @@ This project combines speech recognition, LLM-powered tutoring, and voice synthe
 
 | Component         | Description                                                                 |
 |------------------|-----------------------------------------------------------------------------|
-| **LLM**           | External LLM (`gpt-4o-mini`) handles tutoring logic and grammar correction |
-| **Workflow**      | Cloudflare Workers coordinate API calls and session flow                   |
-| **User Input**    | Voice input via microphone (Whisper) and chat interface (Nuxt + Supabase)  |
-| **Memory/State**  | Supabase stores user progress, session history, and lesson metadata        |
+| **LLM**           | External LLM (`gpt-4o-mini`) handles tutoring logic and grammar correction   |
+| **Workflow**      | Cloudflare Workers coordinate API calls and session flow                     |
+| **User Input**    | Voice input via microphone (Whisper) and chat interface (Nuxt + Supabase)    |
+| **Memory/State**  | Supabase stores user progress, session history, and lesson progress metadata |
 | **Deployment**    | Cloudflare Pages + Workers for edge-native CI/CD and routing               |
 
 ## 🚀 Try Out the UI

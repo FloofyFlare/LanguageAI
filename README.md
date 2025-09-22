@@ -1,4 +1,4 @@
-# AI language_tutor
+# cf_ai_language_tutor 📺
 
 An AI-powered language tutoring tool that helps students practice foreign languages through voice and chat. Built entirely on Cloudflare infrastructure using Nuxt, Supabase, and a combination of cutting-edge AI models.
 
@@ -22,24 +22,57 @@ This project combines speech recognition, LLM-powered tutoring, and voice synthe
 | **LLM**           | External LLM (`gpt-4o-mini`) handles tutoring logic and grammar correction   |
 | **Workflow**      | Cloudflare Workers coordinate API calls and session flow                     |
 | **User Input**    | Voice input via microphone (Whisper) and chat interface (Nuxt + Supabase)    |
-| **Memory/State**  | Supabase stores user progress, session history, and lesson progress metadata |
-| **Deployment**    | Cloudflare Pages + Workers for edge-native CI/CD and routing               |
-
-## 📺 Live Demos!
-** These videos showcase the websites AI functionality and were used at MOVE's pitch competition
-https://drive.google.com/drive/folders/1WX_JkIMXxrEPqqpeAr81287FTuQvkNso?usp=drive_link
+| **Memory/State**  | Supabase stores user progress, session history, and lesson metadata          |
+| **Deployment**    | Cloudflare Pages + Workers for edge-native CI/CD and routing                 |
 
 ## 🚀 Try Out the UI
 
-https://languageai.pages.dev/
-** Currenly the AI api keys have been disabled to prevent missuse
-** the UI works just fine though.
+🔗 [Live Demo](https://languageai.pages.dev)
 
-Here is a temporary log in
-Student login: darkninja4347@yahoo.com
-password: password
+> ⚠️ **Note:** AI API keys have been temporarily disabled to prevent misuse.  
+> The UI and core functionality remain fully accessible.
 
-Teacher login: raymondflowersiv@gmail.com
-password: password
+### 🔐 Temporary Logins
+
+**Student Login**  
+Email: `darkninja4347@yahoo.com`  
+Password: `password`
+
+**Teacher Login**  
+Email: `raymondflowersiv@gmail.com`  
+Password: `password`
+
+## 📺 How to Use the Language Tutor
+
+To explore the full functionality of this AI-powered language learning tool, follow these steps:
+
+### 1. Log In
+- Visit the deployed app: [languageai.pages.dev](https://languageai.pages.dev)
+- Use the login credentials provided above.
+
+If you encounter issues logging in, contact me at: `raymondflowersiv@gmail.com`
+
+### 2. Explore the Interface
+Once logged in, you’ll be taken to either the student or teacher dashboard. You can interact with the tutor via:
+- 🎙️ **Voice input** (microphone icon) — speak in your target language
+- 💬 **Text input** — type questions or responses
+
+The AI will respond with:
+- ✅ Corrected grammar and conversational feedback
+- 🔊 Spoken output using Google Cloud Text-to-Speech
+
+### 3. Watch the Demo
+To see the full flow in action, check out the demo videos:
+
+📼 [Demo Folder on Google Drive](https://drive.google.com/drive/folders/1WX_JkIMXxrEPqqpeAr81287FTuQvkNso?usp=drive_link)
+
+- **Instructor Walkthrough** — backend coordination and AI logic  
+- **Student Experience** — voice input, LLM feedback, and UI navigation  
+
+These videos were showcased at MOVE’s pitch competition and demonstrate how the system uses Whisper for transcription, GPT-4o-mini for tutoring, and Cloudflare Workers for orchestration.
+
+---
+
+
 
 
